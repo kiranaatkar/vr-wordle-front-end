@@ -1,9 +1,9 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import { VRCanvas } from "@react-three/xr";
 import Box from "./Components/Box.js";
 import Floor from "./Components/Floor.js";
 import { Physics } from "@react-three/cannon";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useThree } from "@react-three/fiber";
 import {
   CubeTextureLoader,
   MeshBasicMaterial,
@@ -11,7 +11,6 @@ import {
   BackSide,
   BoxGeometry,
 } from "three";
-import { OrbitControls, Stars, Sky } from "@react-three/drei";
 
 function SkyBox() {
   const { scene } = useThree();
@@ -51,14 +50,13 @@ export default function App() {
       <Physics gravity={[0, -50, 0]}>
         <Box position={[0, 0, 0]} />
         <Box position={[2, 0, 0]} />
-          <Box position={[-2.2, 1, 0]} />
-      <Box position={[-0.8, 1, 0]} />
-      <Box position={[0.6, 1, 0]} />
-      <Box position={[2, 1, 0]} />
-      <Box position={[3.4, 1, 0]} />
+        <Box position={[-2.2, 1, 0]} />
+        <Box position={[-0.8, 1, 0]} />
+        <Box position={[0.6, 1, 0]} />
+        <Box position={[2, 1, 0]} />
+        <Box position={[3.4, 1, 0]} />
         <Floor />
       </Physics>
-      <OrbitControls />
       <SkyBox />
     </VRCanvas>
   );
