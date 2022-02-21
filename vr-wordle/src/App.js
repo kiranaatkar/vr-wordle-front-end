@@ -48,7 +48,7 @@ function SkyBox() {
   const { scene } = useThree();
   const loader = new CubeTextureLoader();
 
-  const environment = "day";
+  const environment = "space";
 
   const texture = loader.load([
     `/${environment}/1.png`,
