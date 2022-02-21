@@ -7,7 +7,7 @@ export default function Box(props) {
   // Hold state for hovered and clicked events
   const [hovered, hover] = useState(false);
   const { size, viewport } = useThree();
-  const [position, setPosition] = useState(props.position);
+  const [position] = useState(props.position);
   const aspect = size.width / viewport.width;
 
   const [box, api] = useBox(() => ({ mass: 1, ...props }));
