@@ -11,6 +11,7 @@ function Box(props) {
   // Subscribe this component to the render-loop, rotate the mesh every frame
   useFrame((state, delta) => (ref.current.rotation.x += 0.01));
   // Return the view, these are regular Threejs elements expressed in JSX
+
   return (
     <mesh
       {...props}
