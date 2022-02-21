@@ -1,9 +1,14 @@
 import React, { useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
-import { CubeTextureLoader } from "three";
+import {
+  CubeTextureLoader,
+  MeshBasicMaterial,
+  Mesh,
+  BackSide,
+  BoxGeometry,
+} from "three";
 import { VRCanvas } from "@react-three/xr";
-import { OrbitControls, Stars } from "@react-three/drei";
-import forest from "./skyboxes/forest.png";
+import { OrbitControls, Stars, Sky } from "@react-three/drei";
 
 function Box(props) {
   // This reference gives us direct access to the THREE.Mesh object
@@ -43,15 +48,28 @@ function SkyBox() {
   const { scene } = useThree();
   const loader = new CubeTextureLoader();
 
+  const environment = "day";
+
   const texture = loader.load([
-    "https://6izyu.csb.app/4b.jpg",
-    "https://6izyu.csb.app/3.jpg",
-    "https://6izyu.csb.app/4b.jpg",
-    "https://6izyu.csb.app/4.jpg",
-    "https://6izyu.csb.app/5.jpg",
-    "https://6izyu.csb.app/2.jpg",
+    `/${environment}/1.png`,
+    `/${environment}/2.png`,
+    `/${environment}/3.png`,
+    `/${environment}/4.png`,
+    `/${environment}/5.png`,
+    `/${environment}/6.png`,
   ]);
-  scene.add(texture);
+
+  const geometry = new BoxGeometry(1000, 1000, 1000);
+
+  const material = new MeshBasicMaterial({
+    envMap: texture,
+    side: BackSide,
+  });
+
+  const cube = new Mesh(geometry, material);
+
+  scene.add(cube);
+
   return null;
 }
 
@@ -67,8 +85,9 @@ export default function App() {
       <Box position={[2, 1, 0]} />
       <Box position={[3.4, 1, 0]} />
       <OrbitControls />
-      <Plane />
-      <Stars />
+      {/* <Plane /> */}
+      {/* <Stars /> */}
+      {/* <Sky /> */}
       <SkyBox />
     </VRCanvas>
   );
