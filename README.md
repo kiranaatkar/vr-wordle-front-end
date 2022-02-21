@@ -1,1 +1,1 @@
-# vr-wordle-front-end
+# VR-wordle-front-end
