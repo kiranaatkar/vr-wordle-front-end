@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { useThree, useLoader } from "@react-three/fiber";
-import { Interactive } from "@react-three/xr";
+import { Interactive, RayGrab } from "@react-three/xr";
 import { useDrag } from "@use-gesture/react";
 import { useBox } from "@react-three/cannon";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 
 export default function Box(props) {
-  const colorMap = useLoader(TextureLoader, "Plaster17_COL_VAR2_1K.jpg");
   // Hold state for hovered and clicked events
   const [hovered, hover] = useState(false);
   const { size, viewport } = useThree();
@@ -33,19 +32,21 @@ export default function Box(props) {
 
   return (
     <Interactive onHover={() => hover(true)} onBlur={() => hover(false)}>
-      <mesh
-        {...bind()}
-        ref={box}
-        position={position}
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-        onPointerOver={(event) => hover(true)}
-        onPointerOut={(event) => hover(false)}
-      >
-        <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
-        <meshStandardMaterial map={colorMap} />
-      </mesh>
+      <RayGrab>
+        <mesh
+          {...bind()}
+          ref={box}
+          position={position}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+          onPointerOver={(event) => hover(true)}
+          onPointerOut={(event) => hover(false)}
+        >
+          <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
+          <meshStandardMaterial color={hovered ? "orange" : "hotpink"} />
+        </mesh>
+      </RayGrab>
     </Interactive>
   );
 }
