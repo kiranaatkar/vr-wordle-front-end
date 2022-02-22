@@ -30,22 +30,24 @@ export default function Box(props) {
   );
 
   return (
-    <Interactive onHover={() => hover(true)} onBlur={() => hover(false)}>
-      <RayGrab>
-        <mesh
-          {...bind()}
-          ref={box}
-          position={position}
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-          onPointerOver={(event) => hover(true)}
-          onPointerOut={(event) => hover(false)}
-        >
-          <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
-          <meshStandardMaterial color={hovered ? "orange" : "hotpink"} />
-        </mesh>
-      </RayGrab>
+    <Interactive
+      onSelect={() => bind()}
+      onHover={() => hover(true)}
+      onBlur={() => hover(false)}
+    >
+      <mesh
+        {...bind()}
+        ref={box}
+        position={position}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        onPointerOver={(event) => hover(true)}
+        onPointerOut={(event) => hover(false)}
+      >
+        <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
+        <meshStandardMaterial color={hovered ? "orange" : "hotpink"} />
+      </mesh>
     </Interactive>
   );
 }
