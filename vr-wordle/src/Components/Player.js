@@ -50,7 +50,10 @@ const Player = (props) => {
   const { forward, backward, left, right, jump } = usePlayerControls();
   const { camera } = useThree();
   const velocity = useRef([0, 0, 0]);
-  useEffect(() => api.velocity.subscribe((v) => (velocity.current = v)), []);
+  useEffect(
+    () => api.velocity.subscribe((v) => (velocity.current = v)),
+    [api.velocity]
+  );
   useFrame((state) => {
     ref.current.getWorldPosition(camera.position);
     frontVector.set(0, 0, Number(backward) - Number(forward));
