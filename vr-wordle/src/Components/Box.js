@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useThree } from "@react-three/fiber";
-import { Interactive } from "@react-three/xr";
+import { useFrame, useThree } from "@react-three/fiber";
+import { Interactive, RayGrab } from "@react-three/xr";
 import { useDrag } from "@use-gesture/react";
 import { useBox } from "@react-three/cannon";
 
@@ -29,25 +29,29 @@ export default function Box(props) {
     { pointerEvents: true }
   );
 
+  useFrame(() => api.mass.set(1));
+
   return (
     <Interactive
-      onSelect={() => bind()}
+      onSqueeze={() => api.velocity.set(0, -1, 0)}
       onHover={() => hover(true)}
       onBlur={() => hover(false)}
     >
-      <mesh
-        {...bind()}
-        ref={box}
-        position={position}
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-        onPointerOver={(event) => hover(true)}
-        onPointerOut={(event) => hover(false)}
-      >
-        <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
-        <meshStandardMaterial color={hovered ? "orange" : "hotpink"} />
-      </mesh>
+      <RayGrab>
+        <mesh
+          {...bind()}
+          ref={box}
+          position={position}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+          onPointerOver={(event) => hover(true)}
+          onPointerOut={(event) => hover(false)}
+        >
+          <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
+          <meshStandardMaterial color={hovered ? "orange" : "hotpink"} />
+        </mesh>
+      </RayGrab>
     </Interactive>
   );
 }
