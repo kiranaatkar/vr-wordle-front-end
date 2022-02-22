@@ -26,7 +26,11 @@ function AddInstancedMesh() {
 function setInstancedMeshPositions(mesh) {
   console.log("positioned");
   for (var i = 0; i < mesh.count; i++) {
-    tempBoxes.position.set(-4 + (i % 9) * 0.7, 5 - Math.floor(i / 9) * 0.7, -3);
+    tempBoxes.position.set(
+      -2 + (i % 9) * 0.5,
+      2 - Math.floor(i / 9) * 0.5,
+      -2 + Math.floor(i / 9) * 0.5
+    );
     tempBoxes.updateMatrix();
     mesh.setMatrixAt(i, tempBoxes.matrix);
   }
