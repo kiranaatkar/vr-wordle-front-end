@@ -44,7 +44,7 @@ const Player = (props) => {
   const [ref, api] = useSphere(() => ({
     mass: 1,
     type: "Dynamic",
-    position: [0, 10, 0],
+    position: [0, 10, 4],
     ...props,
   }));
   const { forward, backward, left, right, jump } = usePlayerControls();

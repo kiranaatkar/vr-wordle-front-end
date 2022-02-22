@@ -1,9 +1,9 @@
 import React from "react";
-import { VRCanvas } from "@react-three/xr";
+import { VRCanvas, useXR, useXREvent } from "@react-three/xr";
 import Box from "./Components/Box.js";
 import Floor from "./Components/Floor.js";
 import { Physics } from "@react-three/cannon";
-import { useThree } from "@react-three/fiber";
+import { useThree, useFrame } from "@react-three/fiber";
 import {
   CubeTextureLoader,
   MeshBasicMaterial,
@@ -44,7 +44,7 @@ function SkyBox() {
 
 export default function App() {
   return (
-    <VRCanvas style={{ touchAction: "none" }} camera={{ fov: 45 }}>
+    <VRCanvas style={{ touchAction: "none" }}>
       <ambientLight intensity={0.5} />
       <spotLight position={[0, 10, 0]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
