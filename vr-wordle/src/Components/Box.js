@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { useThree, useLoader } from "@react-three/fiber";
+import { useThree } from "@react-three/fiber";
 import { Interactive, RayGrab } from "@react-three/xr";
 import { useDrag } from "@use-gesture/react";
 import { useBox } from "@react-three/cannon";
-import { TextureLoader } from "three/src/loaders/TextureLoader";
 
 export default function Box(props) {
   // Hold state for hovered and clicked events
