@@ -1,5 +1,5 @@
 import React from "react";
-import { VRCanvas } from "@react-three/xr";
+import { VRCanvas, DefaultXRControllers, Hands } from "@react-three/xr";
 import Box from "./Components/Box.js";
 import Floor from "./Components/Floor.js";
 import { Physics } from "@react-three/cannon";
@@ -44,6 +44,8 @@ function SkyBox() {
 export default function App() {
   return (
     <VRCanvas style={{ touchAction: "none" }}>
+      <DefaultXRControllers />
+      <Hands />
       <ambientLight intensity={0.5} />
       <spotLight position={[0, 10, 0]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
