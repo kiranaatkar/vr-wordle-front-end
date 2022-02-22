@@ -1,13 +1,11 @@
 import React from "react";
-
 import { VRCanvas, DefaultXRControllers, Hands } from "@react-three/xr";
-
 import Box from "./Components/Box.js";
 import Floor from "./Components/Floor.js";
 import Keyboard from "./Components/Keyboard.js";
 import Grid from "./Components/Grid.js";
 import { Physics } from "@react-three/cannon";
-import { useThree, useFrame } from "@react-three/fiber";
+import { useThree } from "@react-three/fiber";
 import {
   CubeTextureLoader,
   MeshBasicMaterial,
