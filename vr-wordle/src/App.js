@@ -11,6 +11,7 @@ import {
   BackSide,
   BoxGeometry,
 } from "three";
+import Player from "./Components/Player.js";
 
 function SkyBox() {
   const { scene } = useThree();
@@ -43,7 +44,7 @@ function SkyBox() {
 
 export default function App() {
   return (
-    <VRCanvas style={{ touchAction: "none" }}>
+    <VRCanvas style={{ touchAction: "none" }} camera={{ fov: 45 }}>
       <ambientLight intensity={0.5} />
       <spotLight position={[0, 10, 0]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
@@ -55,6 +56,7 @@ export default function App() {
         <Box position={[0.6, 1, 0]} />
         <Box position={[2, 1, 0]} />
         <Box position={[3.4, 1, 0]} />
+        <Player />
         <Floor />
       </Physics>
       <SkyBox />
