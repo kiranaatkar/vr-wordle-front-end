@@ -7,7 +7,7 @@ import {
   InstancedMesh,
 } from "three";
 
-var mesh;
+let mesh;
 const tempBoxes = new Object3D();
 
 function AddInstancedMesh() {
