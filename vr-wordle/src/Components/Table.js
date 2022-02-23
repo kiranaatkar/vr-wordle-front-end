@@ -4,7 +4,7 @@ import { usePlane } from "@react-three/cannon";
 
 export default function Table(props) {
   const [ref] = usePlane(() => ({
-    rotation: [-Math.PI / 2 + 0.3, 0, 0],
+    rotation: [-Math.PI / 2 + 0.2, 0, 0],
     position: [0, 1.1, -0.8],
     type: "Static",
     material: {
@@ -13,7 +13,7 @@ export default function Table(props) {
   }));
 
   return (
-    <Plane args={[3, 2]} ref={ref}>
+    <Plane args={[3.5, 2.5]} ref={ref}>
       <meshStandardMaterial color="lightgray" />
     </Plane>
   );

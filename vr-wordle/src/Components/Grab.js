@@ -36,7 +36,7 @@ export default function Grabber({ ...groupRef }) {
       child.children[0].getWorldPosition(posB);
       const distance = pos.distanceTo(posB);
 
-      if (distance < 0.5) {
+      if (distance < 0.1) {
         api.position.copy(e.controller.controller.position);
         api.rotation.copy(e.controller.controller.rotation);
         setGrabbing(true);
