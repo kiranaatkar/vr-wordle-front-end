@@ -1,9 +1,11 @@
-import React from "react";
-import { VRCanvas, DefaultXRControllers, Hands } from "@react-three/xr";
-import Box from "./Components/Box.js";
+import React, { useRef } from "react";
+
+import { VRCanvas, DefaultXRControllers } from "@react-three/xr";
+import Letter from "./Components/Letter.js";
 import Floor from "./Components/Floor.js";
 import Keyboard from "./Components/Keyboard.js";
 import Grid from "./Components/Grid.js";
+import Grabber from "./Components/Grab.js";
 import { Physics } from "@react-three/cannon";
 import { useThree } from "@react-three/fiber";
 import {
@@ -45,22 +47,21 @@ function SkyBox() {
 }
 
 export default function App() {
+  const letters = useRef(<group />);
   return (
     <VRCanvas style={{ touchAction: "none" }}>
       <DefaultXRControllers />
-      <Hands />
       <ambientLight intensity={0.5} />
       <spotLight position={[0, 10, 0]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
       <Grid />
       <Physics gravity={[0, -50, 0]}>
-        <Box position={[0, 0, 0]} />
-        <Box position={[2, 0, 0]} />
-        <Box position={[-2.2, 1, 0]} />
-        <Box position={[-0.8, 1, 0]} />
-        <Box position={[0.6, 1, 0]} />
-        <Box position={[2, 1, 0]} />
-        <Box position={[3.4, 1, 0]} />
+        <Grabber groupRef={letters} />
+        <group ref={letters}>
+          <Letter position={[1, 1, 1]} />
+          <Letter position={[1, 1.5, 1]} />
+          <Letter position={[1, 2, 1]} />
+        </group>
         <Player />
         <Floor />
       </Physics>
