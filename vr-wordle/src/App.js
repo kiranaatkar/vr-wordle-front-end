@@ -85,7 +85,6 @@ export default function App() {
         <Player />
         <Floor />
       </Physics>
-      <OrbitControls />
       {/* <Keyboard /> */}
       <SkyBox />
     </VRCanvas>
