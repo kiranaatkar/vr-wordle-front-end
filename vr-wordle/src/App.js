@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 
 import { VRCanvas, DefaultXRControllers } from "@react-three/xr";
 import Letter from "./Components/Letter.js";
+import LetterCubes from "./Components/LetterCubes.js";
 import Floor from "./Components/Floor.js";
 import Keyboard from "./Components/Keyboard.js";
 import Grid from "./Components/Grid.js";
@@ -17,6 +18,7 @@ import {
   BoxGeometry,
 } from "three";
 import Player from "./Components/Player.js";
+import { OrbitControls } from "@react-three/drei";
 
 function SkyBox() {
   const { scene } = useThree();
@@ -48,6 +50,7 @@ function SkyBox() {
 }
 
 export default function App() {
+  const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
   const letters = useRef(<group />);
   return (
     <VRCanvas style={{ touchAction: "none" }}>
@@ -60,6 +63,15 @@ export default function App() {
         <Table />
         <Grabber groupRef={letters} />
         <group ref={letters}>
+          {alphabet.map((letter, i) => {
+            return (
+              <LetterCubes
+                id={letter}
+                size={[0.1, 0.1, 0.1]}
+                position={[Math.random() - 0.5, 1.6 + 0.3 * i, -0.8]}
+              />
+            );
+          })}
           <Letter position={[0, 1, 1]} />
           <Letter position={[0, 1.5, 1]} />
           <Letter position={[0, 2, 1]} />
@@ -67,6 +79,7 @@ export default function App() {
         <Player />
         <Floor />
       </Physics>
+      <OrbitControls />
       <Keyboard />
       <SkyBox />
     </VRCanvas>
