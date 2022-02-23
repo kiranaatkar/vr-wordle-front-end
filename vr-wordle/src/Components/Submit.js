@@ -3,8 +3,8 @@ import { Box, Text } from "@react-three/drei";
 import { useBox } from "@react-three/cannon";
 import { Interactive } from "@react-three/xr";
 import { useSpring, animated } from "@react-spring/three";
-export default function Button(props) {
 
+export default function Button(props) {
   const [pressed, buttonPressed] = useState({
     press: false,
     hover: false,
@@ -18,12 +18,11 @@ export default function Button(props) {
     from: { scale: [1, 1, 1] },
   });
 
-
   const [ref] = useBox(() => ({
     args: [0.2, 0.2, 0.05],
     mass: 1,
     type: "Static",
-    position: [-1.2, 1, -0.5],
+    position: [1.2, 1, -0.5],
     rotation: [-Math.PI / 2 + 0.2, 0, 0],
     material: {
       friction: 1,
@@ -51,7 +50,7 @@ export default function Button(props) {
           ></cylinderBufferGeometry>
           <meshBasicMaterial
             attach="material"
-            color={pressed.hover ? "orange" : "red"}
+            color={pressed.hover ? "orange" : "green"}
           />
         </animated.mesh>
       </Interactive>
@@ -61,7 +60,7 @@ export default function Button(props) {
         fontSize={0.05}
         color="white"
       >
-        RESET
+        SUBMIT
       </Text>
       <meshStandardMaterial color="gray" />
     </Box>

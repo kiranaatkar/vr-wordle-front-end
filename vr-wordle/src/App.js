@@ -6,7 +6,7 @@ import LetterCubes from "./Components/LetterCubes.js";
 import Floor from "./Components/Floor.js";
 import Cylinder from "./Components/Cylinder.js";
 import Button from "./Components/Button.js";
-// import Keyboard from "./Components/Keyboard.js";
+import Submit from "./Components/Submit.js";
 import Grid from "./Components/Grid.js";
 import Grabber from "./Components/Grab.js";
 import Table from "./Components/Table.js";
@@ -68,6 +68,7 @@ export default function App() {
       <Physics gravity={[0, -10, 0]}>
         <PointerLockControls />
         <Button />
+        <Submit />
         <Grid guesses={state.guesses} answer={state.answer} />
         <Table
           args={[3.5, 0.05, 2]}
