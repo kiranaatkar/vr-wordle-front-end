@@ -9,7 +9,7 @@ export default function Cylinder(props) {
     mass: 100000,
     args,
     ...props,
-    material: { friction: 0 },
+    material: { friction: 1 },
   }));
 
   return (
