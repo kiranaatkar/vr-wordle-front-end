@@ -5,6 +5,7 @@ import Letter from "./Components/Letter.js";
 import LetterCubes from "./Components/LetterCubes.js";
 import Floor from "./Components/Floor.js";
 import Cylinder from "./Components/Cylinder.js";
+import Button from "./Components/Button.js";
 // import Keyboard from "./Components/Keyboard.js";
 import Grid from "./Components/Grid.js";
 import Grabber from "./Components/Grab.js";
@@ -60,6 +61,7 @@ export default function App() {
       <spotLight position={[0, 10, 0]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
       <Physics gravity={[0, -10, 0]}>
+        <Button />
         <Grid />
         <Table />
         <Cylinder position={[6, 0, 0]} />
@@ -73,6 +75,7 @@ export default function App() {
             return (
               <LetterCubes
                 id={letter}
+                key={letter}
                 size={[0.07, 0.07, 0.07]}
                 position={[Math.random() - 0.5, 1.6 + 0.3 * i, -0.8]}
               />
