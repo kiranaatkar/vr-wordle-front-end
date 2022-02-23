@@ -2,6 +2,8 @@ import React from "react";
 import { VRCanvas } from "@react-three/xr";
 import Box from "./Components/Box.js";
 import Floor from "./Components/Floor.js";
+import Cylinder from "./Components/Cylinder.js";
+import RockColumn from "./Components/RockColumn.js";
 import { Physics } from "@react-three/cannon";
 import { useThree } from "@react-three/fiber";
 import {
@@ -48,13 +50,18 @@ export default function App() {
       <spotLight position={[0, 10, 0]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
       <Physics gravity={[0, -50, 0]}>
-        <Box position={[0, 0, 0]} />
-        <Box position={[2, 0, 0]} />
-        <Box position={[-2.2, 1, 0]} />
-        <Box position={[-0.8, 1, 0]} />
-        <Box position={[0.6, 1, 0]} />
-        <Box position={[2, 1, 0]} />
-        <Box position={[3.4, 1, 0]} />
+        <Cylinder position={[6, 0, 0]} />
+        <Cylinder position={[3, 0, 0]} />
+        <Cylinder position={[0, 0, 0]} />
+        <Cylinder position={[-3, 0, 0]} />
+        <Cylinder position={[-6, 0, 0]} />
+        {/* <RockColumn position={[5, 0, 0]} /> */}
+        <Box position={[6, 2.5, 0]} />
+        <Box position={[3, 2.5, 0]} />
+        <Box position={[0, 2.5, 0]} />
+        <Box position={[-3, 2.5, 0]} />
+        <Box position={[-6, 2.5, 0]} />
+        {/* <Box position={[-9, 2.5, 0]} /> */}
         <Floor />
       </Physics>
       <SkyBox />
