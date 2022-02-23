@@ -1,9 +1,12 @@
-import React from "react";
-import { VRCanvas } from "@react-three/xr";
-import Box from "./Components/Box.js";
+import React, { useRef } from "react";
+
+import { VRCanvas, DefaultXRControllers } from "@react-three/xr";
+import Letter from "./Components/Letter.js";
 import Floor from "./Components/Floor.js";
 import Cylinder from "./Components/Cylinder.js";
-import RockColumn from "./Components/RockColumn.js";
+import Keyboard from "./Components/Keyboard.js";
+import Grid from "./Components/Grid.js";
+import Grabber from "./Components/Grab.js";
 import { Physics } from "@react-three/cannon";
 import { useThree } from "@react-three/fiber";
 import {
@@ -13,6 +16,7 @@ import {
   BackSide,
   BoxGeometry,
 } from "three";
+import Player from "./Components/Player.js";
 
 function SkyBox() {
   const { scene } = useThree();
@@ -44,26 +48,30 @@ function SkyBox() {
 }
 
 export default function App() {
+  const letters = useRef(<group />);
   return (
     <VRCanvas style={{ touchAction: "none" }}>
+      <DefaultXRControllers />
       <ambientLight intensity={0.5} />
       <spotLight position={[0, 10, 0]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
+      <Grid />
       <Physics gravity={[0, -50, 0]}>
         <Cylinder position={[6, 0, 0]} />
         <Cylinder position={[3, 0, 0]} />
         <Cylinder position={[0, 0, 0]} />
         <Cylinder position={[-3, 0, 0]} />
         <Cylinder position={[-6, 0, 0]} />
-        {/* <RockColumn position={[5, 0, 0]} /> */}
-        <Box position={[6, 2.5, 0]} />
-        <Box position={[3, 2.5, 0]} />
-        <Box position={[0, 2.5, 0]} />
-        <Box position={[-3, 2.5, 0]} />
-        <Box position={[-6, 2.5, 0]} />
-        {/* <Box position={[-9, 2.5, 0]} /> */}
+        <Grabber groupRef={letters} />
+        <group ref={letters}>
+          <Letter position={[1, 1, 1]} />
+          <Letter position={[1, 1.5, 1]} />
+          <Letter position={[1, 2, 1]} />
+        </group>
+        <Player />
         <Floor />
       </Physics>
+      <Keyboard />
       <SkyBox />
     </VRCanvas>
   );

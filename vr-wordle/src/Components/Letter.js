@@ -1,16 +1,22 @@
 import React, { useState } from "react";
 import { useThree } from "@react-three/fiber";
+import { Interactive } from "@react-three/xr";
 import { useDrag } from "@use-gesture/react";
 import { useBox } from "@react-three/cannon";
+import { Box } from "@react-three/drei";
 
-export default function Box(props) {
+export default function Letter(props) {
   // Hold state for hovered and clicked events
   const [hovered, hover] = useState(false);
   const { size, viewport } = useThree();
   const [position] = useState(props.position);
   const aspect = size.width / viewport.width;
 
-  const [box, api] = useBox(() => ({ mass: 1, ...props }));
+  const [box, api] = useBox(() => ({
+    mass: 1,
+    position: position,
+    args: [0.4, 0.4, 0.4],
+  }));
 
   const bind = useDrag(
     ({ offset: [,], xy: [x, y], first, last }) => {
@@ -29,18 +35,16 @@ export default function Box(props) {
   );
 
   return (
-    <mesh
-      {...bind()}
-      ref={box}
-      position={position}
-      onClick={(e) => {
-        e.stopPropagation();
-      }}
-      onPointerOver={(event) => hover(true)}
-      onPointerOut={(event) => hover(false)}
-    >
-      <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
-      <meshStandardMaterial color={hovered ? "hotpink" : "orange"} />
-    </mesh>
+    <Interactive onHover={() => hover(true)} onBlur={() => hover(false)}>
+      <Box
+        {...bind()}
+        ref={box}
+        args={[0.4, 0.4, 0.4]}
+        onPointerOver={(event) => hover(true)}
+        onPointerOut={(event) => hover(false)}
+      >
+        <meshStandardMaterial color={hovered ? "orange" : "hotpink"} />
+      </Box>
+    </Interactive>
   );
 }
