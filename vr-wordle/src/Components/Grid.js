@@ -43,6 +43,7 @@ function Guess(guess, word) {
           id={it}
           key={i}
           position={[-width / 2 + (side + space) * i, 0, 0]}
+          key={i}
           state={
             word[i] === it
               ? "correct"

@@ -3,8 +3,8 @@ import { Box, Text } from "@react-three/drei";
 import { useBox } from "@react-three/cannon";
 import { Interactive } from "@react-three/xr";
 import { useSpring, animated } from "@react-spring/three";
-
 export default function Button(props) {
+
   const [pressed, buttonPressed] = useState({
     press: false,
     hover: false,
@@ -17,6 +17,7 @@ export default function Button(props) {
     },
     from: { scale: [1, 1, 1] },
   });
+
 
   const [ref] = useBox(() => ({
     args: [0.2, 0.2, 0.05],
