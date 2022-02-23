@@ -1,8 +1,11 @@
+import React, { useState } from "react";
 import { useBox } from "@react-three/cannon";
 import { Box, Text } from "@react-three/drei";
+import { Interactive } from "@react-three/xr";
 
 export default function LetterCubes({ id, position, size }) {
-  console.log(id, position, size);
+  const [hovered, hover] = useState(false);
+
   const [ref] = useBox(() => ({
     args: size,
     mass: 1,
@@ -13,16 +16,23 @@ export default function LetterCubes({ id, position, size }) {
   }));
 
   return (
-    <Box ref={ref} args={size}>
-      <Text
-        userData={{ letter: id }}
-        position={[0, size[1] / 2 + 0.0001, 0]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        fontSize={0.05}
+    <Interactive onHover={() => hover(true)} onBlur={() => hover(false)}>
+      <Box
+        ref={ref}
+        args={size}
+        onPointerOver={(event) => hover(true)}
+        onPointerOut={(event) => hover(false)}
       >
-        {id.toUpperCase()}
-      </Text>
-      <meshStandardMaterial color="#3a3a3c" />
-    </Box>
+        <Text
+          userData={{ letter: id }}
+          position={[0, size[1] / 2 + 0.0001, 0]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          fontSize={0.05}
+        >
+          {id.toUpperCase()}
+        </Text>
+        <meshStandardMaterial color="#3a3a3c" />
+      </Box>
+    </Interactive>
   );
 }
