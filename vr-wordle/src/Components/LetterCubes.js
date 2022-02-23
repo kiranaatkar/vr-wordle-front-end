@@ -17,7 +17,12 @@ export default function LetterCubes({ id, position, size }) {
 
   return (
     <Interactive onHover={() => hover(true)} onBlur={() => hover(false)}>
-      <Box ref={ref} args={size}>
+      <Box
+        ref={ref}
+        args={size}
+        onPointerOver={(event) => hover(true)}
+        onPointerOut={(event) => hover(false)}
+      >
         <Text
           userData={{ letter: id }}
           position={[0, size[1] / 2 + 0.0001, 0]}
