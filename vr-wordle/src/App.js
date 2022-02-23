@@ -6,6 +6,7 @@ import Floor from "./Components/Floor.js";
 import Keyboard from "./Components/Keyboard.js";
 import Grid from "./Components/Grid.js";
 import Grabber from "./Components/Grab.js";
+import Table from "./Components/Table.js";
 import { Physics } from "@react-three/cannon";
 import { useThree } from "@react-three/fiber";
 import {
@@ -55,12 +56,13 @@ export default function App() {
       <spotLight position={[0, 10, 0]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
       <Grid />
-      <Physics gravity={[0, -50, 0]}>
+      <Physics>
+        <Table />
         <Grabber groupRef={letters} />
         <group ref={letters}>
-          <Letter position={[1, 1, 1]} />
-          <Letter position={[1, 1.5, 1]} />
-          <Letter position={[1, 2, 1]} />
+          <Letter position={[0, 1, 1]} />
+          <Letter position={[0, 1.5, 1]} />
+          <Letter position={[0, 2, 1]} />
         </group>
         <Player />
         <Floor />
