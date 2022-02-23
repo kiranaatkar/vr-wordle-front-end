@@ -5,8 +5,8 @@ export default function Cylinder(props) {
   // Make the cup a physics object with a big mass
   // args: topRad, bottomRad, height, radialSegments, heightSegments, openEnded
   const [topRad, bottomRad, height, radSeg, hSeg, open] = [
-    0.6,
-    0.4,
+    0.75,
+    0.5,
     0.75,
     32,
     1,
@@ -22,7 +22,8 @@ export default function Cylinder(props) {
       { type: "Cylinder", position: [0, 0, 0], args: args },
       {
         type: "Cylinder",
-        args: [bottomRad, bottomRad, height / 10],
+        position: [0, 0, 0],
+        args: [bottomRad, bottomRad, height / 10, radSeg],
       },
       {
         type: "Box",
@@ -36,11 +37,11 @@ export default function Cylinder(props) {
     <group ref={ref}>
       <mesh receiveShadow castShadow>
         <cylinderGeometry args={args} />
-        <meshNormalMaterial wireframe />
+        <meshNormalMaterial />
       </mesh>
       <mesh receiveShadow castShadow>
-        <cylinderGeometry args={[bottomRad, bottomRad, height / 10]} />
-        <meshNormalMaterial wireframe />
+        <cylinderGeometry args={[bottomRad, bottomRad, height / 10, radSeg]} />
+        <meshNormalMaterial />
       </mesh>
       <BoxTrigger
         args={[0.5, 0.5, 0.5]}

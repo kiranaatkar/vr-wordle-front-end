@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame } from "react-three-fiber";
 import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
+import { useCylinder } from "@react-three/cannon";
 
 // Solution from: https://stackoverflow.com/a/47422111
 
@@ -10,7 +11,12 @@ export default function HollowCylinderGeometry(props) {
   const innerRadius = outerRadius - 0.1;
   const radialSegments = 32;
   const height = 0.75;
-  const ref = useRef();
+  const ref = useCylinder(() => ({
+    mass: 1000,
+    material: {
+      friction: 1,
+    },
+  }));
 
   const { arcShape, options } = useMemo(() => {
     const arcShape = new THREE.Shape();

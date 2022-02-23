@@ -8,7 +8,9 @@ import Keyboard from "./Components/Keyboard.js";
 import Grid from "./Components/Grid.js";
 import Grabber from "./Components/Grab.js";
 import HollowCylinder from "./Components/HollowCylinder.js";
+import Bucket from "./Components/Bucket.js";
 import ExtrudedCylinder from "./Components/ExtrudedCylinder.js";
+import RockColumn from "./Components/RockColumn.js";
 //import Table from "./Components/Table.js";
 import { Physics } from "@react-three/cannon";
 import { useThree } from "@react-three/fiber";
@@ -58,23 +60,10 @@ export default function App() {
       <ambientLight intensity={0.5} />
       <spotLight position={[0, 10, 0]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
-      {/* <Grid /> */}
       <Physics gravity={[0, -10, 0]}>
-        {/* <Table />
-        <Cylinder position={[6, 0, 0]} />
-        <Cylinder position={[3, 0, 0]} />
-        <Cylinder position={[0, 0, 0]} />
-        <Cylinder position={[-3, 0, 0]} />
-        <Cylinder position={[-6, 0, 0]} />
-        <Grabber groupRef={letters} />
-        <group ref={letters}>
-          <Letter position={[0, 1, 1]} />
-          <Letter position={[0, 1.5, 1]} />
-          <Letter position={[0, 2, 1]} />
-        </group> */}
         <Player />
         <Floor />
-        {/* <HollowCylinder position={[0, 0, 0]} /> */}
+        <RockColumn rotation={[-Math.PI / 2, 0, 0]} />
         <Cylinder position={[-3, 0, 0]} />
         <ExtrudedCylinder position={[3, 0, 0]} />
       </Physics>

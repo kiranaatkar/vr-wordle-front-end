@@ -27,9 +27,10 @@ export default function Cylinder(props) {
   const height = 0.75;
 
   const extrudeSettings = {
-    steps: 2,
     depth: height,
-    bevelEnabled: true,
+    bevelEnabled: false,
+    steps: 2,
+    curveSegments: radialSegments,
     bevelThickness: 1,
     bevelSize: 1,
     bevelOffset: 0,
@@ -47,7 +48,7 @@ export default function Cylinder(props) {
   holePath.absarc(outerRadius, outerRadius, innerRadius, 0, Math.PI * 2, false);
   arcShape.holes.push(holePath);
 
-  const geometry = new THREE.ExtrudeGeometry(arcShape, extrudeSettings);
+  console.log(arcShape);
 
   return (
     <mesh rotation={[-Math.PI / 2, 0, 0]}>
