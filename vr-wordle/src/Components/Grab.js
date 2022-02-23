@@ -25,10 +25,12 @@ export default function Grabber({ ...groupRef }) {
 
   const controllers = useXR();
 
-  const grabController = controllers.controllers[0];
+  const grabControllerRight = controllers.controllers[0];
+  const grabControllerLeft = null;
 
   useXREvent("selectstart", (e) => {
     for (const child of groupRef.groupRef.current.children) {
+      
       const pos = new Vector3();
       const posB = new Vector3();
 
@@ -36,11 +38,15 @@ export default function Grabber({ ...groupRef }) {
       child.children[0].getWorldPosition(posB);
       const distance = pos.distanceTo(posB);
 
-      if (distance < 0.5) {
+      if (distance < 0.1) {
         api.position.copy(e.controller.controller.position);
         api.rotation.copy(e.controller.controller.rotation);
         setGrabbing(true);
-        grabController.current = e.controller;
+        if (e.originalEvent.data.handedness === "right") {
+          grabControllerRight.current = e.controller;
+        } else {
+          grabControllerLeft.current = e.controller;
+        }
         ref.current = child.children[0];
         console.log(ref.current);
         break;
@@ -53,9 +59,9 @@ export default function Grabber({ ...groupRef }) {
   });
 
   useFrame(() => {
-    if (grabController) {
-      api.position.copy(grabController.controller.position);
-      api.rotation.copy(grabController.controller.rotation);
+    if (grabControllerRight) {
+      api.position.copy(grabControllerRight.controller.position);
+      api.rotation.copy(grabControllerRight.controller.rotation);
     }
   });
 
