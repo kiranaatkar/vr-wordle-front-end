@@ -59,8 +59,8 @@ export default function App() {
       <ambientLight intensity={0.5} />
       <spotLight position={[0, 10, 0]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
-      <Grid />
       <Physics gravity={[0, -10, 0]}>
+        <Grid />
         <Table />
         <Cylinder position={[6, 0, 0]} />
         <Cylinder position={[3, 0, 0]} />
@@ -86,7 +86,7 @@ export default function App() {
         <Floor />
       </Physics>
       <OrbitControls />
-      <Keyboard />
+      {/* <Keyboard /> */}
       <SkyBox />
     </VRCanvas>
   );
