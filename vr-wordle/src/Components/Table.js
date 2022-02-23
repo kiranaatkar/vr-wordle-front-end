@@ -6,6 +6,7 @@ export default function Table(props) {
   const [ref] = usePlane(() => ({
     rotation: [-Math.PI / 2 + 0.3, 0, 0],
     position: [0, 1.1, -0.8],
+    args: [3, 2],
     type: "Static",
     material: {
       friction: 1,
