@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Text, Cylinder } from "@react-three/drei";
 import { useBox } from "@react-three/cannon";
 import { Interactive } from "@react-three/xr";
 
 export default function Button(props) {
+  const { hover, setHovered } = useState(false);
+
   const [ref] = useBox(() => ({
     args: [0.2, 0.2, 0.05],
     mass: 1,
@@ -17,7 +19,10 @@ export default function Button(props) {
 
   return (
     <Box ref={ref} args={[0.2, 0.2, 0.05]}>
-      <Interactive>
+      <Interactive
+        onSelect={() => console.log("clicked!")}
+        onHover={() => setHovered(true)}
+      >
         <Cylinder
           args={[0.09, 0.09, 0.1]}
           rotation={[-Math.PI / 2 + 0.1, 0, 0]}
@@ -30,7 +35,7 @@ export default function Button(props) {
           >
             RESET
           </Text>
-          <meshStandardMaterial color="red" />
+          <meshStandardMaterial color={hover ? "orange" : "red"} />
         </Cylinder>
       </Interactive>
       <meshStandardMaterial color="gray" />
