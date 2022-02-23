@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { OrbitControls, PointerLockControls } from "@react-three/drei";
+import { PointerLockControls } from "@react-three/drei";
 import { VRCanvas, DefaultXRControllers } from "@react-three/xr";
 import Letter from "./Components/Letter.js";
 import LetterCubes from "./Components/LetterCubes.js";
