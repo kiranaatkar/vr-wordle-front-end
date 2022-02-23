@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useThree } from "@react-three/fiber";
-import { Interactive } from "@react-three/xr";
+import { Interactive, useXR, useXRFrame } from "@react-three/xr";
 import { useDrag } from "@use-gesture/react";
 import { useBox } from "@react-three/cannon";
 import { Box } from "@react-three/drei";
+import { Vector3 } from "three";
 
 export default function Letter(props) {
   // Hold state for hovered and clicked events
@@ -37,8 +38,26 @@ export default function Letter(props) {
     { pointerEvents: true }
   );
 
+  const controllers = useXR();
+
+  useXRFrame(() => {
+    const grabController = controllers.controllers[0];
+
+    const pos = new Vector3();
+    const posB = new Vector3();
+    grabController.controller.getWorldPosition(pos);
+    box.current.getWorldPosition(posB);
+    const distance = pos.distanceTo(posB);
+
+    if (distance < 0.1) {
+      hover(true);
+    } else {
+      hover(false);
+    }
+  });
+
   return (
-    <Interactive onHover={() => hover(true)} onBlur={() => hover(false)}>
+    <Interactive onBlur={() => hover(false)}>
       <Box
         {...bind()}
         ref={box}
