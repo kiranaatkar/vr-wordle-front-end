@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState, useRef } from "react";
 
 import { VRCanvas, DefaultXRControllers } from "@react-three/xr";
 import Letter from "./Components/Letter.js";
@@ -52,6 +52,10 @@ function SkyBox() {
 }
 
 export default function App() {
+  const [state, setState] = useState({
+    guesses: ["hello", "world", "vrdle", "wrdle", "crane", "cramp"],
+    answer: "cramp",
+  });
   const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
   const letters = useRef(<group />);
   return (
@@ -60,6 +64,7 @@ export default function App() {
       <ambientLight intensity={0.5} />
       <spotLight position={[0, 10, 0]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
+      <Grid guesses={state.guesses} answer={state.answer} />
       <Physics gravity={[0, -10, 0]}>
         <Button />
         <Grid />
