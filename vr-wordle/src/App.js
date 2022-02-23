@@ -19,7 +19,7 @@ import {
   BoxGeometry,
 } from "three";
 import Player from "./Components/Player.js";
-import { OrbitControls } from "@react-three/drei";
+// import { OrbitControls } from "@react-three/drei";
 
 function SkyBox() {
   const { scene } = useThree();
