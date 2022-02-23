@@ -4,6 +4,7 @@ import { VRCanvas, DefaultXRControllers } from "@react-three/xr";
 import Letter from "./Components/Letter.js";
 import LetterCubes from "./Components/LetterCubes.js";
 import Floor from "./Components/Floor.js";
+import Cylinder from "./Components/Cylinder.js";
 import Keyboard from "./Components/Keyboard.js";
 import Grid from "./Components/Grid.js";
 import Grabber from "./Components/Grab.js";
@@ -59,8 +60,13 @@ export default function App() {
       <spotLight position={[0, 10, 0]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
       <Grid />
-      <Physics>
+      <Physics gravity={[0, -10, 0]}>
         <Table />
+        <Cylinder position={[6, 0, 0]} />
+        <Cylinder position={[3, 0, 0]} />
+        <Cylinder position={[0, 0, 0]} />
+        <Cylinder position={[-3, 0, 0]} />
+        <Cylinder position={[-6, 0, 0]} />
         <Grabber groupRef={letters} />
         <group ref={letters}>
           {alphabet.map((letter, i) => {
