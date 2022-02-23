@@ -56,7 +56,7 @@ export default function App() {
       <spotLight position={[0, 10, 0]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
       <Grid />
-      <Physics gravity={[0, -50, 0]}>
+      <Physics gravity={[0, -10, 0]}>
         <Cylinder position={[6, 0, 0]} />
         <Cylinder position={[3, 0, 0]} />
         <Cylinder position={[0, 0, 0]} />
