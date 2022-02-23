@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Text, Cylinder } from "@react-three/drei";
+import { Box, Text } from "@react-three/drei";
 import { useBox } from "@react-three/cannon";
 import { Interactive } from "@react-three/xr";
 import { useSpring, animated } from "@react-spring/three";
