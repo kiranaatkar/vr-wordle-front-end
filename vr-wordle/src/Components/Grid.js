@@ -2,7 +2,9 @@ import { Box, Text } from "@react-three/drei";
 
 export default function Grid(props) {
   return props.guesses.map((it, i) => (
-    <group position={[0, 7 - i * 1.2, -2]}>{Guess(it, props.answer)}</group>
+    <group position={[0, 7 - i * 1.2, -2]} key={i}>
+      {Guess(it, props.answer)}
+    </group>
   ));
 }
 
@@ -39,6 +41,7 @@ function Guess(guess, word) {
         <StaticLetter
           side={side}
           id={it}
+          key={i}
           position={[-width / 2 + (side + space) * i, 0, 0]}
           state={
             word[i] === it

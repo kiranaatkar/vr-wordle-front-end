@@ -6,7 +6,7 @@ import LetterCubes from "./Components/LetterCubes.js";
 import Floor from "./Components/Floor.js";
 import Cylinder from "./Components/Cylinder.js";
 import Button from "./Components/Button.js";
-// import Keyboard from "./Components/Keyboard.js";
+import Submit from "./Components/Submit.js";
 import Grid from "./Components/Grid.js";
 import Grabber from "./Components/Grab.js";
 import Table from "./Components/Table.js";
@@ -64,10 +64,11 @@ export default function App() {
       <ambientLight intensity={0.5} />
       <spotLight position={[0, 10, 0]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
-      <Grid guesses={state.guesses} answer={state.answer} />
+
       <Physics gravity={[0, -10, 0]}>
         <Button />
-        <Grid />
+        <Submit />
+        <Grid guesses={state.guesses} answer={state.answer} />
         <Table
           args={[3.5, 0.05, 2]}
           position={[0, 1.1, -1.2]}
