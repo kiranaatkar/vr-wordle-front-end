@@ -18,7 +18,7 @@ export default function LetterCubes({ id, position, size }) {
         userData={{ letter: id }}
         position={[0, size[1] / 2 + 0.0001, 0]}
         rotation={[-Math.PI / 2, 0, 0]}
-        fontSize={0.07}
+        fontSize={0.05}
       >
         {id.toUpperCase()}
       </Text>

@@ -67,7 +67,7 @@ export default function App() {
             return (
               <LetterCubes
                 id={letter}
-                size={[0.1, 0.1, 0.1]}
+                size={[0.07, 0.07, 0.07]}
                 position={[Math.random() - 0.5, 1.6 + 0.3 * i, -0.8]}
               />
             );
