@@ -9,7 +9,9 @@ import Button from "./Components/Button.js";
 // import Keyboard from "./Components/Keyboard.js";
 import Grid from "./Components/Grid.js";
 import Grabber from "./Components/Grab.js";
-import Table from "./Components/Table.js";
+import HollowCylinder from "./Components/HollowCylinder.js";
+import ExtrudedCylinder from "./Components/ExtrudedCylinder.js";
+//import Table from "./Components/Table.js";
 import { Physics } from "@react-three/cannon";
 import { useThree } from "@react-three/fiber";
 import {
@@ -64,7 +66,6 @@ export default function App() {
       <ambientLight intensity={0.5} />
       <spotLight position={[0, 10, 0]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
-
       <Physics gravity={[0, -10, 0]}>
         <Button />
         <Grid guesses={state.guesses} answer={state.answer} />
@@ -93,9 +94,12 @@ export default function App() {
           <Letter position={[0, 1, 1]} />
           <Letter position={[0, 1.5, 1]} />
           <Letter position={[0, 2, 1]} />
-        </group>
+        </group> */}
         <Player />
         <Floor />
+        {/* <HollowCylinder position={[0, 0, 0]} /> */}
+        <Cylinder position={[-3, 0, 0]} />
+        <ExtrudedCylinder position={[3, 0, 0]} />
       </Physics>
       {/* <Keyboard /> */}
       <SkyBox />
