@@ -14,6 +14,7 @@ export default function Letter(props) {
   const aspect = size.width / viewport.width;
 
   const [box, api] = useBox(() => ({
+    type: "Dynamic",
     mass: 1,
     position: position,
     args: [0.4, 0.4, 0.4],
@@ -64,6 +65,7 @@ export default function Letter(props) {
         args={[0.4, 0.4, 0.4]}
         onPointerOver={(event) => hover(true)}
         onPointerOut={(event) => hover(false)}
+        name={props.name}
       >
         <meshStandardMaterial color={hovered ? "orange" : "hotpink"} />
       </Box>

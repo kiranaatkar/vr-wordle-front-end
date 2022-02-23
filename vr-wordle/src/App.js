@@ -4,16 +4,10 @@ import { VRCanvas, DefaultXRControllers } from "@react-three/xr";
 import Letter from "./Components/Letter.js";
 import LetterCubes from "./Components/LetterCubes.js";
 import Floor from "./Components/Floor.js";
-import Cylinder from "./Components/Cylinder.js";
 import Button from "./Components/Button.js";
-// import Keyboard from "./Components/Keyboard.js";
 import Grid from "./Components/Grid.js";
 import Grabber from "./Components/Grab.js";
-import HollowCylinder from "./Components/HollowCylinder.js";
-import Bucket from "./Components/Bucket.js";
-import ExtrudedCylinder from "./Components/ExtrudedCylinder.js";
-import RockColumn from "./Components/RockColumn.js";
-//import Table from "./Components/Table.js";
+import Table from "./Components/Table.js";
 import { Physics } from "@react-three/cannon";
 import { useThree } from "@react-three/fiber";
 import {
@@ -24,7 +18,8 @@ import {
   BoxGeometry,
 } from "three";
 import Player from "./Components/Player.js";
-// import { OrbitControls } from "@react-three/drei";
+import Model from "./Components/Scene.js";
+import SetLetterBox from "./Components/BoxTrigger.js";
 
 function SkyBox() {
   const { scene } = useThree();
@@ -69,21 +64,17 @@ export default function App() {
       <spotLight position={[0, 10, 0]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
       <Physics gravity={[0, -10, 0]}>
-        <Button />
+        {/* <Button />
         <Grid guesses={state.guesses} answer={state.answer} />
         <Table
           args={[3.5, 0.05, 2]}
           position={[0, 1.1, -1.2]}
           rotation={[0.2, 0, 0]}
-        />
-        <Cylinder position={[6, 0, 0]} />
-        <Cylinder position={[3, 0, 0]} />
-        <Cylinder position={[0, 0, 0]} />
-        <Cylinder position={[-3, 0, 0]} />
-        <Cylinder position={[-6, 0, 0]} />
+        /> */}
+
         <Grabber groupRef={letters} />
         <group ref={letters}>
-          {alphabet.map((letter, i) => {
+          {/* {alphabet.map((letter, i) => {
             return (
               <LetterCubes
                 id={letter}
@@ -92,18 +83,18 @@ export default function App() {
                 position={[(Math.random() - 0.5) * 0.25, 1.6 + 0.3 * i, -1]}
               />
             );
-          })}
+          })} 
           <Letter position={[0, 1, 1]} />
           <Letter position={[0, 1.5, 1]} />
-          <Letter position={[0, 2, 1]} />
+          <Letter position={[0, 2, 1]} /> */}
+          {/* <Model position={[0, 0, -0.5]} /> */}
+          <Letter position={[0, 4, 2]} name="A" />
+          <Letter position={[2, 4, 2]} name="B" />
+          <SetLetterBox args={[0.5, 0.5, 0.5]} position={[0, 0.25, -0.75]} />
         </group>
         <Player />
         <Floor />
-        <RockColumn rotation={[-Math.PI / 2, 0, 0]} />
-        <Cylinder position={[-3, 0, 0]} />
-        <ExtrudedCylinder position={[3, 0, 0]} />
       </Physics>
-      {/* <Keyboard /> */}
       <SkyBox />
     </VRCanvas>
   );
