@@ -6,6 +6,9 @@ import { Interactive } from "@react-three/xr";
 export default function LetterCubes({ id, position, size }) {
   const [hovered, hover] = useState(false);
 
+  if (hovered) {
+  }
+
   const [ref] = useBox(() => ({
     args: size,
     mass: 1,
