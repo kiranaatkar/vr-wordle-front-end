@@ -13,7 +13,7 @@ export default function Cylinder(props) {
   }));
 
   return (
-    <mesh ref={ref}>
+    <mesh ref={ref} scale={0.5}>
       <cylinderGeometry args={args} />
       <meshNormalMaterial />
     </mesh>
