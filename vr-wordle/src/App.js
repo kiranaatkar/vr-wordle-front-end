@@ -59,11 +59,11 @@ export default function App() {
       <Grid />
       <Physics gravity={[0, -10, 0]}>
         <Table />
-        <Cylinder position={[6, 0, 0]} />
-        <Cylinder position={[3, 0, 0]} />
-        <Cylinder position={[0, 0, 0]} />
-        <Cylinder position={[-3, 0, 0]} />
-        <Cylinder position={[-6, 0, 0]} />
+        <Cylinder position={[6, 0.75, 1.5]} />
+        <Cylinder position={[3, 0.75, 1.5]} />
+        <Cylinder position={[0, 0.75, 1.5]} />
+        <Cylinder position={[-3, 0.75, 1.5]} />
+        <Cylinder position={[-6, 0.75, 1.5]} />
         <Grabber groupRef={letters} />
         <group ref={letters}>
           <Letter position={[0, 1, 1]} />
