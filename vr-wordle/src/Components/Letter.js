@@ -16,6 +16,9 @@ export default function Letter(props) {
     mass: 1,
     position: position,
     args: [0.4, 0.4, 0.4],
+    material: {
+      friction: 1,
+    },
   }));
 
   const bind = useDrag(
