@@ -61,7 +61,11 @@ export default function App() {
       <pointLight position={[-10, -10, -10]} />
       <Physics gravity={[0, -10, 0]}>
         <Grid />
-        <Table />
+        <Table
+          args={[3.5, 0.05, 2]}
+          position={[0, 1.1, -1.2]}
+          rotation={[0.2, 0, 0]}
+        />
         <Cylinder position={[6, 0, 0]} />
         <Cylinder position={[3, 0, 0]} />
         <Cylinder position={[0, 0, 0]} />
@@ -74,7 +78,7 @@ export default function App() {
               <LetterCubes
                 id={letter}
                 size={[0.07, 0.07, 0.07]}
-                position={[Math.random() - 0.5, 1.6 + 0.3 * i, -0.8]}
+                position={[(Math.random() - 0.5) * 0.25, 1.6 + 0.3 * i, -1]}
               />
             );
           })}
