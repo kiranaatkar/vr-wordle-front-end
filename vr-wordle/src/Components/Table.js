@@ -1,20 +1,21 @@
 import React from "react";
-import { Plane } from "@react-three/drei";
-import { usePlane } from "@react-three/cannon";
+import { Box } from "@react-three/drei";
+import { useBox } from "@react-three/cannon";
 
-export default function Table(props) {
-  const [ref] = usePlane(() => ({
-    rotation: [-Math.PI / 2 + 0.3, 0, 0],
-    position: [0, 0.6, -0.8],
+export default function Table({ position, rotation, args }) {
+  const [ref] = useBox(() => ({
+    rotation: rotation,
+    position: position,
+    args: args,
     type: "Static",
     material: {
-      friction: 0,
+      friction: 1,
     },
   }));
 
   return (
-    <Plane args={[3, 2]} ref={ref}>
+    <Box args={args} ref={ref}>
       <meshStandardMaterial color="lightgray" />
-    </Plane>
+    </Box>
   );
 }
