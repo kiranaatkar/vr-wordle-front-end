@@ -5,7 +5,7 @@ import Letter from "./Components/Letter.js";
 import LetterCubes from "./Components/LetterCubes.js";
 import Floor from "./Components/Floor.js";
 import Cylinder from "./Components/Cylinder.js";
-import Keyboard from "./Components/Keyboard.js";
+// import Keyboard from "./Components/Keyboard.js";
 import Grid from "./Components/Grid.js";
 import Grabber from "./Components/Grab.js";
 import Table from "./Components/Table.js";

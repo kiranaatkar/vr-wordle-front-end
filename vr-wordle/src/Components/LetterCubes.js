@@ -3,7 +3,7 @@ import { Box, Text } from "@react-three/drei";
 
 export default function LetterCubes({ id, position, size }) {
   console.log(id, position, size);
-  const [ref, api] = useBox(() => ({
+  const [ref] = useBox(() => ({
     args: size,
     mass: 1,
     position: position,
