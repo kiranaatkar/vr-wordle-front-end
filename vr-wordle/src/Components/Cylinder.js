@@ -3,14 +3,13 @@ import { useCylinder } from "@react-three/cannon";
 
 export default function Cylinder(props) {
   // Make the cup a physics object with a big mass
+  // args: topRad, bottomRad, height, radialSegments, heightSegments, openEnded
   const args = [0.6, 0.4, 0.75, 32, 1, true];
   const [ref] = useCylinder(() => ({
-    mass: 10000,
+    mass: 100000,
     args,
-    material: {
-      friction: 1,
-    },
     ...props,
+    material: { friction: 1 },
   }));
 
   return (
