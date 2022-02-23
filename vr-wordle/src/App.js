@@ -19,7 +19,7 @@ import {
 } from "three";
 import Player from "./Components/Player.js";
 import Model from "./Components/Scene.js";
-import SetLetterBox from "./Components/BoxTrigger.js";
+import SetLetterBox from "./Components/SetLetterBox.js";
 
 function SkyBox() {
   const { scene } = useThree();
