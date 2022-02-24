@@ -34,7 +34,7 @@ export function generateLetters(reset, alphabet, letters) {
 }
 
 export default function App() {
-  const [state, setState] = useState({
+  const [state] = useState({
     guesses: ["hello", "world", "vrdle", "wrdle", "crane", "cramp"],
     answer: "cramp",
     reset: false,

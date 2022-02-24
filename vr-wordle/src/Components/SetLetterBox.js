@@ -1,5 +1,5 @@
 import { useBox } from "@react-three/cannon";
-import { useState } from "react";
+// import { useState } from "react";
 
 export default function SetLetterBox({ args, position, guessIndex, setGuess }) {
   const [ref] = useBox(() => ({
