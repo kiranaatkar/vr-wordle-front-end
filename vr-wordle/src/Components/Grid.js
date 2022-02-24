@@ -37,6 +37,7 @@ function StaticLetter(props) {
         position={[0, size[1] / 2 + 0.001, 0]}
         rotation={[-Math.PI / 2, 0, 0]}
         fontSize={props.side - 0.1}
+        color={"white"}
       >
         {props.id.toUpperCase()}
       </Text>
