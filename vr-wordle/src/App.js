@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Stars } from "@react-three/drei";
 import { VRCanvas, DefaultXRControllers } from "@react-three/xr";
 import LetterCubes from "./Components/LetterCubes.js";
@@ -10,9 +10,10 @@ import Grabber from "./Components/Grab.js";
 import Table from "./Components/Table.js";
 import { Physics } from "@react-three/cannon";
 import Player from "./Components/Player.js";
-// import Model from "./Components/Scene.js";
 import Letter from "./Components/Letter.js";
 import SetLetterBox from "./Components/SetLetterBox.js";
+import { answerWords } from "./word-lists/answer-words.js";
+import { differenceInDays } from "date-fns";
 
 export function generateLetters(reset, alphabet, letters) {
   return (
@@ -24,7 +25,7 @@ export function generateLetters(reset, alphabet, letters) {
             index={i}
             id={letter}
             key={letter}
-            size={[0.07, 0.07, 0.07]}
+            sizeArg={[0.07, 0.07, 0.07]}
             position={[(Math.random() - 0.5) * 0.25, 1.6 + 0.3 * i, -1]}
           />
         );
@@ -33,22 +34,32 @@ export function generateLetters(reset, alphabet, letters) {
   );
 }
 
+function getRandomAnswerWord() {
+  const dateOne = new Date();
+  const dateTwo = new Date("02/24/2022");
+  let answer = answerWords[differenceInDays(dateOne, dateTwo) + 250];
+  return answer;
+}
+
 export default function App() {
   const [state, setState] = useState({
     guesses: ["     ", "     ", "     ", "     ", "     ", "     "],
     guessCount: 0,
-    answer: "CRAMP",
-    reset: false,
     currentGuess: ["", "", "", "", ""],
   });
 
   console.log(state);
 
   const [reset, setReset] = useState(false);
-
+  
   const resetPositions = () => {
     setReset(!reset);
   };
+
+  const [answer, setAnswer] = useState("");
+  useEffect(() => {
+    setAnswer(getRandomAnswerWord());
+  }, []);
 
   const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
   const letters = useRef(<group />);
@@ -91,7 +102,7 @@ export default function App() {
         {/* <PointerLockControls /> */}
         <Button reset={resetPositions} />
         <Submit submit={submitGuess} />
-        <Grid guesses={state.guesses} answer={state.answer} />
+        <Grid guesses={state.guesses} answer={answer} />
         <Table
           args={[3.5, 0.2, 2]}
           position={[0, 1.05, -1.2]}
