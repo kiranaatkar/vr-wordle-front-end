@@ -20,6 +20,7 @@ function StaticLetter(props) {
   const [box] = useBox(() => ({
     rotation: [Math.PI / 2, 0, 0],
     position: props.position,
+    mass: 100,
     args: size,
     type: "Static",
   }));
