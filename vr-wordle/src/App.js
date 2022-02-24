@@ -56,8 +56,10 @@ export default function App() {
     reset: false,
   });
 
+  const [reset, setReset] = useState(false);
+
   const resetPositions = () => {
-    setState({ ...state, reset: !state.reset });
+    setReset(!reset);
   };
 
   const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
@@ -69,7 +71,7 @@ export default function App() {
       <spotLight position={[0, 10, 0]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
       <Physics gravity={[0, -10, 0]}>
-        <PointerLockControls />
+        {/* <PointerLockControls /> */}
         <Button reset={resetPositions} />
         <Submit />
         <Grid guesses={state.guesses} answer={state.answer} />
@@ -88,7 +90,7 @@ export default function App() {
           {alphabet.map((letter, i) => {
             return (
               <LetterCubes
-                reset={state.reset}
+                reset={reset}
                 index={i}
                 id={letter}
                 key={letter}
