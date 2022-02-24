@@ -85,7 +85,7 @@ export default function LetterCubes({ id, position, sizeArg, reset, index }) {
       >
         <Text
           userData={{ letter: id }}
-          position={[0, size[1] / 2 + 0.0001, 0]}
+          position={[0, sizeArg[1] / 2 + 0.0001, 0]}
           rotation={[-Math.PI / 2, 0, 0]}
           fontSize={0.05}
         >
