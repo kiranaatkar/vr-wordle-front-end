@@ -22,7 +22,11 @@ export default function LetterCubes({ id, position, size, reset, index }) {
   }));
 
   if (state.reset !== reset) {
-    api.position.set((Math.random() - 0.5) * 0.25, 1.6 + 0.3 * index, -1);
+    api.position.set(
+      (Math.random() - 0.5) * 0.2,
+      2 + 0.21 * index,
+      -0.7 + (Math.random() - 0.5) * 0.2
+    );
     console.log("reset");
     setState({ ...state, reset: reset });
   }
