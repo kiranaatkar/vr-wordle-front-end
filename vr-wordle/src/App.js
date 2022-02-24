@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
 import { PointerLockControls } from "@react-three/drei";
 import { VRCanvas, DefaultXRControllers } from "@react-three/xr";
-import Letter from "./Components/Letter.js";
 import LetterCubes from "./Components/LetterCubes.js";
 import Floor from "./Components/Floor.js";
 import Cylinder from "./Components/Cylinder.js";
@@ -20,7 +19,6 @@ import {
   BoxGeometry,
 } from "three";
 import Player from "./Components/Player.js";
-// import { OrbitControls } from "@react-three/drei";
 
 function SkyBox() {
   const { scene } = useThree();
@@ -95,11 +93,7 @@ export default function App() {
                 id={letter}
                 key={letter}
                 size={[0.07, 0.07, 0.07]}
-                position={
-                  state.reset
-                    ? [(Math.random() - 0.5) * 0.25, 1.6 + 0.3 * i, -1]
-                    : [(Math.random() - 0.5) * 0.25, 1.6 + 0.3 * i, -1]
-                }
+                position={[(Math.random() - 0.5) * 0.25, 1.6 + 0.3 * i, -1]}
               />
             );
           })}
@@ -107,7 +101,6 @@ export default function App() {
         <Player />
         <Floor />
       </Physics>
-      {/* <Keyboard /> */}
       <SkyBox />
     </VRCanvas>
   );
