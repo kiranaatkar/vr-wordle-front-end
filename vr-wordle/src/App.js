@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Stars } from "@react-three/drei";
 import { VRCanvas, DefaultXRControllers } from "@react-three/xr";
 import LetterCubes from "./Components/LetterCubes.js";
@@ -12,6 +12,8 @@ import { Physics } from "@react-three/cannon";
 import Player from "./Components/Player.js";
 import Letter from "./Components/Letter.js";
 import SetLetterBox from "./Components/SetLetterBox.js";
+import { answerWords } from "./word-lists/answer-words.js";
+import { differenceInDays } from "date-fns";
 
 export function generateLetters(reset, alphabet, letters) {
   return (
@@ -32,6 +34,13 @@ export function generateLetters(reset, alphabet, letters) {
   );
 }
 
+function getRandomAnswerWord() {
+  const dateOne = new Date();
+  const dateTwo = new Date("02/24/2022");
+  let answer = answerWords[differenceInDays(dateOne, dateTwo) + 250];
+  return answer;
+}
+
 export default function App() {
   const [guesses, setGuesses] = useState([
     "     ",
@@ -42,13 +51,19 @@ export default function App() {
     "     ",
   ]);
   const [guessCount, setGuessCount] = useState(0);
-  const [answer] = useState("CRAMP");
   const [reset, setReset] = useState(false);
   const [currentGuess, setCurrentGuess] = useState(["", "", "", "", ""]);
 
+  const [reset, setReset] = useState(false);
+  
   const resetPositions = () => {
     setReset(!reset);
   };
+
+  const [answer, setAnswer] = useState("");
+  useEffect(() => {
+    setAnswer(getRandomAnswerWord());
+  }, []);
 
   const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
   const letters = useRef(<group />);
@@ -61,6 +76,7 @@ export default function App() {
     }
   };
 
+
   const submitGuess = () => {
     if (guessCount < 6 && currentGuess.length === 5) {
       const newGuesses = guesses;
@@ -70,6 +86,8 @@ export default function App() {
       setGuessCount(newCount);
     }
   };
+
+  
 
   return (
     <VRCanvas style={{ touchAction: "none" }}>
