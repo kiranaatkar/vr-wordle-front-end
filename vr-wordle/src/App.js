@@ -52,7 +52,7 @@ export default function App() {
   ]);
   const [guessCount, setGuessCount] = useState(0);
   const [reset, setReset] = useState(false);
-  const [currentGuess, setCurrentGuess] = useState(["", "", "", "", ""]);
+  const [currentGuess, setCurrentGuess] = useState([]);
 
   const resetPositions = () => {
     setReset(!reset);
