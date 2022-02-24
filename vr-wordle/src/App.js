@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Stars } from "@react-three/drei";
 import { VRCanvas, DefaultXRControllers } from "@react-three/xr";
 import LetterCubes from "./Components/LetterCubes.js";
@@ -12,6 +12,9 @@ import { Physics } from "@react-three/cannon";
 import Player from "./Components/Player.js";
 import Letter from "./Components/Letter.js";
 import Model from "./Components/Scene.js";
+import SetLetterBox from "./Components/SetLetterBox.js";
+import { answerWords } from "./word-lists/answer-words.js";
+import { differenceInDays } from "date-fns";
 
 export function generateLetters(reset, alphabet, letters) {
   return (
@@ -23,7 +26,7 @@ export function generateLetters(reset, alphabet, letters) {
             index={i}
             id={letter}
             key={letter}
-            size={[0.07, 0.07, 0.07]}
+            sizeArg={[0.07, 0.07, 0.07]}
             position={[(Math.random() - 0.5) * 0.25, 1.6 + 0.3 * i, -1]}
           />
         );
@@ -32,12 +35,21 @@ export function generateLetters(reset, alphabet, letters) {
   );
 }
 
+function getRandomAnswerWord() {
+  const dateOne = new Date();
+  const dateTwo = new Date("02/24/2022");
+  let answer = answerWords[differenceInDays(dateOne, dateTwo) + 250];
+  return answer;
+}
+
 export default function App() {
-  const [state] = useState({
-    guesses: ["hello", "world", "vrdle", "wrdle", "crane", "cramp"],
-    answer: "cramp",
-    reset: false,
+  const [state, setState] = useState({
+    guesses: ["     ", "     ", "     ", "     ", "     ", "     "],
+    guessCount: 0,
+    currentGuess: ["", "", "", "", ""],
   });
+
+  console.log(state);
 
   const [reset, setReset] = useState(false);
 
@@ -45,17 +57,41 @@ export default function App() {
     setReset(!reset);
   };
 
+  const [answer, setAnswer] = useState("");
+  useEffect(() => {
+    setAnswer(getRandomAnswerWord());
+  }, []);
+
   const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
   const letters = useRef(<group />);
 
-  const currentGuess = ["", "", "", "", ""];
-
   const setGuess = (char, i) => {
-    if (char && currentGuess[i] !== char) {
-      currentGuess[i] = char;
-      console.log(currentGuess.join(""));
+    if (char && state.currentGuess[i] !== char) {
+      const dummyArr = state.currentGuess;
+      dummyArr[i] = char;
+      setState({ ...state, currentGuess: dummyArr });
     }
   };
+
+  console.log(state);
+
+  const submitGuess = () => {
+    console.log(state);
+    if (state.guesses.length <= 6 && state.currentGuess.length === 5) {
+      let newGuesses = state.guesses.slice();
+      newGuesses[state.guessCount] = state.currentGuess.join("");
+      let newGuessCount = state.guessCount + 1;
+      console.log(newGuesses);
+      setState({
+        ...state,
+        guessCount: newGuessCount,
+        guesses: newGuesses,
+      });
+      // setGuessCount(newGuessCount);
+    }
+  };
+
+  console.log(state);
 
   return (
     <VRCanvas style={{ touchAction: "none" }}>
@@ -66,8 +102,8 @@ export default function App() {
       <Physics gravity={[0, -10, 0]}>
         {/* <PointerLockControls /> */}
         <Button reset={resetPositions} />
-        <Submit />
-        <Grid guesses={state.guesses} answer={state.answer} />
+        <Submit submit={submitGuess} />
+        <Grid guesses={state.guesses} answer={answer} />
         <Table
           args={[3.5, 0.2, 2]}
           position={[0, 1.05, -1.2]}

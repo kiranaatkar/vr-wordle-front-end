@@ -4,7 +4,7 @@ import { useBox } from "@react-three/cannon";
 import { Interactive } from "@react-three/xr";
 import { useSpring, animated } from "@react-spring/three";
 
-export default function Button(props) {
+export default function Submit(props) {
   const [state, setState] = useState({
     press: false,
     hover: false,
@@ -30,7 +30,7 @@ export default function Button(props) {
   }));
 
   function buttonPressed() {
-    console.log(state);
+    props.submit();
     setTimeout(() => setState({ ...state, hover: false, press: false }), 1000);
   }
 
