@@ -42,15 +42,17 @@ function getRandomAnswerWord() {
 }
 
 export default function App() {
-  const [state, setState] = useState({
-    guesses: ["     ", "     ", "     ", "     ", "     ", "     "],
-    guessCount: 0,
-    currentGuess: ["", "", "", "", ""],
-  });
-
-  console.log(state);
-
+  const [guesses, setGuesses] = useState([
+    "     ",
+    "     ",
+    "     ",
+    "     ",
+    "     ",
+    "     ",
+  ]);
+  const [guessCount, setGuessCount] = useState(0);
   const [reset, setReset] = useState(false);
+  const [currentGuess, setCurrentGuess] = useState(["", "", "", "", ""]);
 
   const resetPositions = () => {
     setReset(!reset);
@@ -65,32 +67,22 @@ export default function App() {
   const letters = useRef(<group />);
 
   const setGuess = (char, i) => {
-    if (char && state.currentGuess[i] !== char) {
-      const dummyArr = state.currentGuess;
+    if (char && currentGuess[i] !== char) {
+      const dummyArr = currentGuess;
       dummyArr[i] = char;
-      setState({ ...state, currentGuess: dummyArr });
+      setCurrentGuess(dummyArr);
     }
   };
-
-  console.log(state);
 
   const submitGuess = () => {
-    console.log(state);
-    if (state.guesses.length <= 6 && state.currentGuess.length === 5) {
-      let newGuesses = state.guesses.slice();
-      newGuesses[state.guessCount] = state.currentGuess.join("");
-      let newGuessCount = state.guessCount + 1;
-      console.log(newGuesses);
-      setState({
-        ...state,
-        guessCount: newGuessCount,
-        guesses: newGuesses,
-      });
-      // setGuessCount(newGuessCount);
+    if (guessCount < 6 && currentGuess.length === 5) {
+      const newGuesses = guesses;
+      newGuesses[guessCount] = currentGuess.join("");
+      const newCount = guessCount + 1;
+      setGuesses(newGuesses);
+      setGuessCount(newCount);
     }
   };
-
-  console.log(state);
 
   return (
     <VRCanvas style={{ touchAction: "none" }}>
@@ -98,11 +90,12 @@ export default function App() {
       <ambientLight intensity={0.5} />
       <spotLight position={[0, 10, 0]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
+      <fog attach="fog" color="white" near={1} far={10} />
       <Physics gravity={[0, -10, 0]}>
         {/* <PointerLockControls /> */}
         <Button reset={resetPositions} />
         <Submit submit={submitGuess} />
-        <Grid guesses={state.guesses} answer={answer} />
+        <Grid guesses={guesses} answer={answer} />
         <Table
           args={[3.5, 0.2, 2]}
           position={[0, 1.05, -1.2]}
@@ -124,6 +117,7 @@ export default function App() {
         <Player />
         <Floor />
       </Physics>
+
       <Stars />
     </VRCanvas>
   );

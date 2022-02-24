@@ -10,8 +10,12 @@ export default function Floor(props) {
   }));
   return (
     <mesh {...props} position={[0, 0, 0]} ref={ref}>
-      <planeBufferGeometry attach="geometry" args={[100, 100]} />
-      <meshStandardMaterial color="gray" />
+      <planeBufferGeometry
+        attach="geometry"
+        args={[100, 100]}
+        opacity={0.001}
+      />
+      <meshStandardMaterial color="white" opacity={0.001} />
     </mesh>
   );
 }
