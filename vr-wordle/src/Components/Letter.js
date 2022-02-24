@@ -14,7 +14,6 @@ export default function Letter(props) {
   const aspect = size.width / viewport.width;
 
   const [box, api] = useBox(() => ({
-    type: "Dynamic",
     mass: 1,
     position: position,
     args: [0.4, 0.4, 0.4],
