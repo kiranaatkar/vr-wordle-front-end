@@ -3,13 +3,16 @@ import { useBox } from "@react-three/cannon";
 import { Box, Text } from "@react-three/drei";
 import { Interactive } from "@react-three/xr";
 
-export default function LetterCubes({ id, position, size }) {
-  const [hovered, hover] = useState(false);
+export default function LetterCubes({ id, position, size, reset, index }) {
+  const [hovered, hover] = useState({
+    hover: false,
+    reset: false,
+  });
 
   if (hovered) {
   }
 
-  const [ref] = useBox(() => ({
+  const [ref, api] = useBox(() => ({
     args: size,
     mass: 1,
     position: position,
@@ -18,13 +21,22 @@ export default function LetterCubes({ id, position, size }) {
     },
   }));
 
+  if (hovered.reset !== reset) {
+    api.position.set((Math.random() - 0.5) * 0.25, 1.6 + 0.3 * index, -1);
+    console.log("reset");
+    hover({ ...hovered, reset: reset });
+  }
+
   return (
-    <Interactive onHover={() => hover(true)} onBlur={() => hover(false)}>
+    <Interactive
+      onHover={() => hover({ ...hovered, hover: true })}
+      onBlur={() => hover({ ...hovered, hover: false })}
+    >
       <Box
         ref={ref}
         args={size}
-        onPointerOver={(event) => hover(true)}
-        onPointerOut={(event) => hover(false)}
+        onPointerOver={(event) => hover({ ...hovered, hover: true })}
+        onPointerOut={(event) => hover({ ...hovered, hover: false })}
       >
         <Text
           userData={{ letter: id }}
