@@ -1,19 +1,19 @@
 import { useBox } from "@react-three/cannon";
 import { Box } from "@react-three/drei";
 
-function BasketSide({ position, rotation, args }) {
-  const [ref] = useBox(() => ({
-    type: "Static",
-    position: position,
-    args: args,
-    rotation: rotation,
-  }));
-  return (
-    <Box ref={ref} args={args}>
-      <meshStandardMaterial color="grey" />
-    </Box>
-  );
-}
+// function BasketSide({ position, rotation, args }) {
+//   const [ref] = useBox(() => ({
+//     type: "Static",
+//     position: position,
+//     args: args,
+//     rotation: rotation,
+//   }));
+//   return (
+//     <Box ref={ref} args={args}>
+//       <meshStandardMaterial color="grey" />
+//     </Box>
+//   );
+// }
 
 export default function SetLetterBox({ args, position, guessIndex, setGuess }) {
   const [box] = useBox(() => ({
