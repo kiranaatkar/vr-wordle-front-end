@@ -1,5 +1,4 @@
 import { useBox } from "@react-three/cannon";
-import { useState } from "react";
 
 export default function SetLetterBox({ args, position, guessIndex, setGuess }) {
   const [ref] = useBox(() => ({
@@ -9,6 +8,7 @@ export default function SetLetterBox({ args, position, guessIndex, setGuess }) {
     position,
     isTrigger: true,
     onCollide: (e) => {
+      console.log("COLLIDING");
       setGuess(e.body.name, guessIndex);
     },
   }));

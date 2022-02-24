@@ -32,7 +32,7 @@ export default function App() {
   const currentGuess = ["", "", "", "", ""];
 
   const setGuess = (char, i) => {
-    if (currentGuess[i] !== char) {
+    if (char && currentGuess[i] !== char) {
       currentGuess[i] = char;
       console.log(currentGuess.join(""));
     }
@@ -69,45 +69,47 @@ export default function App() {
               />
             );
           })}
-          <Letter position={[0, 1, 1]} />
-          <Letter position={[0, 1.5, 1]} />
-          <Letter position={[0, 2, 1]} />
-          {/* <Model position={[0, 0, -0.5]} /> */}
-          <Letter position={[0, 4, 2]} name="W" />
-          <Letter position={[2, 4, 2]} name="R" />
-          <Letter position={[4, 4, 2]} name="D" />
-          <Letter position={[6, 4, 2]} name="L" />
-          <Letter position={[8, 4, 2]} name="E" />
+
+          <Letter position={[-4, 4, 2]} name="W" />
+          <Letter position={[-2, 4, 2]} name="R" />
+          <Letter position={[0, 4, 2]} name="D" />
+          <Letter position={[2, 4, 2]} name="L" />
+          <Letter position={[4, 4, 2]} name="E" />
           <SetLetterBox
             args={[0.5, 0.5, 0.5]}
-            position={[0, 0.25, -0.75]}
+            position={[-4, 0.25, -0.75]}
             guessIndex={0}
             setGuess={setGuess}
           />
           <SetLetterBox
             args={[0.5, 0.5, 0.5]}
-            position={[2, 0.25, -0.75]}
+            position={[-2, 0.25, -0.75]}
             guessIndex={1}
             setGuess={setGuess}
           />
           <SetLetterBox
             args={[0.5, 0.5, 0.5]}
-            position={[4, 0.25, -0.75]}
+            position={[0, 0.25, -0.75]}
             guessIndex={2}
             setGuess={setGuess}
           />
           <SetLetterBox
             args={[0.5, 0.5, 0.5]}
-            position={[6, 0.25, -0.75]}
+            position={[2, 0.25, -0.75]}
             guessIndex={3}
             setGuess={setGuess}
           />
           <SetLetterBox
             args={[0.5, 0.5, 0.5]}
-            position={[8, 0.25, -0.75]}
+            position={[4, 0.25, -0.75]}
             guessIndex={4}
             setGuess={setGuess}
           />
+          <Model position={[-4, 0, -0.75]} guessIndex={0} setGuess={setGuess} />
+          <Model position={[-2, 0, -0.75]} guessIndex={1} setGuess={setGuess} />
+          <Model position={[0, 0, -0.75]} guessIndex={2} setGuess={setGuess} />
+          <Model position={[2, 0, -0.75]} guessIndex={3} setGuess={setGuess} />
+          <Model position={[4, 0, -0.75]} guessIndex={4} setGuess={setGuess} />
         </group>
         <Player />
         <Floor />
