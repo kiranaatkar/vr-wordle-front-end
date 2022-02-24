@@ -3,6 +3,7 @@ import { Box, Text } from "@react-three/drei";
 import { useBox, useLockConstraint } from "@react-three/cannon";
 import { Interactive } from "@react-three/xr";
 import { useSpring, animated } from "@react-spring/three";
+
 export default function Button(props) {
   const [pressed, buttonPressed] = useState({
     press: false,
@@ -35,6 +36,7 @@ export default function Button(props) {
     },
     from: { scale: [1, 1, 1] },
   });
+
 
   const [box] = useBox(() => ({
     args: [0.2, 0.2, 0.05],
