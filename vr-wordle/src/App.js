@@ -45,9 +45,13 @@ export default function App() {
   const [state, setState] = useState({
     guesses: ["     ", "     ", "     ", "     ", "     ", "     "],
     guessCount: 0,
+    currentGuess: ["", "", "", "", ""],
   });
 
+  console.log(state);
+
   const [reset, setReset] = useState(false);
+  
   const resetPositions = () => {
     setReset(!reset);
   };
@@ -60,24 +64,33 @@ export default function App() {
   const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
   const letters = useRef(<group />);
 
-  const currentGuess = ["", "", "", "", ""];
-
   const setGuess = (char, i) => {
-    if (char && currentGuess[i] !== char) {
-      currentGuess[i] = char;
-      console.log(currentGuess.join(""));
+    if (char && state.currentGuess[i] !== char) {
+      const dummyArr = state.currentGuess;
+      dummyArr[i] = char;
+      setState({ ...state, currentGuess: dummyArr });
     }
   };
+
+  console.log(state);
 
   const submitGuess = () => {
-    console.log(currentGuess);
-    if (state.guesses.length <= 6 && currentGuess.length === 5) {
-      console.log("submitted");
+    console.log(state);
+    if (state.guesses.length <= 6 && state.currentGuess.length === 5) {
       let newGuesses = state.guesses.slice();
-      newGuesses[state.guessCount] = currentGuess.join("");
-      setState({ ...state, guesses: newGuesses });
+      newGuesses[state.guessCount] = state.currentGuess.join("");
+      let newGuessCount = state.guessCount + 1;
+      console.log(newGuesses);
+      setState({
+        ...state,
+        guessCount: newGuessCount,
+        guesses: newGuesses,
+      });
+      // setGuessCount(newGuessCount);
     }
   };
+
+  console.log(state);
 
   return (
     <VRCanvas style={{ touchAction: "none" }}>
