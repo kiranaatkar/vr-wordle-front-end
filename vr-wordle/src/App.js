@@ -15,22 +15,18 @@ import Letter from "./Components/Letter.js";
 import SetLetterBox from "./Components/SetLetterBox.js";
 import SkyBox from "./Components/SkyBox.js";
 
-export function generateLetters(state, alphabet, letters) {
+export function generateLetters(reset, alphabet, letters) {
   return (
     <group ref={letters}>
       {alphabet.map((letter, i) => {
         return (
           <LetterCubes
-            reset={state.reset}
+            reset={reset}
             index={i}
             id={letter}
             key={letter}
             size={[0.07, 0.07, 0.07]}
-            position={
-              state.reset
-                ? [(Math.random() - 0.5) * 0.25, 1.6 + 0.3 * i, -1]
-                : [(Math.random() - 0.5) * 0.25, 1.6 + 0.3 * i, -1]
-            }
+            position={[(Math.random() - 0.5) * 0.25, 1.6 + 0.3 * i, -1]}
           />
         );
       })}
@@ -79,42 +75,42 @@ export default function App() {
         />
 
         <Grabber groupRef={letters} />
-        {generateLetters(state, alphabet, letters)}
-          <Letter position={[0, 4, 2]} name="W" />
-          <Letter position={[2, 4, 2]} name="R" />
-          <Letter position={[4, 4, 2]} name="D" />
-          <Letter position={[6, 4, 2]} name="L" />
-          <Letter position={[8, 4, 2]} name="E" />
-          <SetLetterBox
-            args={[0.5, 0.5, 0.5]}
-            position={[0, 0.25, -0.75]}
-            guessIndex={0}
-            setGuess={setGuess}
-          />
-          <SetLetterBox
-            args={[0.5, 0.5, 0.5]}
-            position={[2, 0.25, -0.75]}
-            guessIndex={1}
-            setGuess={setGuess}
-          />
-          <SetLetterBox
-            args={[0.5, 0.5, 0.5]}
-            position={[4, 0.25, -0.75]}
-            guessIndex={2}
-            setGuess={setGuess}
-          />
-          <SetLetterBox
-            args={[0.5, 0.5, 0.5]}
-            position={[6, 0.25, -0.75]}
-            guessIndex={3}
-            setGuess={setGuess}
-          />
-          <SetLetterBox
-            args={[0.5, 0.5, 0.5]}
-            position={[8, 0.25, -0.75]}
-            guessIndex={4}
-            setGuess={setGuess}
-          />
+        {generateLetters(reset, alphabet, letters)}
+        <Letter position={[0, 4, 2]} name="W" />
+        <Letter position={[2, 4, 2]} name="R" />
+        <Letter position={[4, 4, 2]} name="D" />
+        <Letter position={[6, 4, 2]} name="L" />
+        <Letter position={[8, 4, 2]} name="E" />
+        <SetLetterBox
+          args={[0.5, 0.5, 0.5]}
+          position={[0, 0.25, -0.75]}
+          guessIndex={0}
+          setGuess={setGuess}
+        />
+        <SetLetterBox
+          args={[0.5, 0.5, 0.5]}
+          position={[2, 0.25, -0.75]}
+          guessIndex={1}
+          setGuess={setGuess}
+        />
+        <SetLetterBox
+          args={[0.5, 0.5, 0.5]}
+          position={[4, 0.25, -0.75]}
+          guessIndex={2}
+          setGuess={setGuess}
+        />
+        <SetLetterBox
+          args={[0.5, 0.5, 0.5]}
+          position={[6, 0.25, -0.75]}
+          guessIndex={3}
+          setGuess={setGuess}
+        />
+        <SetLetterBox
+          args={[0.5, 0.5, 0.5]}
+          position={[8, 0.25, -0.75]}
+          guessIndex={4}
+          setGuess={setGuess}
+        />
         <Player />
         <Floor />
       </Physics>
