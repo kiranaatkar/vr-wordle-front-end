@@ -104,11 +104,11 @@ export default function App() {
 
         <Grabber groupRef={letters} />
         {generateLetters(reset, alphabet, letters)}
-        <Letter position={[-4, 4, 2]} name="W" />
-        <Letter position={[-2, 4, 2]} name="R" />
-        <Letter position={[0, 4, 2]} name="D" />
-        <Letter position={[2, 4, 2]} name="L" />
-        <Letter position={[4, 4, 2]} name="E" />
+        <Letter position={[-4, 4, 2]} name="w" />
+        <Letter position={[-2, 4, 2]} name="r" />
+        <Letter position={[0, 4, 2]} name="d" />
+        <Letter position={[2, 4, 2]} name="l" />
+        <Letter position={[4, 4, 2]} name="e" />
         <Model position={[-4, 0, -0.75]} guessIndex={0} setGuess={setGuess} />
         <Model position={[-2, 0, -0.75]} guessIndex={1} setGuess={setGuess} />
         <Model position={[0, 0, -0.75]} guessIndex={2} setGuess={setGuess} />
