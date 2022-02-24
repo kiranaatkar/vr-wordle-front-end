@@ -15,6 +15,7 @@ import { Box } from "@react-three/drei";
 //   );
 // }
 
+
 export default function SetLetterBox({ args, position, guessIndex, setGuess }) {
   const [box] = useBox(() => ({
     type: "Static",

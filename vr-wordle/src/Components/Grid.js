@@ -1,8 +1,9 @@
 import { Box, Text } from "@react-three/drei";
+import { useBox } from "@react-three/cannon";
 
 export default function Grid(props) {
   return props.guesses.map((it, i) => (
-    <group position={[0, 7 - i * 1.2, -2]} key={i}>
+    <group position={[0, 7.5 - i * 1.2, -3]} key={i}>
       {Guess(it, props.answer)}
     </group>
   ));
@@ -16,8 +17,21 @@ function StaticLetter(props) {
     absent: "#3a3a3c",
   }[props.state];
 
+  const [box] = useBox(() => ({
+    rotation: [Math.PI / 2, 0, 0],
+    position: props.position,
+    mass: 100,
+    args: size,
+    type: "Static",
+  }));
+
   return (
-    <Box args={size} position={props.position} rotation={[Math.PI / 2, 0, 0]}>
+    <Box
+      ref={box}
+      args={size}
+      position={props.position}
+      rotation={[Math.PI / 2, 0, 0]}
+    >
       <Text
         userData={{ letter: props.id }}
         position={[0, size[1] / 2 + 0.001, 0]}

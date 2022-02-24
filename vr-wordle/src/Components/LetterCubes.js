@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useBox } from "@react-three/cannon";
 import { Box, Text } from "@react-three/drei";
-import { Interactive } from "@react-three/xr";
+import { Interactive, useXR, useXRFrame } from "@react-three/xr";
+import { Vector3 } from "three";
 
 export default function LetterCubes({ id, position, size, reset, index }) {
   const [state, setState] = useState({
@@ -22,10 +23,32 @@ export default function LetterCubes({ id, position, size, reset, index }) {
   }));
 
   if (state.reset !== reset) {
-    api.position.set((Math.random() - 0.5) * 0.25, 1.6 + 0.3 * index, -1);
+    api.position.set(
+      (Math.random() - 0.5) * 0.2,
+      2 + 0.21 * index,
+      -0.7 + (Math.random() - 0.5) * 0.2
+    );
     console.log("reset");
     setState({ ...state, reset: reset });
   }
+
+  const controllers = useXR();
+
+  useXRFrame(() => {
+    const grabController = controllers.controllers[0];
+
+    const pos = new Vector3();
+    const posB = new Vector3();
+    grabController.controller.getWorldPosition(pos);
+    ref.current.getWorldPosition(posB);
+    const distance = pos.distanceTo(posB);
+
+    if (distance < 0.1) {
+      setState({ ...state, hover: true });
+    } else {
+      setState({ ...state, hover: false });
+    }
+  });
 
   return (
     <Interactive
@@ -46,7 +69,7 @@ export default function LetterCubes({ id, position, size, reset, index }) {
         >
           {id.toUpperCase()}
         </Text>
-        <meshStandardMaterial color="#3a3a3c" />
+        <meshStandardMaterial color={state.hover ? "#00E2FB" : "#3a3a3c"} />
       </Box>
     </Interactive>
   );
