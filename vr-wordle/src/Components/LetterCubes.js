@@ -44,9 +44,9 @@ export default function LetterCubes({ id, position, size, reset, index }) {
     const distance = pos.distanceTo(posB);
 
     if (distance < 0.1) {
-      hover({ ...hovered, hover: true });
+      setState({ ...state, hover: true });
     } else {
-      hover({ ...hovered, hover: false });
+      setState({ ...state, hover: false });
     }
   });
 
@@ -69,7 +69,7 @@ export default function LetterCubes({ id, position, size, reset, index }) {
         >
           {id.toUpperCase()}
         </Text>
-        <meshStandardMaterial color={hovered.hover ? "#00E2FB" : "#3a3a3c"} />
+        <meshStandardMaterial color={state.hover ? "#00E2FB" : "#3a3a3c"} />
       </Box>
     </Interactive>
   );
