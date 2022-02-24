@@ -12,7 +12,6 @@ import { Physics } from "@react-three/cannon";
 import Player from "./Components/Player.js";
 import Letter from "./Components/Letter.js";
 import Model from "./Components/Scene.js";
-import SetLetterBox from "./Components/SetLetterBox.js";
 import { answerWords } from "./word-lists/answer-words.js";
 import { differenceInDays } from "date-fns";
 

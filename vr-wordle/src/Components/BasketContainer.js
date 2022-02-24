@@ -12,7 +12,7 @@ function ContainerWall(props) {
   return (
     <Box
       ref={ref}
-      args={[0.75, 0.15, 0.75]}
+      args={[0.75, 0.1, 0.75]}
       position={props.position}
       rotation={props.rotation}
     >

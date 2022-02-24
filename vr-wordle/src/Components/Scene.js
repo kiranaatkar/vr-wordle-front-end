@@ -22,12 +22,12 @@ export default function Model({ position, guessIndex, setGuess }) {
         <meshNormalMaterial />
       </mesh>
       <SetLetterBox
-        args={[0.5, 0.01, 0.5]}
-        position={([position[0], position[1] + 0.5], position[1])}
+        args={[0.5, 0.5, 0.5]}
+        position={[position[0], position[1] + 0.25, position[2]]}
         guessIndex={guessIndex}
         setGuess={setGuess}
       />
-      <BasketContainer basketGeometry={[...position, 0.5]} />
+      <BasketContainer basketGeometry={[...position, 0.4]} />
     </>
   );
 }
