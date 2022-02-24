@@ -1,10 +1,9 @@
 import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 import SetLetterBox from "./SetLetterBox.js";
-import { useBox } from "@react-three/cannon";
+import { use } from "@react-three/cannon";
 
 export default function Model({ position, guessIndex, setGuess }) {
-  const [x, y, z] = position;
   const group = useRef();
   const { nodes, materials } = useGLTF("/uploads_files_1953815_bucket.glb");
 
