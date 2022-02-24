@@ -13,7 +13,7 @@ export default function SetLetterBox({ args, position, guessIndex, setGuess }) {
   }));
 
   return (
-    <mesh ref={box} position={position}>
+    <mesh ref={box} position={position} opacity={0.001}>
       <boxBufferGeometry args={args} />
       <meshStandardMaterial wireframe color="hotpink" />
     </mesh>
