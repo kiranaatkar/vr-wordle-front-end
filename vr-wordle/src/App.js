@@ -90,6 +90,7 @@ export default function App() {
       <ambientLight intensity={0.5} />
       <spotLight position={[0, 10, 0]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
+      <fog attach="fog" color="white" near={1} far={10} />
       <Physics gravity={[0, -10, 0]}>
         {/* <PointerLockControls /> */}
         <Button reset={resetPositions} />
@@ -141,6 +142,7 @@ export default function App() {
         <Player />
         <Floor />
       </Physics>
+
       <Stars />
     </VRCanvas>
   );
