@@ -11,6 +11,7 @@ import Table from "./Components/Table.js";
 import { Physics } from "@react-three/cannon";
 import Player from "./Components/Player.js";
 import Model from "./Components/Scene.js";
+import Letter from "./Components/Letter.js";
 import SetLetterBox from "./Components/SetLetterBox.js";
 import SkyBox from "./Components/SkyBox.js";
 
@@ -42,7 +43,7 @@ export default function App() {
       <spotLight position={[0, 10, 0]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
       <Physics gravity={[0, -10, 0]}>
-        <PointerLockControls />
+        {/* <PointerLockControls /> */}
         <Button reset={resetPositions} />
         <Submit />
         <Grid guesses={state.guesses} answer={state.answer} />
@@ -65,7 +66,7 @@ export default function App() {
                 position={[(Math.random() - 0.5) * 0.25, 1.6 + 0.3 * i, -1]}
               />
             );
-          })} 
+          })}
           <Letter position={[0, 1, 1]} />
           <Letter position={[0, 1.5, 1]} />
           <Letter position={[0, 2, 1]} />
@@ -105,7 +106,6 @@ export default function App() {
             guessIndex={4}
             setGuess={setGuess}
           />
-          })}
         </group>
         <Player />
         <Floor />
