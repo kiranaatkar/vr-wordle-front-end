@@ -13,7 +13,6 @@ import Player from "./Components/Player.js";
 // import Model from "./Components/Scene.js";
 import Letter from "./Components/Letter.js";
 import SetLetterBox from "./Components/SetLetterBox.js";
-import Letter from "./Components/Letter.js";
 
 export function generateLetters(reset, alphabet, letters) {
   return (
