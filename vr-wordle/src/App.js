@@ -54,8 +54,6 @@ export default function App() {
   const [reset, setReset] = useState(false);
   const [currentGuess, setCurrentGuess] = useState(["", "", "", "", ""]);
 
-  const [reset, setReset] = useState(false);
-  
   const resetPositions = () => {
     setReset(!reset);
   };
@@ -76,7 +74,6 @@ export default function App() {
     }
   };
 
-
   const submitGuess = () => {
     if (guessCount < 6 && currentGuess.length === 5) {
       const newGuesses = guesses;
@@ -86,8 +83,6 @@ export default function App() {
       setGuessCount(newCount);
     }
   };
-
-  
 
   return (
     <VRCanvas style={{ touchAction: "none" }}>
