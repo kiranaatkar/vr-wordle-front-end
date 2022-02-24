@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { PointerLockControls } from "@react-three/drei";
+import { Stars } from "@react-three/drei";
 import { VRCanvas, DefaultXRControllers } from "@react-three/xr";
 import LetterCubes from "./Components/LetterCubes.js";
 import Floor from "./Components/Floor.js";
@@ -10,10 +10,9 @@ import Grabber from "./Components/Grab.js";
 import Table from "./Components/Table.js";
 import { Physics } from "@react-three/cannon";
 import Player from "./Components/Player.js";
-import Model from "./Components/Scene.js";
+// import Model from "./Components/Scene.js";
 import Letter from "./Components/Letter.js";
 import SetLetterBox from "./Components/SetLetterBox.js";
-import SkyBox from "./Components/SkyBox.js";
 
 export function generateLetters(reset, alphabet, letters) {
   return (
@@ -114,7 +113,8 @@ export default function App() {
         <Player />
         <Floor />
       </Physics>
-      <SkyBox />
+      <Stars />
+      {/* <SkyBox /> */}
     </VRCanvas>
   );
 }
