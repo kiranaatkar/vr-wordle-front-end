@@ -1,12 +1,16 @@
 import { Box, Text } from "@react-three/drei";
 import { useBox } from "@react-three/cannon";
+import { useSpring, animated } from "@react-spring/three";
+import { useState } from "react";
 
 export default function Grid(props) {
-  return props.guesses.map((it, i) => (
-    <group position={[0, 7.5 - i * 1.2, -3]} key={i}>
-      {Guess(it, props.answer)}
-    </group>
-  ));
+  return props.guesses.map((it, i) => {
+    return (
+      <group position={[0, 7.5 - i * 1.2, -3]} key={i}>
+        {Guess(it, props.answer)}
+      </group>
+    );
+  });
 }
 
 function StaticLetter(props) {
@@ -17,6 +21,22 @@ function StaticLetter(props) {
     absent: "#3a3a3c",
   }[props.state];
 
+  const [active, setActive] = useState(false);
+
+  const { rotation, guessColor, scale } = useSpring({
+    from: { rotation: [Math.PI / 2, 0, 0], guessColor: "#3a3a3c", scale: 1 },
+    to: { rotation: [Math.PI, 0, 0], guessColor: color, scale: 1.5 },
+    config: { mass: 10, tension: 1000, friction: 300, precision: 0.00001 },
+  });
+
+  // const { scale } = useSpring({
+  //   scale: active ? 1.5 : 1,
+  // });
+
+  // const { guessColor } = useSpring({
+  //   guessColor: active ? "red" : "#3a3a3c",
+  // });
+
   const [box] = useBox(() => ({
     rotation: [Math.PI / 2, 0, 0],
     position: props.position,
@@ -26,12 +46,23 @@ function StaticLetter(props) {
   }));
 
   return (
-    <Box
+    <animated.mesh
       ref={box}
       args={size}
       position={props.position}
-      rotation={[Math.PI / 2, 0, 0]}
+      rotation={active ? rotation : [Math.PI / 2, 0, 0]}
+      scale={active ? scale : 1}
+      onClick={() => {
+        console.log(active);
+        console.log("clicked");
+        setActive(!active);
+      }}
     >
+      <boxGeometry attach="geometry"></boxGeometry>
+      <animated.meshStandardMaterial
+        attach="material"
+        color={active ? guessColor : "#3a3a3c"}
+      />
       <Text
         userData={{ letter: props.id }}
         position={[0, size[1] / 2 + 0.001, 0]}
@@ -41,8 +72,7 @@ function StaticLetter(props) {
       >
         {props.id.toUpperCase()}
       </Text>
-      <meshStandardMaterial color={color} />
-    </Box>
+    </animated.mesh>
   );
 }
 
