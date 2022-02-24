@@ -34,7 +34,7 @@ export function generateLetters(reset, alphabet, letters) {
 }
 
 export default function App() {
-  const [state] = useState({
+  const [state, setState] = useState({
     guesses: ["hello", "world", "vrdle", "wrdle", "crane", "cramp"],
     answer: "cramp",
     reset: false,
@@ -58,6 +58,12 @@ export default function App() {
     }
   };
 
+  const submitGuess = () => {
+    if (state.guesses.length < 6 && currentGuess.length === 5) {
+      setState({ ...state, guesses: [...state.guesses, currentGuess] });
+    }
+  };
+
   return (
     <VRCanvas style={{ touchAction: "none" }}>
       <DefaultXRControllers />
@@ -67,7 +73,7 @@ export default function App() {
       <Physics gravity={[0, -10, 0]}>
         {/* <PointerLockControls /> */}
         <Button reset={resetPositions} />
-        <Submit />
+        <Submit submit={submitGuess} />
         <Grid guesses={state.guesses} answer={state.answer} />
         <Table
           args={[3.5, 0.2, 2]}
