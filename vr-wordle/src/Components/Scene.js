@@ -1,10 +1,9 @@
 import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 import SetLetterBox from "./SetLetterBox.js";
-import { useBox } from "@react-three/cannon";
+import BasketContainer from "./BasketContainer.js";
 
 export default function Model({ position, guessIndex, setGuess }) {
-  const [x, y, z] = position;
   const group = useRef();
   const { nodes, materials } = useGLTF("/uploads_files_1953815_bucket.glb");
 
@@ -24,10 +23,11 @@ export default function Model({ position, guessIndex, setGuess }) {
       </mesh>
       <SetLetterBox
         args={[0.5, 0.5, 0.5]}
-        position={position}
+        position={[position[0], position[1] + 0.25, position[2]]}
         guessIndex={guessIndex}
         setGuess={setGuess}
       />
+      <BasketContainer basketGeometry={[...position, 0.4]} />
     </>
   );
 }
