@@ -1,6 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { Box, Text } from "@react-three/drei";
-import { useBox, useLockConstraint } from "@react-three/cannon";
+import { useBox } from "@react-three/cannon";
 import { Interactive } from "@react-three/xr";
 import { useSpring, animated } from "@react-spring/three";
 
@@ -10,24 +10,6 @@ export default function Button(props) {
     hover: false,
     resetting: false,
   });
-
-  const [dummyRef, api] = useBox(() => ({
-    type: "Dynamic",
-    collisionFilterGroup: 32,
-    collisionFilterMask: 32,
-    args: [0.01, 0.01, 0.01],
-  }));
-
-  const ref = useRef();
-
-  useLockConstraint(
-    { current: ref.current },
-    dummyRef,
-    {
-      maxForce: 2,
-    },
-    [state]
-  );
 
   const { scale } = useSpring({
     to: async (next, cancel) => {
