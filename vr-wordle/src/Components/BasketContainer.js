@@ -16,7 +16,7 @@ function ContainerWall(props) {
       position={props.position}
       rotation={props.rotation}
     >
-      <meshStandardMaterial opacity={0.001} transparent />
+      <meshStandardMaterial color="red" wireframe opacity={1} transparent />
     </Box>
   );
 }
@@ -37,7 +37,7 @@ export default function BasketContainer(props) {
         position={[x, y, z - r]}
         rotation={[Math.PI / 2, Math.PI / 2, 0]}
       />
-      <ContainerWall position={[-x - r, y, z]} rotation={[0, 0, Math.PI / 2]} />
+      <ContainerWall position={[x - r, y, z]} rotation={[0, 0, Math.PI / 2]} />
       <ContainerWall position={[x + r, y, z]} rotation={[0, 0, Math.PI / 2]} />
     </>
   );

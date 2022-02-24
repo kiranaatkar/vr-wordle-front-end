@@ -12,6 +12,7 @@ import { Physics } from "@react-three/cannon";
 import Player from "./Components/Player.js";
 import Letter from "./Components/Letter.js";
 import Model from "./Components/Scene.js";
+import Column from "./Components/Column.js";
 import { answerWords } from "./word-lists/answer-words.js";
 import { differenceInDays } from "date-fns";
 
@@ -109,11 +110,12 @@ export default function App() {
         <Letter position={[0, 4, 2]} name="d" />
         <Letter position={[2, 4, 2]} name="l" />
         <Letter position={[4, 4, 2]} name="e" />
-        <Model position={[-4, 0, -0.75]} guessIndex={0} setGuess={setGuess} />
-        <Model position={[-2, 0, -0.75]} guessIndex={1} setGuess={setGuess} />
-        <Model position={[0, 0, -0.75]} guessIndex={2} setGuess={setGuess} />
-        <Model position={[2, 0, -0.75]} guessIndex={3} setGuess={setGuess} />
-        <Model position={[4, 0, -0.75]} guessIndex={4} setGuess={setGuess} />
+
+        <Column position={[-1.25, 0, 0.3]} guessIndex={4} setGuess={setGuess} />
+        <Column position={[-0.6, 0, 0.5]} guessIndex={3} setGuess={setGuess} />
+        <Column position={[0, 0, 0.6]} guessIndex={2} setGuess={setGuess} />
+        <Column position={[0.6, 0, 0.5]} guessIndex={1} setGuess={setGuess} />
+        <Column position={[1.2, 0, 0.3]} guessIndex={0} setGuess={setGuess} />
         <Player />
         <Floor />
       </Physics>
