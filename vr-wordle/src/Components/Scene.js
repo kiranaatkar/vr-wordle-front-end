@@ -5,27 +5,22 @@ import { useBox } from "@react-three/cannon";
 
 export default function Model({ position, guessIndex, setGuess }) {
   const [x, y, z] = position;
-  const [ref] = useBox(() => ({
-    type: "Static",
-    mass: 1,
-    position,
-    isTrigger: true,
-    onCollide: (e) => {
-      setGuess(e.body.name, guessIndex);
-    },
-  }));
+  const group = useRef();
   const { nodes, materials } = useGLTF("/uploads_files_1953815_bucket.glb");
 
   return (
-    <group ref={ref} position={position} dispose={null}>
+    <>
       <mesh
+        ref={group}
+        position={position}
+        dispose={null}
         scale={2.5}
         castShadow
         receiveShadow
         geometry={nodes.Bucket.geometry}
         material={materials.Bucket}
       >
-        <meshStandardMaterial wireframe color="green" />
+        <meshNormalMaterial />
       </mesh>
       <SetLetterBox
         args={[0.5, 0.5, 0.5]}
@@ -33,7 +28,7 @@ export default function Model({ position, guessIndex, setGuess }) {
         guessIndex={guessIndex}
         setGuess={setGuess}
       />
-    </group>
+    </>
   );
 }
 

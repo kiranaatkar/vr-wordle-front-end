@@ -75,7 +75,7 @@ export default function App() {
           <Letter position={[0, 4, 2]} name="D" />
           <Letter position={[2, 4, 2]} name="L" />
           <Letter position={[4, 4, 2]} name="E" />
-          <SetLetterBox
+          {/* <SetLetterBox
             args={[0.5, 0.5, 0.5]}
             position={[-4, 0.25, -0.75]}
             guessIndex={0}
@@ -104,7 +104,7 @@ export default function App() {
             position={[4, 0.25, -0.75]}
             guessIndex={4}
             setGuess={setGuess}
-          />
+          /> */}
           <Model position={[-4, 0, -0.75]} guessIndex={0} setGuess={setGuess} />
           <Model position={[-2, 0, -0.75]} guessIndex={1} setGuess={setGuess} />
           <Model position={[0, 0, -0.75]} guessIndex={2} setGuess={setGuess} />
@@ -114,7 +114,7 @@ export default function App() {
         <Player />
         <Floor />
       </Physics>
-      <SkyBox />
+      {/* <SkyBox /> */}
     </VRCanvas>
   );
 }
