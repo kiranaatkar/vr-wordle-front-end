@@ -3,51 +3,16 @@ import { PointerLockControls } from "@react-three/drei";
 import { VRCanvas, DefaultXRControllers } from "@react-three/xr";
 import LetterCubes from "./Components/LetterCubes.js";
 import Floor from "./Components/Floor.js";
-import Cylinder from "./Components/Cylinder.js";
 import Button from "./Components/Button.js";
 import Submit from "./Components/Submit.js";
 import Grid from "./Components/Grid.js";
 import Grabber from "./Components/Grab.js";
 import Table from "./Components/Table.js";
 import { Physics } from "@react-three/cannon";
-import { useThree } from "@react-three/fiber";
-import {
-  CubeTextureLoader,
-  MeshBasicMaterial,
-  Mesh,
-  BackSide,
-  BoxGeometry,
-} from "three";
 import Player from "./Components/Player.js";
-
-function SkyBox() {
-  const { scene } = useThree();
-  const loader = new CubeTextureLoader();
-
-  const environment = "space";
-
-  const texture = loader.load([
-    `/${environment}/1.png`,
-    `/${environment}/2.png`,
-    `/${environment}/3.png`,
-    `/${environment}/4.png`,
-    `/${environment}/5.png`,
-    `/${environment}/6.png`,
-  ]);
-
-  const geometry = new BoxGeometry(1000, 1000, 1000);
-
-  const material = new MeshBasicMaterial({
-    envMap: texture,
-    side: BackSide,
-  });
-
-  const cube = new Mesh(geometry, material);
-
-  scene.add(cube);
-
-  return null;
-}
+import Model from "./Components/Scene.js";
+import SetLetterBox from "./Components/SetLetterBox.js";
+import SkyBox from "./Components/SkyBox.js";
 
 export default function App() {
   const [state, setState] = useState({
@@ -62,6 +27,14 @@ export default function App() {
 
   const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
   const letters = useRef(<group />);
+
+  const currentGuess = ["", "", "", "", ""];
+
+  const setGuess = (char, i) => {
+    currentGuess[i] = char;
+    console.log(currentGuess.join(""));
+  };
+
   return (
     <VRCanvas style={{ touchAction: "none" }}>
       <DefaultXRControllers />
@@ -78,11 +51,7 @@ export default function App() {
           position={[0, 1.1, -1.2]}
           rotation={[0.2, 0, 0]}
         />
-        <Cylinder position={[6, 0, 0]} />
-        <Cylinder position={[3, 0, 0]} />
-        <Cylinder position={[0, 0, 0]} />
-        <Cylinder position={[-3, 0, 0]} />
-        <Cylinder position={[-6, 0, 0]} />
+
         <Grabber groupRef={letters} />
         <group ref={letters}>
           {alphabet.map((letter, i) => {
@@ -96,6 +65,46 @@ export default function App() {
                 position={[(Math.random() - 0.5) * 0.25, 1.6 + 0.3 * i, -1]}
               />
             );
+          })} 
+          <Letter position={[0, 1, 1]} />
+          <Letter position={[0, 1.5, 1]} />
+          <Letter position={[0, 2, 1]} />
+          {/* <Model position={[0, 0, -0.5]} /> */}
+          <Letter position={[0, 4, 2]} name="W" />
+          <Letter position={[2, 4, 2]} name="R" />
+          <Letter position={[4, 4, 2]} name="D" />
+          <Letter position={[6, 4, 2]} name="L" />
+          <Letter position={[8, 4, 2]} name="E" />
+          <SetLetterBox
+            args={[0.5, 0.5, 0.5]}
+            position={[0, 0.25, -0.75]}
+            guessIndex={0}
+            setGuess={setGuess}
+          />
+          <SetLetterBox
+            args={[0.5, 0.5, 0.5]}
+            position={[2, 0.25, -0.75]}
+            guessIndex={1}
+            setGuess={setGuess}
+          />
+          <SetLetterBox
+            args={[0.5, 0.5, 0.5]}
+            position={[4, 0.25, -0.75]}
+            guessIndex={2}
+            setGuess={setGuess}
+          />
+          <SetLetterBox
+            args={[0.5, 0.5, 0.5]}
+            position={[6, 0.25, -0.75]}
+            guessIndex={3}
+            setGuess={setGuess}
+          />
+          <SetLetterBox
+            args={[0.5, 0.5, 0.5]}
+            position={[8, 0.25, -0.75]}
+            guessIndex={4}
+            setGuess={setGuess}
+          />
           })}
         </group>
         <Player />
