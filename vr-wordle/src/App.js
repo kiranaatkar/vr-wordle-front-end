@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-
+import { PointerLockControls } from "@react-three/drei";
 import { VRCanvas, DefaultXRControllers } from "@react-three/xr";
 import Letter from "./Components/Letter.js";
 import LetterCubes from "./Components/LetterCubes.js";
@@ -72,7 +72,8 @@ export default function App() {
       <pointLight position={[-10, -10, -10]} />
 
       <Physics gravity={[0, -10, 0]}>
-        <Button groupRef={letters} reset={resetPositions} />
+        <PointerLockControls />
+        <Button reset={resetPositions} />
         <Submit />
         <Grid guesses={state.guesses} answer={state.answer} />
         <Table

@@ -3,8 +3,6 @@ import { Box, Text } from "@react-three/drei";
 import { useBox, useLockConstraint } from "@react-three/cannon";
 import { Interactive } from "@react-three/xr";
 import { useSpring, animated } from "@react-spring/three";
-import { StaticReadUsage, Vector3 } from "three";
-
 export default function Button(props) {
   const [pressed, buttonPressed] = useState({
     press: false,
@@ -29,16 +27,6 @@ export default function Button(props) {
     },
     [pressed]
   );
-
-  // function resetPositions() {
-  //   for (const i in groupRef.groupRef.current.children) {
-  //     ref.current = groupRef.groupRef.current.children[i].children[0];
-  //     console.log(ref.current);
-  //     //   api.position.set([(Math.random() - 0.5) * 0.25, 1.6 + 0.3 * i, -1]);
-  //     api.position.set(1, 1, -1);
-  //     console.log(dummyRef);
-  //   }
-  // }
 
   const { scale } = useSpring({
     to: async (next, cancel) => {
