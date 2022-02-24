@@ -41,6 +41,7 @@ function Guess(guess, word) {
         <StaticLetter
           side={side}
           id={it}
+          key={i}
           position={[-width / 2 + (side + space) * i, 0, 0]}
           key={i}
           state={
