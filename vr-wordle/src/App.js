@@ -13,6 +13,7 @@ import Player from "./Components/Player.js";
 // import Model from "./Components/Scene.js";
 import Letter from "./Components/Letter.js";
 import SetLetterBox from "./Components/SetLetterBox.js";
+import Letter from "./Components/Letter.js";
 
 export function generateLetters(reset, alphabet, letters) {
   return (
@@ -52,8 +53,10 @@ export default function App() {
   const currentGuess = ["", "", "", "", ""];
 
   const setGuess = (char, i) => {
-    currentGuess[i] = char;
-    console.log(currentGuess.join(""));
+    if (char && currentGuess[i] !== char) {
+      currentGuess[i] = char;
+      console.log(currentGuess.join(""));
+    }
   };
 
   return (
@@ -114,7 +117,6 @@ export default function App() {
         <Floor />
       </Physics>
       <Stars />
-      {/* <SkyBox /> */}
     </VRCanvas>
   );
 }

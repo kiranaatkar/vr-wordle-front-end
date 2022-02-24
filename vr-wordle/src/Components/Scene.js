@@ -1,24 +1,34 @@
 import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
-import { useBox } from "@react-three/cannon";
 import SetLetterBox from "./SetLetterBox.js";
+import { useBox } from "@react-three/cannon";
 
-export default function Model(props) {
+export default function Model({ position, guessIndex, setGuess }) {
+  const [x, y, z] = position;
   const group = useRef();
   const { nodes, materials } = useGLTF("/uploads_files_1953815_bucket.glb");
+
   return (
-    <group ref={group} {...props} dispose={null}>
+    <>
       <mesh
-        scale={3}
+        ref={group}
+        position={position}
+        dispose={null}
+        scale={2.5}
         castShadow
         receiveShadow
         geometry={nodes.Bucket.geometry}
         material={materials.Bucket}
       >
-        <meshStandardMaterial wireframe color="green" />
+        <meshNormalMaterial />
       </mesh>
-      <SetLetterBox args={[0.5, 0.5, 0.5]} position={[0, 0.25, 0]} />
-    </group>
+      <SetLetterBox
+        args={[0.5, 0.5, 0.5]}
+        position={position}
+        guessIndex={guessIndex}
+        setGuess={setGuess}
+      />
+    </>
   );
 }
 
