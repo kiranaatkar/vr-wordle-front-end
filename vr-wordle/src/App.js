@@ -51,6 +51,29 @@ function SkyBox() {
   return null;
 }
 
+export function generateLetters(state, alphabet, letters) {
+  return (
+    <group ref={letters}>
+      {alphabet.map((letter, i) => {
+        return (
+          <LetterCubes
+            reset={state.reset}
+            index={i}
+            id={letter}
+            key={letter}
+            size={[0.07, 0.07, 0.07]}
+            position={
+              state.reset
+                ? [(Math.random() - 0.5) * 0.25, 1.6 + 0.3 * i, -1]
+                : [(Math.random() - 0.5) * 0.25, 1.6 + 0.3 * i, -1]
+            }
+          />
+        );
+      })}
+    </group>
+  );
+}
+
 export default function App() {
   const [state, setState] = useState({
     guesses: ["hello", "world", "vrdle", "wrdle", "crane", "cramp"],
@@ -86,24 +109,7 @@ export default function App() {
         <Cylinder position={[-3, 0, 0]} />
         <Cylinder position={[-6, 0, 0]} />
         <Grabber groupRef={letters} />
-        <group ref={letters}>
-          {alphabet.map((letter, i) => {
-            return (
-              <LetterCubes
-                reset={state.reset}
-                index={i}
-                id={letter}
-                key={letter}
-                size={[0.07, 0.07, 0.07]}
-                position={
-                  state.reset
-                    ? [(Math.random() - 0.5) * 0.25, 1.6 + 0.3 * i, -1]
-                    : [(Math.random() - 0.5) * 0.25, 1.6 + 0.3 * i, -1]
-                }
-              />
-            );
-          })}
-        </group>
+        {generateLetters(state, alphabet, letters)}
         <Player />
         <Floor />
       </Physics>

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useBox } from "@react-three/cannon";
 import { Box, Text } from "@react-three/drei";
-import { Interactive } from "@react-three/xr";
+import { Interactive, useXR, useXRFrame } from "@react-three/xr";
+import { Vector3 } from "three";
 
 export default function LetterCubes({ id, position, size, reset, index }) {
   const [hovered, hover] = useState({
@@ -27,6 +28,24 @@ export default function LetterCubes({ id, position, size, reset, index }) {
     hover({ ...hovered, reset: reset });
   }
 
+  const controllers = useXR();
+
+  useXRFrame(() => {
+    const grabController = controllers.controllers[0];
+
+    const pos = new Vector3();
+    const posB = new Vector3();
+    grabController.controller.getWorldPosition(pos);
+    ref.current.getWorldPosition(posB);
+    const distance = pos.distanceTo(posB);
+
+    if (distance < 0.1) {
+      hover({ ...hovered, hover: true });
+    } else {
+      hover({ ...hovered, hover: false });
+    }
+  });
+
   return (
     <Interactive
       onHover={() => hover({ ...hovered, hover: true })}
@@ -46,7 +65,7 @@ export default function LetterCubes({ id, position, size, reset, index }) {
         >
           {id.toUpperCase()}
         </Text>
-        <meshStandardMaterial color="#3a3a3c" />
+        <meshStandardMaterial color={hovered.hover ? "#00E2FB" : "#3a3a3c"} />
       </Box>
     </Interactive>
   );
