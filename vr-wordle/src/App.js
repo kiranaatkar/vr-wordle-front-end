@@ -35,7 +35,8 @@ export function generateLetters(reset, alphabet, letters) {
 
 export default function App() {
   const [state, setState] = useState({
-    guesses: ["hello", "world", "vrdle", "wrdle", "crane", "cramp"],
+    guesses: ["     ", "     ", "     ", "     ", "     ", "     "],
+    guessCount: 0,
     answer: "cramp",
     reset: false,
   });
@@ -59,8 +60,12 @@ export default function App() {
   };
 
   const submitGuess = () => {
-    if (state.guesses.length < 6 && currentGuess.length === 5) {
-      setState({ ...state, guesses: [...state.guesses, currentGuess] });
+    console.log(currentGuess);
+    if (state.guesses.length <= 6 && currentGuess.length === 5) {
+      console.log("submitted");
+      let newGuesses = state.guesses.slice();
+      newGuesses[state.guessCount] = currentGuess.join("");
+      setState({ ...state, guesses: newGuesses });
     }
   };
 
