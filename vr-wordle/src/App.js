@@ -10,7 +10,6 @@ import Grabber from "./Components/Grab.js";
 import Table from "./Components/Table.js";
 import { Physics } from "@react-three/cannon";
 import Player from "./Components/Player.js";
-// import Model from "./Components/Scene.js";
 import Letter from "./Components/Letter.js";
 import SetLetterBox from "./Components/SetLetterBox.js";
 
@@ -24,7 +23,7 @@ export function generateLetters(reset, alphabet, letters) {
             index={i}
             id={letter}
             key={letter}
-            size={[0.07, 0.07, 0.07]}
+            sizeArg={[0.07, 0.07, 0.07]}
             position={[(Math.random() - 0.5) * 0.25, 1.6 + 0.3 * i, -1]}
           />
         );

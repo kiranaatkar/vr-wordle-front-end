@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useThree } from "@react-three/fiber";
 import { useBox } from "@react-three/cannon";
 import { Box, Text } from "@react-three/drei";
+import { useDrag } from "@use-gesture/react";
 import { Interactive, useXR, useXRFrame } from "@react-three/xr";
 import { Vector3 } from "three";
 
-export default function LetterCubes({ id, position, size, reset, index }) {
+export default function LetterCubes({ id, position, sizeArg, reset, index }) {
   const [state, setState] = useState({
     hover: false,
     reset: false,
@@ -13,14 +15,33 @@ export default function LetterCubes({ id, position, size, reset, index }) {
   if (state) {
   }
 
+  const { size, viewport } = useThree();
+  const aspect = size.width / viewport.width;
+
   const [ref, api] = useBox(() => ({
-    args: size,
+    args: sizeArg,
     mass: 1,
     position: position,
     material: {
       friction: 1,
     },
   }));
+
+  const bind = useDrag(
+    ({ offset: [,], xy: [x, y], first, last }) => {
+      if (first) {
+        api.mass.set(0);
+      } else if (last) {
+        api.mass.set(10);
+      }
+      api.position.set(
+        (x - size.width / 2) / aspect,
+        -(y - size.height / 2) / aspect,
+        -0.7
+      );
+    },
+    { pointerEvents: true }
+  );
 
   if (state.reset !== reset) {
     api.position.set(
@@ -56,10 +77,12 @@ export default function LetterCubes({ id, position, size, reset, index }) {
       onBlur={() => setState({ ...state, hover: false })}
     >
       <Box
+        {...bind()}
         ref={ref}
-        args={size}
+        args={sizeArg}
         onPointerOver={(event) => setState({ ...state, hover: true })}
         onPointerOut={(event) => setState({ ...state, hover: false })}
+        name={id}
       >
         <Text
           userData={{ letter: id }}
