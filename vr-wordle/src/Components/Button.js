@@ -30,21 +30,28 @@ export default function Button(props) {
     },
   }));
 
+  function resetPositions() {
+    props.reset();
+    setTimeout(() => setState({ ...state, hover: false, press: false }), 1000);
+  }
+
   return (
     <Box ref={box} args={[0.2, 0.3, 0.1]}>
       <Interactive
         onSelect={() => {
           setState({ ...state, press: true });
+          resetPositions();
         }}
         onHover={() => setState({ ...state, hover: true })}
+        onBlur={() => setState({ ...state, hover: false })}
       >
         <animated.mesh
           rotation={[Math.PI / 2, 0, 0]}
           position={[0, 0.03, 0]}
           scale={state.press ? scale : [1, 1, 1]}
           onClick={(event) => {
-            setState({ ...state, press: !state.press });
-            props.reset();
+            setState({ ...state, press: true });
+            resetPositions();
           }}
           onPointerOver={(event) => setState({ ...state, hover: true })}
           onPointerOut={(event) => setState({ ...state, hover: false })}
