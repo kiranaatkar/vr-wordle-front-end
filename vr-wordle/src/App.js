@@ -33,14 +33,18 @@ export function generateLetters(reset, alphabet, letters) {
 }
 
 export default function App() {
-  const [state, setState] = useState({
-    guesses: ["     ", "     ", "     ", "     ", "     ", "     "],
-    guessCount: 0,
-    answer: "cramp",
-    reset: false,
-  });
-
+  const [guesses, setGuesses] = useState([
+    "     ",
+    "     ",
+    "     ",
+    "     ",
+    "     ",
+    "     ",
+  ]);
+  const [guessCount, setGuessCount] = useState(0);
+  const [answer] = useState("CRAMP");
   const [reset, setReset] = useState(false);
+  const [currentGuess, setCurrentGuess] = useState(["", "", "", "", ""]);
 
   const resetPositions = () => {
     setReset(!reset);
@@ -49,22 +53,21 @@ export default function App() {
   const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
   const letters = useRef(<group />);
 
-  const currentGuess = ["", "", "", "", ""];
-
   const setGuess = (char, i) => {
     if (char && currentGuess[i] !== char) {
-      currentGuess[i] = char;
-      console.log(currentGuess.join(""));
+      const dummyArr = currentGuess;
+      dummyArr[i] = char;
+      setCurrentGuess(dummyArr);
     }
   };
 
   const submitGuess = () => {
-    console.log(currentGuess);
-    if (state.guesses.length <= 6 && currentGuess.length === 5) {
-      console.log("submitted");
-      let newGuesses = state.guesses.slice();
-      newGuesses[state.guessCount] = currentGuess.join("");
-      setState({ ...state, guesses: newGuesses });
+    if (guessCount < 6 && currentGuess.length === 5) {
+      const newGuesses = guesses;
+      newGuesses[guessCount] = currentGuess.join("");
+      const newCount = guessCount + 1;
+      setGuesses(newGuesses);
+      setGuessCount(newCount);
     }
   };
 
@@ -78,7 +81,7 @@ export default function App() {
         {/* <PointerLockControls /> */}
         <Button reset={resetPositions} />
         <Submit submit={submitGuess} />
-        <Grid guesses={state.guesses} answer={state.answer} />
+        <Grid guesses={guesses} answer={answer} />
         <Table
           args={[3.5, 0.2, 2]}
           position={[0, 1.05, -1.2]}
