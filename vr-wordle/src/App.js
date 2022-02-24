@@ -11,7 +11,7 @@ import Table from "./Components/Table.js";
 import { Physics } from "@react-three/cannon";
 import Player from "./Components/Player.js";
 import Letter from "./Components/Letter.js";
-import SetLetterBox from "./Components/SetLetterBox.js";
+import Model from "./Components/Scene.js";
 import { answerWords } from "./word-lists/answer-words.js";
 import { differenceInDays } from "date-fns";
 
@@ -104,41 +104,16 @@ export default function App() {
 
         <Grabber groupRef={letters} />
         {generateLetters(reset, alphabet, letters)}
-        <Letter position={[0, 4, 2]} name="W" />
-        <Letter position={[2, 4, 2]} name="R" />
-        <Letter position={[4, 4, 2]} name="D" />
-        <Letter position={[6, 4, 2]} name="L" />
-        <Letter position={[8, 4, 2]} name="E" />
-        <SetLetterBox
-          args={[0.5, 0.5, 0.5]}
-          position={[0, 0.25, -0.75]}
-          guessIndex={0}
-          setGuess={setGuess}
-        />
-        <SetLetterBox
-          args={[0.5, 0.5, 0.5]}
-          position={[2, 0.25, -0.75]}
-          guessIndex={1}
-          setGuess={setGuess}
-        />
-        <SetLetterBox
-          args={[0.5, 0.5, 0.5]}
-          position={[4, 0.25, -0.75]}
-          guessIndex={2}
-          setGuess={setGuess}
-        />
-        <SetLetterBox
-          args={[0.5, 0.5, 0.5]}
-          position={[6, 0.25, -0.75]}
-          guessIndex={3}
-          setGuess={setGuess}
-        />
-        <SetLetterBox
-          args={[0.5, 0.5, 0.5]}
-          position={[8, 0.25, -0.75]}
-          guessIndex={4}
-          setGuess={setGuess}
-        />
+        <Letter position={[-4, 4, 2]} name="w" />
+        <Letter position={[-2, 4, 2]} name="r" />
+        <Letter position={[0, 4, 2]} name="d" />
+        <Letter position={[2, 4, 2]} name="l" />
+        <Letter position={[4, 4, 2]} name="e" />
+        <Model position={[-4, 0, -0.75]} guessIndex={0} setGuess={setGuess} />
+        <Model position={[-2, 0, -0.75]} guessIndex={1} setGuess={setGuess} />
+        <Model position={[0, 0, -0.75]} guessIndex={2} setGuess={setGuess} />
+        <Model position={[2, 0, -0.75]} guessIndex={3} setGuess={setGuess} />
+        <Model position={[4, 0, -0.75]} guessIndex={4} setGuess={setGuess} />
         <Player />
         <Floor />
       </Physics>
