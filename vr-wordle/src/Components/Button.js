@@ -1,33 +1,15 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { Box, Text } from "@react-three/drei";
-import { useBox, useLockConstraint } from "@react-three/cannon";
+import { useBox } from "@react-three/cannon";
 import { Interactive } from "@react-three/xr";
 import { useSpring, animated } from "@react-spring/three";
 
 export default function Button(props) {
-  const [pressed, buttonPressed] = useState({
+  const [state, setState] = useState({
     press: false,
     hover: false,
     resetting: false,
   });
-
-  const [dummyRef, api] = useBox(() => ({
-    type: "Dynamic",
-    collisionFilterGroup: 32,
-    collisionFilterMask: 32,
-    args: [0.01, 0.01, 0.01],
-  }));
-
-  const ref = useRef();
-
-  useLockConstraint(
-    { current: ref.current },
-    dummyRef,
-    {
-      maxForce: 2,
-    },
-    [pressed]
-  );
 
   const { scale } = useSpring({
     to: async (next, cancel) => {
@@ -36,7 +18,6 @@ export default function Button(props) {
     },
     from: { scale: [1, 1, 1] },
   });
-
 
   const [box] = useBox(() => ({
     args: [0.2, 0.2, 0.05],
@@ -49,31 +30,38 @@ export default function Button(props) {
     },
   }));
 
+  function resetPositions() {
+    props.reset();
+    setTimeout(() => setState({ ...state, hover: false, press: false }), 1000);
+  }
+
   return (
     <Box ref={box} args={[0.2, 0.3, 0.1]}>
       <Interactive
         onSelect={() => {
-          buttonPressed({ ...pressed, press: true });
+          setState({ ...state, press: true });
+          resetPositions();
         }}
-        onHover={() => buttonPressed({ ...pressed, hover: true })}
+        onHover={() => setState({ ...state, hover: true })}
+        onBlur={() => setState({ ...state, hover: false })}
       >
         <animated.mesh
           rotation={[Math.PI / 2, 0, 0]}
           position={[0, 0.03, 0]}
-          scale={pressed.press ? scale : [1, 1, 1]}
+          scale={state.press ? scale : [1, 1, 1]}
           onClick={(event) => {
-            buttonPressed({ ...pressed, press: !pressed.press });
-            props.reset();
+            setState({ ...state, press: true });
+            resetPositions();
           }}
-          onPointerOver={(event) => buttonPressed({ ...pressed, hover: true })}
-          onPointerOut={(event) => buttonPressed({ ...pressed, hover: false })}
+          onPointerOver={(event) => setState({ ...state, hover: true })}
+          onPointerOut={(event) => setState({ ...state, hover: false })}
         >
           <cylinderBufferGeometry
             args={[0.09, 0.09, 0.2, 30]}
           ></cylinderBufferGeometry>
           <meshBasicMaterial
             attach="material"
-            color={pressed.hover ? "orange" : "red"}
+            color={state.hover ? "orange" : "red"}
           />
         </animated.mesh>
       </Interactive>

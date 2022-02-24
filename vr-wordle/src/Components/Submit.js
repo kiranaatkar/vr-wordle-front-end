@@ -5,7 +5,7 @@ import { Interactive } from "@react-three/xr";
 import { useSpring, animated } from "@react-spring/three";
 
 export default function Button(props) {
-  const [pressed, buttonPressed] = useState({
+  const [state, setState] = useState({
     press: false,
     hover: false,
   });
@@ -29,28 +29,40 @@ export default function Button(props) {
     },
   }));
 
+  function buttonPressed() {
+    console.log(state);
+    setTimeout(() => setState({ ...state, hover: false, press: false }), 1000);
+  }
+
   return (
     <Box ref={ref} args={[0.2, 0.3, 0.1]}>
       <Interactive
         onSelect={() => {
-          buttonPressed({ press: true });
+          setState({ ...state, press: true });
+          buttonPressed();
         }}
-        onHover={() => buttonPressed({ hover: true })}
+        onHover={() => setState({ ...state, hover: true })}
+        onBlur={() => setState({ ...state, hover: false })}
       >
         <animated.mesh
           rotation={[Math.PI / 2, 0, 0]}
           position={[0, 0.03, 0]}
-          scale={pressed.press ? scale : [1, 1, 1]}
-          onClick={(event) => buttonPressed({ press: !pressed.press })}
-          onPointerOver={(event) => buttonPressed({ hover: true })}
-          onPointerOut={(event) => buttonPressed({ hover: false })}
+          scale={state.press ? scale : [1, 1, 1]}
+          onClick={(event) => {
+            setState({ ...state, press: true });
+            buttonPressed();
+          }}
+          onPointerOver={(event) => {
+            setState({ ...state, hover: true });
+          }}
+          onPointerOut={(event) => setState({ ...state, hover: false })}
         >
           <cylinderBufferGeometry
             args={[0.09, 0.09, 0.2, 30]}
           ></cylinderBufferGeometry>
           <meshBasicMaterial
             attach="material"
-            color={pressed.hover ? "orange" : "green"}
+            color={state.hover ? "orange" : "green"}
           />
         </animated.mesh>
       </Interactive>

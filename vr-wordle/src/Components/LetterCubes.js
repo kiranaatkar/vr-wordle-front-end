@@ -5,12 +5,12 @@ import { Interactive, useXR, useXRFrame } from "@react-three/xr";
 import { Vector3 } from "three";
 
 export default function LetterCubes({ id, position, size, reset, index }) {
-  const [hovered, hover] = useState({
+  const [state, setState] = useState({
     hover: false,
     reset: false,
   });
 
-  if (hovered) {
+  if (state) {
   }
 
   const [ref, api] = useBox(() => ({
@@ -22,10 +22,14 @@ export default function LetterCubes({ id, position, size, reset, index }) {
     },
   }));
 
-  if (hovered.reset !== reset) {
-    api.position.set((Math.random() - 0.5) * 0.25, 1.6 + 0.3 * index, -1);
+  if (state.reset !== reset) {
+    api.position.set(
+      (Math.random() - 0.5) * 0.2,
+      2 + 0.21 * index,
+      -0.7 + (Math.random() - 0.5) * 0.2
+    );
     console.log("reset");
-    hover({ ...hovered, reset: reset });
+    setState({ ...state, reset: reset });
   }
 
   const controllers = useXR();
@@ -48,14 +52,14 @@ export default function LetterCubes({ id, position, size, reset, index }) {
 
   return (
     <Interactive
-      onHover={() => hover({ ...hovered, hover: true })}
-      onBlur={() => hover({ ...hovered, hover: false })}
+      onHover={() => setState({ ...state, hover: true })}
+      onBlur={() => setState({ ...state, hover: false })}
     >
       <Box
         ref={ref}
         args={size}
-        onPointerOver={(event) => hover({ ...hovered, hover: true })}
-        onPointerOut={(event) => hover({ ...hovered, hover: false })}
+        onPointerOver={(event) => setState({ ...state, hover: true })}
+        onPointerOut={(event) => setState({ ...state, hover: false })}
       >
         <Text
           userData={{ letter: id }}
