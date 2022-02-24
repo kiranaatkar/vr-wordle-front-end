@@ -49,6 +49,8 @@ export default function Letter(props) {
     box.current.getWorldPosition(posB);
     const distance = pos.distanceTo(posB);
 
+    console.log(distance);
+
     if (distance < 0.1) {
       hover(true);
     } else {

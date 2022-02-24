@@ -15,6 +15,29 @@ import Letter from "./Components/Letter.js";
 import SetLetterBox from "./Components/SetLetterBox.js";
 import SkyBox from "./Components/SkyBox.js";
 
+export function generateLetters(state, alphabet, letters) {
+  return (
+    <group ref={letters}>
+      {alphabet.map((letter, i) => {
+        return (
+          <LetterCubes
+            reset={state.reset}
+            index={i}
+            id={letter}
+            key={letter}
+            size={[0.07, 0.07, 0.07]}
+            position={
+              state.reset
+                ? [(Math.random() - 0.5) * 0.25, 1.6 + 0.3 * i, -1]
+                : [(Math.random() - 0.5) * 0.25, 1.6 + 0.3 * i, -1]
+            }
+          />
+        );
+      })}
+    </group>
+  );
+}
+
 export default function App() {
   const [state, setState] = useState({
     guesses: ["hello", "world", "vrdle", "wrdle", "crane", "cramp"],
@@ -56,27 +79,7 @@ export default function App() {
         />
 
         <Grabber groupRef={letters} />
-        <group ref={letters}>
-          {alphabet.map((letter, i) => {
-            return (
-              <LetterCubes
-                reset={reset}
-                index={i}
-                id={letter}
-                key={letter}
-                size={[0.06, 0.06, 0.06]}
-                position={[
-                  (Math.random() - 0.5) * 0.2,
-                  2 + 0.21 * i,
-                  -0.7 + (Math.random() - 0.5) * 0.2,
-                ]}
-              />
-            );
-          })}
-          <Letter position={[0, 1, 1]} />
-          <Letter position={[0, 1.5, 1]} />
-          <Letter position={[0, 2, 1]} />
-          {/* <Model position={[0, 0, -0.5]} /> */}
+        {generateLetters(state, alphabet, letters)}
           <Letter position={[0, 4, 2]} name="W" />
           <Letter position={[2, 4, 2]} name="R" />
           <Letter position={[4, 4, 2]} name="D" />
@@ -112,7 +115,6 @@ export default function App() {
             guessIndex={4}
             setGuess={setGuess}
           />
-        </group>
         <Player />
         <Floor />
       </Physics>
