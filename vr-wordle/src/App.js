@@ -10,9 +10,7 @@ import Grabber from "./Components/Grab.js";
 import Table from "./Components/Table.js";
 import { Physics } from "@react-three/cannon";
 import Player from "./Components/Player.js";
-// import Model from "./Components/Scene.js";
 import Letter from "./Components/Letter.js";
-import SetLetterBox from "./Components/SetLetterBox.js";
 import Model from "./Components/Scene.js";
 
 export function generateLetters(reset, alphabet, letters) {
