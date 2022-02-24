@@ -30,7 +30,6 @@ export default function Grabber({ ...groupRef }) {
 
   useXREvent("selectstart", (e) => {
     for (const child of groupRef.groupRef.current.children) {
-      
       const pos = new Vector3();
       const posB = new Vector3();
 
@@ -48,7 +47,6 @@ export default function Grabber({ ...groupRef }) {
           grabControllerLeft.current = e.controller;
         }
         ref.current = child.children[0];
-        console.log(ref.current);
         break;
       }
     }

@@ -55,7 +55,13 @@ export default function App() {
   const [state, setState] = useState({
     guesses: ["hello", "world", "vrdle", "wrdle", "crane", "cramp"],
     answer: "cramp",
+    reset: false,
   });
+
+  const resetPositions = () => {
+    setState({ ...state, reset: !state.reset });
+  };
+
   const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
   const letters = useRef(<group />);
   return (
@@ -66,7 +72,7 @@ export default function App() {
       <pointLight position={[-10, -10, -10]} />
       <Physics gravity={[0, -10, 0]}>
         <PointerLockControls />
-        <Button />
+        <Button reset={resetPositions} />
         <Submit />
         <Grid guesses={state.guesses} answer={state.answer} />
         <Table
@@ -84,16 +90,19 @@ export default function App() {
           {alphabet.map((letter, i) => {
             return (
               <LetterCubes
+                reset={state.reset}
+                index={i}
                 id={letter}
                 key={letter}
                 size={[0.07, 0.07, 0.07]}
-                position={[(Math.random() - 0.5) * 0.25, 1.6 + 0.3 * i, -1]}
+                position={
+                  state.reset
+                    ? [(Math.random() - 0.5) * 0.25, 1.6 + 0.3 * i, -1]
+                    : [(Math.random() - 0.5) * 0.25, 1.6 + 0.3 * i, -1]
+                }
               />
             );
           })}
-          <Letter position={[0, 1, 1]} />
-          <Letter position={[0, 1.5, 1]} />
-          <Letter position={[0, 2, 1]} />
         </group>
         <Player />
         <Floor />

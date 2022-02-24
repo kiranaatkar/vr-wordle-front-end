@@ -1,15 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Box, Text } from "@react-three/drei";
-import { useBox } from "@react-three/cannon";
+import { useBox, useLockConstraint } from "@react-three/cannon";
 import { Interactive } from "@react-three/xr";
 import { useSpring, animated } from "@react-spring/three";
 
 export default function Button(props) {
-
   const [pressed, buttonPressed] = useState({
     press: false,
     hover: false,
+    resetting: false,
   });
+
+  const [dummyRef, api] = useBox(() => ({
+    type: "Dynamic",
+    collisionFilterGroup: 32,
+    collisionFilterMask: 32,
+    args: [0.01, 0.01, 0.01],
+  }));
+
+  const ref = useRef();
+
+  useLockConstraint(
+    { current: ref.current },
+    dummyRef,
+    {
+      maxForce: 2,
+    },
+    [pressed]
+  );
 
   const { scale } = useSpring({
     to: async (next, cancel) => {
@@ -19,7 +37,8 @@ export default function Button(props) {
     from: { scale: [1, 1, 1] },
   });
 
-  const [ref] = useBox(() => ({
+
+  const [box] = useBox(() => ({
     args: [0.2, 0.2, 0.05],
     mass: 1,
     type: "Static",
@@ -31,20 +50,23 @@ export default function Button(props) {
   }));
 
   return (
-    <Box ref={ref} args={[0.2, 0.3, 0.1]}>
+    <Box ref={box} args={[0.2, 0.3, 0.1]}>
       <Interactive
         onSelect={() => {
-          buttonPressed({ press: true });
+          buttonPressed({ ...pressed, press: true });
         }}
-        onHover={() => buttonPressed({ hover: true })}
+        onHover={() => buttonPressed({ ...pressed, hover: true })}
       >
         <animated.mesh
           rotation={[Math.PI / 2, 0, 0]}
           position={[0, 0.03, 0]}
           scale={pressed.press ? scale : [1, 1, 1]}
-          onClick={(event) => buttonPressed({ press: !pressed.press })}
-          onPointerOver={(event) => buttonPressed({ hover: true })}
-          onPointerOut={(event) => buttonPressed({ hover: false })}
+          onClick={(event) => {
+            buttonPressed({ ...pressed, press: !pressed.press });
+            props.reset();
+          }}
+          onPointerOver={(event) => buttonPressed({ ...pressed, hover: true })}
+          onPointerOut={(event) => buttonPressed({ ...pressed, hover: false })}
         >
           <cylinderBufferGeometry
             args={[0.09, 0.09, 0.2, 30]}
