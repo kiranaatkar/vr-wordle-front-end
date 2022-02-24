@@ -50,8 +50,8 @@ export default function App() {
         <Submit />
         <Grid guesses={state.guesses} answer={state.answer} />
         <Table
-          args={[3.5, 0.05, 2]}
-          position={[0, 1.1, -1.2]}
+          args={[3.5, 0.2, 2]}
+          position={[0, 1.05, -1.2]}
           rotation={[0.2, 0, 0]}
         />
 
@@ -64,8 +64,12 @@ export default function App() {
                 index={i}
                 id={letter}
                 key={letter}
-                size={[0.07, 0.07, 0.07]}
-                position={[(Math.random() - 0.5) * 0.25, 1.6 + 0.3 * i, -1]}
+                size={[0.06, 0.06, 0.06]}
+                position={[
+                  (Math.random() - 0.5) * 0.2,
+                  2 + 0.21 * i,
+                  -0.7 + (Math.random() - 0.5) * 0.2,
+                ]}
               />
             );
           })}
