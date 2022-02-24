@@ -49,7 +49,6 @@ export default function LetterCubes({ id, position, sizeArg, reset, index }) {
       2 + 0.21 * index,
       -0.7 + (Math.random() - 0.5) * 0.2
     );
-    console.log("reset");
     setState({ ...state, reset: reset });
   }
 
