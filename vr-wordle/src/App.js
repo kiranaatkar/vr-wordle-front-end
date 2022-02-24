@@ -22,8 +22,10 @@ export default function App() {
     reset: false,
   });
 
+  const [reset, setReset] = useState(false);
+
   const resetPositions = () => {
-    setState({ ...state, reset: !state.reset });
+    setReset(!reset);
   };
 
   const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
@@ -58,7 +60,7 @@ export default function App() {
           {alphabet.map((letter, i) => {
             return (
               <LetterCubes
-                reset={state.reset}
+                reset={reset}
                 index={i}
                 id={letter}
                 key={letter}
