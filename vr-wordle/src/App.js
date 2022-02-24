@@ -11,7 +11,6 @@ import Table from "./Components/Table.js";
 import { Physics } from "@react-three/cannon";
 import Player from "./Components/Player.js";
 import Letter from "./Components/Letter.js";
-import Model from "./Components/Scene.js";
 import Column from "./Components/Column.js";
 import { answerWords } from "./word-lists/answer-words.js";
 import { differenceInDays } from "date-fns";
