@@ -43,7 +43,6 @@ function StaticLetter(props) {
       args={size}
       rotation={[0, 0, 0]}
       position={props.position}
-      scale={1}
       onClick={() => {
         setActive(!active);
       }}
