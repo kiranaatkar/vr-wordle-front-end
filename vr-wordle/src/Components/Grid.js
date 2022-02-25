@@ -1,6 +1,6 @@
 import { Box, Text } from "@react-three/drei";
 import { useState, useRef } from "react";
-import { useSpring, animated, config } from "@react-spring/three";
+import { useSpring, animated } from "@react-spring/three";
 import { useFrame } from "@react-three/fiber";
 
 export default function Grid(props) {
@@ -34,13 +34,6 @@ function StaticLetter(props) {
   useFrame(() => {
     if (props.submitted && box.current.rotation.x < Math.PI / 2) {
       box.current.rotation.x += 0.03 - props.index * 0.005;
-
-      // if (props.state === "present") {
-      //   color[0] += 2;
-      //   color[1] += 2;
-      //   console.log(color[0]);
-      // } else if (props.state === "correct") {
-      // }
     }
   });
 
