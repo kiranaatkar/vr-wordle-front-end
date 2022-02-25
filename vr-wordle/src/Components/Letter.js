@@ -13,10 +13,12 @@ export default function Letter(props) {
   const [position] = useState(props.position);
   const aspect = size.width / viewport.width;
 
+  const args = [0.4, 0.4, 0.4];
+
   const [box, api] = useBox(() => ({
     mass: 1,
     position: position,
-    args: [0.4, 0.4, 0.4],
+    args: args,
     material: {
       friction: 1,
     },
@@ -61,7 +63,7 @@ export default function Letter(props) {
       <Box
         {...bind()}
         ref={box}
-        args={[0.4, 0.4, 0.4]}
+        args={args}
         onPointerOver={(event) => hover(true)}
         onPointerOut={(event) => hover(false)}
         name={props.name}
