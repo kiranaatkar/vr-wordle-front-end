@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useThree } from "@react-three/fiber";
-import { Interactive, useXR, useXRFrame } from "@react-three/xr";
+import { Interactive, useController, useXRFrame } from "@react-three/xr";
 import { useDrag } from "@use-gesture/react";
 import { useBox } from "@react-three/cannon";
 import { Box } from "@react-three/drei";
@@ -13,10 +13,12 @@ export default function Letter(props) {
   const [position] = useState(props.position);
   const aspect = size.width / viewport.width;
 
+  const args = [0.4, 0.4, 0.4];
+
   const [box, api] = useBox(() => ({
     mass: 1,
     position: position,
-    args: [0.4, 0.4, 0.4],
+    args: [0.2, 0.2, 0.2],
     material: {
       friction: 1,
     },
@@ -32,17 +34,15 @@ export default function Letter(props) {
       api.position.set(
         (x - size.width / 2) / aspect,
         -(y - size.height / 2) / aspect,
-        -0.7
+        props.position[2]
       );
     },
     { pointerEvents: true }
   );
 
-  const controllers = useXR();
+  const grabController = useController("right");
 
   useXRFrame(() => {
-    const grabController = controllers.controllers[0];
-
     const pos = new Vector3();
     const posB = new Vector3();
     grabController.controller.getWorldPosition(pos);
@@ -61,7 +61,7 @@ export default function Letter(props) {
       <Box
         {...bind()}
         ref={box}
-        args={[0.4, 0.4, 0.4]}
+        args={[0.2, 0.2, 0.2]}
         onPointerOver={(event) => hover(true)}
         onPointerOut={(event) => hover(false)}
         name={props.name}

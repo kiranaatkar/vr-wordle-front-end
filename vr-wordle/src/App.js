@@ -55,18 +55,32 @@ export default function App() {
   const [reset, setReset] = useState(false);
   const [currentGuess, setCurrentGuess] = useState([]);
   const [tableText, setTableText] = useState("");
+  const [answer, setAnswer] = useState("");
+  const [gameEnd, setGameCondition] = useState(false);
 
   const resetPositions = () => {
     setReset(!reset);
   };
 
-  const [answer, setAnswer] = useState("");
   useEffect(() => {
     setAnswer(getRandomAnswerWord());
   }, []);
 
   const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
   const letters = useRef(<group />);
+
+  const deleteOldGuess = () => {
+    for (const letter of currentGuess) {
+      if (!getRandomAnswerWord().split("").includes(letter)) {
+        const indexToRemove = letters.current.children.findIndex((child) => {
+          return child.children[0].name === letter;
+        });
+        if (indexToRemove !== -1) {
+          letters.current.children.splice(indexToRemove, 1);
+        }
+      }
+    }
+  };
 
   const setGuess = (char, i) => {
     if (char && currentGuess[i] !== char) {
@@ -78,15 +92,19 @@ export default function App() {
   };
 
   const submitGuess = () => {
-    if (
-      guessCount < 6 &&
-      currentGuess.filter((char) => char !== "").length === 5
-    ) {
+    if (guessCount < 6 && currentGuess.length === 5 && !gameEnd) {
       const newGuesses = guesses;
       newGuesses[guessCount] = currentGuess.join("");
       const newCount = guessCount + 1;
       setGuesses(newGuesses);
       setGuessCount(newCount);
+      if (currentGuess.join("") === answer) {
+        console.log("win");
+        setGameCondition("win");
+      } else if (!newGuesses.includes(answer) && guessCount === 5) {
+        console.log("lose");
+        setGameCondition("lose");
+      }
     } else {
       setTableText("Word must be 5 characters");
     }
@@ -95,10 +113,9 @@ export default function App() {
   return (
     <VRCanvas style={{ touchAction: "none" }}>
       <DefaultXRControllers />
-      <ambientLight intensity={0.5} />
+      <ambientLight intensity={1} />
       <spotLight position={[0, 10, 0]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
-      <fog attach="fog" color="white" near={1} far={10} />
       <Physics gravity={[0, -10, 0]}>
         {/* <PointerLockControls /> */}
         <Button reset={resetPositions} />
@@ -112,17 +129,16 @@ export default function App() {
         <Notification tableText={tableText} />
         <Grabber groupRef={letters} />
         {generateLetters(reset, alphabet, letters)}
-        <Letter position={[-4, 4, 2]} name="w" />
-        <Letter position={[-2, 4, 2]} name="r" />
-        <Letter position={[0, 4, 2]} name="d" />
-        <Letter position={[2, 4, 2]} name="l" />
-        <Letter position={[4, 4, 2]} name="e" />
-
-        <Column position={[-1.25, 0, 0.3]} guessIndex={4} setGuess={setGuess} />
-        <Column position={[-0.6, 0, 0.5]} guessIndex={3} setGuess={setGuess} />
-        <Column position={[0, 0, 0.6]} guessIndex={2} setGuess={setGuess} />
-        <Column position={[0.6, 0, 0.5]} guessIndex={1} setGuess={setGuess} />
-        <Column position={[1.2, 0, 0.3]} guessIndex={0} setGuess={setGuess} />
+        <Letter position={[2, 1, 0.4]} name="w" />
+        <Letter position={[2, 2, 0.6]} name="r" />
+        <Letter position={[2, 3, 0.7]} name="d" />
+        <Letter position={[-2, 1, 0.6]} name="l" />
+        <Letter position={[-2, 2, 0.4]} name="e" />
+        <Column position={[-1.25, 0, 0.4]} guessIndex={4} setGuess={setGuess} />
+        <Column position={[-0.6, 0, 0.6]} guessIndex={3} setGuess={setGuess} />
+        <Column position={[0, 0, 0.7]} guessIndex={2} setGuess={setGuess} />
+        <Column position={[0.6, 0, 0.6]} guessIndex={1} setGuess={setGuess} />
+        <Column position={[1.2, 0, 0.4]} guessIndex={0} setGuess={setGuess} />
         <Player />
         <Floor />
       </Physics>
