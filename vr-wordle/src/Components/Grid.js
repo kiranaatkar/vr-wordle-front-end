@@ -1,12 +1,17 @@
 import { Box, Text } from "@react-three/drei";
 import { useBox } from "@react-three/cannon";
+import { useSpring, animated } from "@react-spring/three";
+import { useState, useRef } from "react";
+import { useFrame } from "@react-three/fiber";
 
 export default function Grid(props) {
-  return props.guesses.map((it, i) => (
-    <group position={[0, 7.5 - i * 1.2, -3]} key={i}>
-      {Guess(it, props.answer)}
-    </group>
-  ));
+  return props.guesses.map((it, i) => {
+    return (
+      <group position={[0, 7.5 - i * 1.2, -3]} key={i}>
+        {Guess(it, props.answer)}
+      </group>
+    );
+  });
 }
 
 function StaticLetter(props) {
@@ -17,21 +22,30 @@ function StaticLetter(props) {
     absent: "#3a3a3c",
   }[props.state];
 
-  const [box] = useBox(() => ({
-    rotation: [Math.PI / 2, 0, 0],
-    position: props.position,
-    mass: 100,
-    args: size,
-    type: "Static",
-  }));
+  const [active, setActive] = useState(false);
+
+  const box = useRef();
+
+  useFrame(() => {
+    if (props.submitted && box.current.rotation.x < Math.PI / 2) {
+      box.current.rotation.x += 0.02;
+    }
+  });
 
   return (
     <Box
       ref={box}
       args={size}
+      rotation={[0, 0, 0]}
       position={props.position}
-      rotation={[Math.PI / 2, 0, 0]}
+      scale={1}
+      onClick={() => {
+        console.log(active);
+        console.log("clicked");
+        setActive(!active);
+      }}
     >
+      <animated.meshStandardMaterial attach="material" color={"#3a3a3c"} />
       <Text
         userData={{ letter: props.id }}
         position={[0, size[1] / 2 + 0.001, 0]}
@@ -41,7 +55,6 @@ function StaticLetter(props) {
       >
         {props.id.toUpperCase()}
       </Text>
-      <meshStandardMaterial color={color} />
     </Box>
   );
 }
@@ -56,6 +69,7 @@ function Guess(guess, word) {
         <StaticLetter
           side={side}
           id={it}
+          submitted={it ? true : false}
           key={i}
           position={[-width / 2 + (side + space) * i, 0, 0]}
           state={
