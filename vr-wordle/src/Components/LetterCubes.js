@@ -3,7 +3,7 @@ import { useThree } from "@react-three/fiber";
 import { useBox } from "@react-three/cannon";
 import { Box, Text } from "@react-three/drei";
 import { useDrag } from "@use-gesture/react";
-import { Interactive, useXR, useXRFrame } from "@react-three/xr";
+import { Interactive, useController, useXRFrame } from "@react-three/xr";
 import { Vector3 } from "three";
 
 export default function LetterCubes({ id, position, sizeArg, reset, index }) {
@@ -52,11 +52,9 @@ export default function LetterCubes({ id, position, sizeArg, reset, index }) {
     setState({ ...state, reset: reset });
   }
 
-  const controllers = useXR();
+  const grabController = useController("right");
 
   useXRFrame(() => {
-    const grabController = controllers.controllers[0];
-
     const pos = new Vector3();
     const posB = new Vector3();
     grabController.controller.getWorldPosition(pos);

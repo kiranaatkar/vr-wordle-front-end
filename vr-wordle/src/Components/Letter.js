@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useThree } from "@react-three/fiber";
-import { Interactive, useXR, useXRFrame } from "@react-three/xr";
+import { Interactive, useController, useXRFrame } from "@react-three/xr";
 import { useDrag } from "@use-gesture/react";
 import { useBox } from "@react-three/cannon";
 import { Box } from "@react-three/drei";
@@ -32,17 +32,15 @@ export default function Letter(props) {
       api.position.set(
         (x - size.width / 2) / aspect,
         -(y - size.height / 2) / aspect,
-        -0.7
+        1
       );
     },
     { pointerEvents: true }
   );
 
-  const controllers = useXR();
+  const grabController = useController("right");
 
   useXRFrame(() => {
-    const grabController = controllers.controllers[0];
-
     const pos = new Vector3();
     const posB = new Vector3();
     grabController.controller.getWorldPosition(pos);
