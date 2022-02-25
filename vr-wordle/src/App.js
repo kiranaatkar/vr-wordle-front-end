@@ -118,7 +118,6 @@ export default function App() {
       <ambientLight intensity={1} />
       <spotLight position={[0, 10, 0]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
-      <mesh></mesh>
       <Text
         fontSize={1}
         color="green"
