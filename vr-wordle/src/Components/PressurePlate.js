@@ -3,10 +3,9 @@ import { useState } from "react";
 import { useSpring, animated, config } from "@react-spring/three";
 
 export default function PressurePlate(props) {
-  const [x, y, z] = props.position;
   const [pressed, setPress] = useState(false);
 
-  const [ref, api] = useCylinder(() => ({
+  const [ref] = useCylinder(() => ({
     type: "Static",
     mass: 10,
     args: props.args,
@@ -15,13 +14,10 @@ export default function PressurePlate(props) {
     onCollide: (e) => {
       props.setGuess(e.body.name, props.guessIndex);
     },
-    onCollideBegin: (e) => {
-      console.log("BEGIN");
+    onCollideBegin: () => {
       setPress(true);
-      console.log(api);
     },
-    onCollideEnd: (e) => {
-      console.log("END");
+    onCollideEnd: () => {
       setPress(false);
     },
   }));
@@ -32,22 +28,16 @@ export default function PressurePlate(props) {
     config: config.slow,
   });
 
-  const { position } = useSpring({
-    to: { position: [x, pressed ? y - 0.2 : y, z] },
-    from: { position: [x, pressed ? y : y - 0.2, z] },
-    config: config.slow,
-  });
-
   function getPlateColor() {
-    if (pressed) {
-      return <meshNormalMaterial />;
-    } else {
-      return <meshStandardMaterial color="black" />;
-    }
+    return pressed ? (
+      <meshNormalMaterial />
+    ) : (
+      <meshStandardMaterial color="black" />
+    );
   }
 
   return (
-    <animated.mesh ref={ref} position={position} scale={scale}>
+    <animated.mesh ref={ref} scale={scale}>
       <cylinderBufferGeometry attach="geometry" args={props.args} />
       {getPlateColor()}
     </animated.mesh>
