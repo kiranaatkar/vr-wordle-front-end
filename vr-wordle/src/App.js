@@ -105,6 +105,7 @@ export default function App() {
         console.log("lose");
         setGameCondition("lose");
       }
+      deleteOldGuess();
     } else {
       setTableText("Word must be 5 characters");
     }
