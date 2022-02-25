@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text } from "@react-three/drei";
+import { Box } from "@react-three/drei";
 import { useBox } from "@react-three/cannon";
 
 export default function Table({ position, rotation, args }) {

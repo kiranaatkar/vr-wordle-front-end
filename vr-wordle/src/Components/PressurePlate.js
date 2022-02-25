@@ -3,7 +3,7 @@ import { animated } from "@react-spring/three";
 import { useState } from "react";
 
 export default function PressurePlate(props) {
-  const [char, setChar] = useState("");
+  const [char] = useState("");
   const [ref] = useCylinder(() => ({
     type: "Static",
     mass: 10,
