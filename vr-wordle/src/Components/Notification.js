@@ -2,7 +2,6 @@ import React from "react";
 import { Text } from "@react-three/drei";
 
 export default function Notification(props) {
-  console.log("notification rendering");
   return (
     <Text
       position={[0, 1.22, -1.45]}

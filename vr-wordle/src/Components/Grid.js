@@ -25,7 +25,7 @@ function StaticLetter(props) {
 
   const springs = useSpring({
     color: props.submitted ? color : "#3a3a3c",
-    delay: 700 + props.index * 500,
+    delay: 600 + props.index * 600,
     config: { duration: 200 },
   });
 
@@ -45,8 +45,6 @@ function StaticLetter(props) {
       position={props.position}
       scale={1}
       onClick={() => {
-        console.log(active);
-        console.log("clicked");
         setActive(!active);
       }}
     >
