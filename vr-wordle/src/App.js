@@ -115,8 +115,6 @@ export default function App() {
         <Column position={[0, 0, 0.7]} guessIndex={2} setGuess={setGuess} />
         <Column position={[0.6, 0, 0.6]} guessIndex={1} setGuess={setGuess} />
         <Column position={[1.2, 0, 0.4]} guessIndex={0} setGuess={setGuess} />
-        <Column position={[5, 0, 0.4]} guessIndex={0} setGuess={setGuess} />
-
         <Player />
         <Floor />
       </Physics>

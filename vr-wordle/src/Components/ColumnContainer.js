@@ -1,5 +1,5 @@
 import { useCylinder } from "@react-three/cannon";
-import { set } from "date-fns";
+import PressurePlate from "./PressurePlate";
 
 export default function ColumnContainer({
   columnGeometry,
@@ -20,32 +20,12 @@ export default function ColumnContainer({
       />
       <PressurePlate
         position={[x, y + 0.55, z]}
-        args={[0.225, 0.225, 0.05, 32]}
+        args={[0.225, 0.225, 0.1, 32]}
         setGuess={setGuess}
         guessIndex={guessIndex}
       />
       <ContainerCircle position={[x, y, z]} args={[0.145, 0.145, 1, 32]} />
     </>
-  );
-}
-
-function PressurePlate(props) {
-  const [x, y, z] = props.position;
-  const [ref, api] = useCylinder(() => ({
-    type: "Static",
-    mass: 1000,
-    args: props.args,
-    position: props.position,
-    onCollide: (e) => {
-      props.setGuess(e.body.name, props.guessIndex);
-    },
-  }));
-
-  return (
-    <mesh ref={ref} position={props.position}>
-      <cylinderBufferGeometry attach="geometry" args={props.args} />
-      <meshNormalMaterial color="hotpink" wireframe opacity={1} transparent />
-    </mesh>
   );
 }
 
