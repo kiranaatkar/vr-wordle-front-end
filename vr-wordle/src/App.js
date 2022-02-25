@@ -54,6 +54,7 @@ export default function App() {
   const [reset, setReset] = useState(false);
   const [currentGuess, setCurrentGuess] = useState([]);
   const [answer, setAnswer] = useState("");
+  const [gameEnd, setGameCondition] = useState(false);
 
   const resetPositions = () => {
     setReset(!reset);
@@ -88,12 +89,19 @@ export default function App() {
   };
 
   const submitGuess = () => {
-    if (guessCount < 6 && currentGuess.length === 5) {
+    if (guessCount < 6 && currentGuess.length === 5 && !gameEnd) {
       const newGuesses = guesses;
       newGuesses[guessCount] = currentGuess.join("");
       const newCount = guessCount + 1;
       setGuesses(newGuesses);
       setGuessCount(newCount);
+      if (currentGuess.join("") === answer) {
+        console.log("win");
+        setGameCondition("win");
+      } else if (!newGuesses.includes(answer) && guessCount === 5) {
+        console.log("lose");
+        setGameCondition("lose");
+      }
 
       deleteOldGuess();
     }
