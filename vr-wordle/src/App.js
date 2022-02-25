@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Stars } from "@react-three/drei";
+import { Stars, Text } from "@react-three/drei";
 import { VRCanvas, DefaultXRControllers } from "@react-three/xr";
 import LetterCubes from "./Components/LetterCubes.js";
 import Floor from "./Components/Floor.js";
@@ -14,7 +14,6 @@ import Letter from "./Components/Letter.js";
 import Column from "./Components/Column.js";
 import { answerWords } from "./word-lists/answer-words.js";
 import { differenceInDays } from "date-fns";
-import Notification from "./Components/Notification.js";
 
 export function generateLetters(reset, alphabet, letters) {
   return (
@@ -53,8 +52,7 @@ export default function App() {
   ]);
   const [guessCount, setGuessCount] = useState(0);
   const [reset, setReset] = useState(false);
-  const [currentGuess, setCurrentGuess] = useState([]);
-  const [tableText, setTableText] = useState("");
+  const [currentGuess, setCurrentGuess] = useState(["v", "i", "v", "i", "d"]);
   const [answer, setAnswer] = useState("");
   const [gameEnd, setGameCondition] = useState(false);
 
@@ -87,7 +85,6 @@ export default function App() {
       const dummyArr = currentGuess;
       dummyArr[i] = char;
       setCurrentGuess(dummyArr);
-      setTableText(dummyArr.join(""));
     }
   };
 
@@ -110,8 +107,6 @@ export default function App() {
         setGameCondition("lose");
       }
       deleteOldGuess();
-    } else {
-      setTableText("Word must be 5 characters");
     }
   };
 
@@ -121,17 +116,36 @@ export default function App() {
       <ambientLight intensity={1} />
       <spotLight position={[0, 10, 0]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
+      <mesh></mesh>
+      <Text
+        fontSize={1}
+        color="green"
+        position={[0, 1.22, -1.45]}
+        rotation={[-Math.PI / 2, 0, 0]}
+        fillOpacity={gameEnd === "win" ? 1 : 0}
+      >
+        You Win!
+      </Text>
+      <Text
+        fontSize={1}
+        color="red"
+        position={[0, 1.22, -1.45]}
+        rotation={[1, 0, 0]}
+        fillOpacity={gameEnd === "lose" ? 1 : 0}
+      >
+        You Lose!
+      </Text>
+      <Grid guesses={guesses} answer={answer} />
       <Physics gravity={[0, -10, 0]}>
         {/* <PointerLockControls /> */}
         <Button reset={resetPositions} />
         <Submit submit={submitGuess} />
-        <Grid guesses={guesses} answer={answer} />
+
         <Table
           args={[3.5, 0.2, 2]}
           position={[0, 1.05, -1.2]}
           rotation={[0.2, 0, 0]}
         />
-        <Notification tableText={tableText} />
         <Grabber groupRef={letters} />
         {generateLetters(reset, alphabet, letters)}
         <Letter position={[2, 1, 0.4]} name="w" />
@@ -139,11 +153,11 @@ export default function App() {
         <Letter position={[2, 3, 0.7]} name="d" />
         <Letter position={[-2, 1, 0.6]} name="l" />
         <Letter position={[-2, 2, 0.4]} name="e" />
-        <Column position={[-1.25, 0, 0.4]} guessIndex={4} setGuess={setGuess} />
-        <Column position={[-0.6, 0, 0.6]} guessIndex={3} setGuess={setGuess} />
-        <Column position={[0, 0, 0.7]} guessIndex={2} setGuess={setGuess} />
-        <Column position={[0.6, 0, 0.6]} guessIndex={1} setGuess={setGuess} />
-        <Column position={[1.2, 0, 0.4]} guessIndex={0} setGuess={setGuess} />
+        <Column position={[-1.25, 0, 1]} guessIndex={4} setGuess={setGuess} />
+        <Column position={[-0.6, 0, 1]} guessIndex={3} setGuess={setGuess} />
+        <Column position={[0, 0, 1]} guessIndex={2} setGuess={setGuess} />
+        <Column position={[0.6, 0, 1]} guessIndex={1} setGuess={setGuess} />
+        <Column position={[1.2, 0, 1]} guessIndex={0} setGuess={setGuess} />
         <Player />
         <Floor />
       </Physics>
