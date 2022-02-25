@@ -91,6 +91,46 @@ export default function LetterCubes({ id, position, sizeArg, reset, index }) {
         >
           {id.toUpperCase()}
         </Text>
+        <Text
+          userData={{ letter: id }}
+          position={[0, -(sizeArg[1] / 2 + 0.0001), 0]}
+          rotation={[-Math.PI / 2, Math.PI, 0]}
+          fontSize={0.05}
+        >
+          {id.toUpperCase()}
+        </Text>
+        <Text
+          userData={{ letter: id }}
+          position={[sizeArg[1] / 2 + 0.0001, 0, 0]}
+          rotation={[0, Math.PI / 2, -Math.PI / 2]}
+          fontSize={0.05}
+        >
+          {id.toUpperCase()}
+        </Text>
+        <Text
+          userData={{ letter: id }}
+          position={[-(sizeArg[1] / 2 + 0.0001), 0, 0]}
+          rotation={[0, -Math.PI / 2, Math.PI / 2]}
+          fontSize={0.05}
+        >
+          {id.toUpperCase()}
+        </Text>
+        <Text
+          userData={{ letter: id }}
+          position={[0, 0, sizeArg[1] / 2 + 0.0001]}
+          rotation={[0, 0, 0]}
+          fontSize={0.05}
+        >
+          {id.toUpperCase()}
+        </Text>
+        <Text
+          userData={{ letter: id }}
+          position={[0, 0, -(sizeArg[1] / 2 + 0.0001)]}
+          rotation={[0, 0, 0]}
+          fontSize={0.05}
+        >
+          {id.toUpperCase()}
+        </Text>
         <meshStandardMaterial color={state.hover ? "#00E2FB" : "#3a3a3c"} />
       </Box>
     </Interactive>
