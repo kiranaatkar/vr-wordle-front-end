@@ -52,7 +52,9 @@ export default function App() {
   ]);
   const [guessCount, setGuessCount] = useState(0);
   const [reset, setReset] = useState(false);
-  const [currentGuess, setCurrentGuess] = useState(["v", "i", "v", "i", "d"]);
+
+  const [currentGuess, setCurrentGuess] = useState([]);
+
   const [answer, setAnswer] = useState("");
   const [gameEnd, setGameCondition] = useState(false);
 
@@ -146,6 +148,7 @@ export default function App() {
           position={[0, 1.05, -1.2]}
           rotation={[0.2, 0, 0]}
         />
+
         <Grabber groupRef={letters} />
         {generateLetters(reset, alphabet, letters)}
         <Letter position={[2, 1, 0.4]} name="w" />
