@@ -25,8 +25,8 @@ function StaticLetter(props) {
 
   const springs = useSpring({
     color: props.submitted ? color : "#3a3a3c",
-    delay: 400 + props.index * 400,
-    config: { duration: 1500 },
+    delay: 700 + props.index * 500,
+    config: { duration: 200 },
   });
 
   const box = useRef();
