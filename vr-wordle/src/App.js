@@ -14,7 +14,6 @@ import Letter from "./Components/Letter.js";
 import Column from "./Components/Column.js";
 import { answerWords } from "./word-lists/answer-words.js";
 import { differenceInDays } from "date-fns";
-import Notification from "./Components/Notification.js";
 
 export function generateLetters(reset, alphabet, letters) {
   return (
@@ -54,7 +53,6 @@ export default function App() {
   const [guessCount, setGuessCount] = useState(0);
   const [reset, setReset] = useState(false);
   const [currentGuess, setCurrentGuess] = useState([]);
-  const [tableText, setTableText] = useState("");
   const [answer, setAnswer] = useState("");
   const [gameEnd, setGameCondition] = useState(false);
 
@@ -87,12 +85,15 @@ export default function App() {
       const dummyArr = currentGuess;
       dummyArr[i] = char;
       setCurrentGuess(dummyArr);
-      setTableText(dummyArr.join(""));
     }
   };
 
   const submitGuess = () => {
-    if (guessCount < 6 && currentGuess.length === 5 && !gameEnd) {
+    if (
+      guessCount < 6 &&
+      currentGuess.filter((char) => char !== "").length === 5 &&
+      !gameEnd
+    ) {
       const newGuesses = guesses;
       newGuesses[guessCount] = currentGuess.join("");
       const newCount = guessCount + 1;
@@ -105,8 +106,7 @@ export default function App() {
         console.log("lose");
         setGameCondition("lose");
       }
-    } else {
-      setTableText("Word must be 5 characters");
+      deleteOldGuess();
     }
   };
 
@@ -126,7 +126,6 @@ export default function App() {
           position={[0, 1.05, -1.2]}
           rotation={[0.2, 0, 0]}
         />
-        {/* <Notification tableText={tableText} /> */}
         <Grabber groupRef={letters} />
         {generateLetters(reset, alphabet, letters)}
         <Letter position={[2, 1, 0.4]} name="w" />

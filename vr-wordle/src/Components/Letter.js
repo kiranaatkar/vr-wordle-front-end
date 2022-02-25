@@ -13,8 +13,6 @@ export default function Letter(props) {
   const [position] = useState(props.position);
   const aspect = size.width / viewport.width;
 
-  const args = [0.4, 0.4, 0.4];
-
   const [box, api] = useBox(() => ({
     mass: 1,
     position: position,
@@ -34,7 +32,7 @@ export default function Letter(props) {
       api.position.set(
         (x - size.width / 2) / aspect,
         -(y - size.height / 2) / aspect,
-        props.position[2]
+        1
       );
     },
     { pointerEvents: true }
