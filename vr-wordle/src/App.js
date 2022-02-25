@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Stars } from "@react-three/drei";
+import { Stars, Text } from "@react-three/drei";
 import { VRCanvas, DefaultXRControllers } from "@react-three/xr";
 import LetterCubes from "./Components/LetterCubes.js";
 import Floor from "./Components/Floor.js";
@@ -52,7 +52,9 @@ export default function App() {
   ]);
   const [guessCount, setGuessCount] = useState(0);
   const [reset, setReset] = useState(false);
+
   const [currentGuess, setCurrentGuess] = useState([]);
+
   const [answer, setAnswer] = useState("");
   const [gameEnd, setGameCondition] = useState(false);
 
@@ -116,11 +118,31 @@ export default function App() {
       <ambientLight intensity={1} />
       <spotLight position={[0, 10, 0]} angle={0.15} penumbra={1} />
       <pointLight position={[-10, -10, -10]} />
+      <mesh></mesh>
+      <Text
+        fontSize={1}
+        color="green"
+        position={[0, 1.22, -1.45]}
+        rotation={[-Math.PI / 2, 0, 0]}
+        fillOpacity={gameEnd === "win" ? 1 : 0}
+      >
+        You Win!
+      </Text>
+      <Text
+        fontSize={1}
+        color="red"
+        position={[0, 1.22, -1.45]}
+        rotation={[1, 0, 0]}
+        fillOpacity={gameEnd === "lose" ? 1 : 0}
+      >
+        You Lose!
+      </Text>
+      <Grid guesses={guesses} answer={answer} />
       <Physics gravity={[0, -10, 0]}>
         {/* <PointerLockControls /> */}
         <Button reset={resetPositions} />
         <Submit submit={submitGuess} />
-        <Grid guesses={guesses} answer={answer} />
+
         <Table
           args={[3.5, 0.2, 2]}
           position={[0, 1.05, -1.2]}
