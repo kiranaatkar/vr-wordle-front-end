@@ -18,7 +18,7 @@ export default function Letter(props) {
   const [box, api] = useBox(() => ({
     mass: 1,
     position: position,
-    args: args,
+    args: [0.2, 0.2, 0.2],
     material: {
       friction: 1,
     },
@@ -34,7 +34,7 @@ export default function Letter(props) {
       api.position.set(
         (x - size.width / 2) / aspect,
         -(y - size.height / 2) / aspect,
-        1
+        props.position[2]
       );
     },
     { pointerEvents: true }
@@ -61,7 +61,7 @@ export default function Letter(props) {
       <Box
         {...bind()}
         ref={box}
-        args={args}
+        args={[0.2, 0.2, 0.2]}
         onPointerOver={(event) => hover(true)}
         onPointerOut={(event) => hover(false)}
         name={props.name}
