@@ -122,11 +122,11 @@ export default function App() {
         <Letter position={[0, 4, 2]} name="d" />
         <Letter position={[2, 4, 2]} name="l" />
         <Letter position={[4, 4, 2]} name="e" />
-        <Column position={[-1.25, 0, 0.4]} guessIndex={4} setGuess={setGuess} />
-        <Column position={[-0.6, 0, 0.6]} guessIndex={3} setGuess={setGuess} />
-        <Column position={[0, 0, 0.7]} guessIndex={2} setGuess={setGuess} />
-        <Column position={[0.6, 0, 0.6]} guessIndex={1} setGuess={setGuess} />
-        <Column position={[1.2, 0, 0.4]} guessIndex={0} setGuess={setGuess} />
+        <Column position={[-1.25, 0, 1]} guessIndex={4} setGuess={setGuess} />
+        <Column position={[-0.6, 0, 1]} guessIndex={3} setGuess={setGuess} />
+        <Column position={[0, 0, 1]} guessIndex={2} setGuess={setGuess} />
+        <Column position={[0.6, 0, 1]} guessIndex={1} setGuess={setGuess} />
+        <Column position={[1.2, 0, 1]} guessIndex={0} setGuess={setGuess} />
         <Player />
         <Floor />
       </Physics>
