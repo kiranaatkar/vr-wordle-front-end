@@ -1,37 +1,56 @@
 import { Box, Text } from "@react-three/drei";
-import { useBox } from "@react-three/cannon";
+import { useState, useRef } from "react";
+import { useSpring, animated } from "@react-spring/three";
+import { useFrame } from "@react-three/fiber";
 
 export default function Grid(props) {
-  return props.guesses.map((it, i) => (
-    <group position={[0, 7.5 - i * 1.2, -3]} key={i}>
-      {Guess(it, props.answer)}
-    </group>
-  ));
+  return props.guesses.map((it, i) => {
+    return (
+      <group position={[0, 7.5 - i * 1.2, -3]} key={i}>
+        {Guess(it, props.answer)}
+      </group>
+    );
+  });
 }
 
 function StaticLetter(props) {
   const size = [props.side, props.side, props.side];
-  const color = {
-    present: "#b59f3b",
-    correct: "#538d4e",
-    absent: "#3a3a3c",
+  let color = {
+    present: "#B59F3B",
+    correct: "#538D4E",
+    absent: "#3A3A3C",
   }[props.state];
 
-  const [box] = useBox(() => ({
-    rotation: [Math.PI / 2, 0, 0],
-    position: props.position,
-    mass: 100,
-    args: size,
-    type: "Static",
-  }));
+  const [active, setActive] = useState(false);
+
+  const springs = useSpring({
+    color: props.submitted ? color : "#3a3a3c",
+    delay: 400 + props.index * 400,
+    config: { duration: 1500 },
+  });
+
+  const box = useRef();
+
+  useFrame(() => {
+    if (props.submitted && box.current.rotation.x < Math.PI / 2) {
+      box.current.rotation.x += 0.03 - props.index * 0.005;
+    }
+  });
 
   return (
     <Box
       ref={box}
       args={size}
+      rotation={[0, 0, 0]}
       position={props.position}
-      rotation={[Math.PI / 2, 0, 0]}
+      scale={1}
+      onClick={() => {
+        console.log(active);
+        console.log("clicked");
+        setActive(!active);
+      }}
     >
+      <animated.meshStandardMaterial attach="material" color={springs.color} />
       <Text
         userData={{ letter: props.id }}
         position={[0, size[1] / 2 + 0.001, 0]}
@@ -41,7 +60,6 @@ function StaticLetter(props) {
       >
         {props.id.toUpperCase()}
       </Text>
-      <meshStandardMaterial color={color} />
     </Box>
   );
 }
@@ -56,6 +74,8 @@ function Guess(guess, word) {
         <StaticLetter
           side={side}
           id={it}
+          submitted={!(it === " ")}
+          index={i}
           key={i}
           position={[-width / 2 + (side + space) * i, 0, 0]}
           state={
