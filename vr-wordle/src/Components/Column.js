@@ -8,7 +8,7 @@ import ColumnContainer from "./ColumnContainer.js";
 
 export default function Model({ position, guessIndex, setGuess }) {
   const group = useRef();
-  const { nodes, materials } = useGLTF("/scene.glb");
+  const { nodes } = useGLTF("/scene.glb");
   return (
     <>
       <group
