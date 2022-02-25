@@ -1,24 +1,45 @@
 import { useCylinder } from "@react-three/cannon";
-import { animated } from "@react-spring/three";
 import { useState } from "react";
+import { useSpring, animated, config } from "@react-spring/three";
 
 export default function PressurePlate(props) {
-  const [char] = useState("");
+  const [pressed, setPress] = useState(false);
+
   const [ref] = useCylinder(() => ({
     type: "Static",
     mass: 10,
     args: props.args,
-    // scale: [1, pressed ? 0.2 : 1, 1],
+    scale: [1, pressed ? 0.2 : 1, 1],
     position: props.position,
-    onCollideBegin: (e) => {
-      e.body.name !== char && props.setGuess(e.body.name, props.guessIndex);
+    onCollide: (e) => {
+      props.setGuess(e.body.name, props.guessIndex);
+    },
+    onCollideBegin: () => {
+      setPress(true);
+    },
+    onCollideEnd: () => {
+      setPress(false);
     },
   }));
 
+  const { scale } = useSpring({
+    to: { scale: [1, pressed ? 0.5 : 1, 1] },
+    from: { scale: [1, pressed ? 1 : 0.5, 1] },
+    config: config.slow,
+  });
+
+  function getPlateColor() {
+    return pressed ? (
+      <meshNormalMaterial />
+    ) : (
+      <meshStandardMaterial color="black" />
+    );
+  }
+
   return (
-    <animated.mesh ref={ref} position={props.position}>
+    <animated.mesh ref={ref} scale={scale}>
       <cylinderBufferGeometry attach="geometry" args={props.args} />
-      <meshNormalMaterial color="hotpink" wireframe opacity={1} transparent />
+      {getPlateColor()}
     </animated.mesh>
   );
 }
