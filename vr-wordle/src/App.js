@@ -92,7 +92,11 @@ export default function App() {
   };
 
   const submitGuess = () => {
-    if (guessCount < 6 && currentGuess.length === 5 && !gameEnd) {
+    if (
+      guessCount < 6 &&
+      currentGuess.filter((char) => char !== "").length === 5 &&
+      !gameEnd
+    ) {
       const newGuesses = guesses;
       newGuesses[guessCount] = currentGuess.join("");
       const newCount = guessCount + 1;
