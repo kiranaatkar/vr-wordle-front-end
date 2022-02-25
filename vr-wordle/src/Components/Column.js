@@ -22,14 +22,14 @@ export default function Model({ position, guessIndex, setGuess }) {
           castShadow
           receiveShadow
           geometry={nodes.Object_2.geometry}
-          material={materials.Doric_Twist_Pedestal}
-        />
+        >
+          <meshStandardMaterial color="black" />{" "}
+        </mesh>
       </group>
       <ColumnContainer
         columnGeometry={[...position, 0.3]}
         setGuess={setGuess}
         guessIndex={guessIndex}
-        material={materials.Doric_Twist_Pedestal}
       />
     </>
   );

@@ -13,10 +13,10 @@ export default function ColumnContainer({
   return (
     // bottom, top, pressure plate, trunk
     <>
-      <ContainerCircle position={[x, 0, z]} args={[0.225, 0.225, 0.1, 32]} />
+      <ContainerCircle position={[x, 0, z]} args={[0.14, 0.325, 0.25, 32]} />
       <ContainerCircle
         position={[x, y + 0.465, z]}
-        args={[0.225, 0.2, 0.1, 32]}
+        args={[0.225, 0.15, 0.15, 32]}
       />
       <PressurePlate
         position={[x, y + 0.55, z]}
@@ -39,7 +39,7 @@ function ContainerCircle(props) {
   return (
     <mesh ref={ref} position={props.position}>
       <cylinderBufferGeometry attach="geometry" args={props.args} />
-      <meshNormalMaterial color="red" wireframe opacity={1} transparent />
+      <meshNormalMaterial opacity={1} transparent />
     </mesh>
   );
 }

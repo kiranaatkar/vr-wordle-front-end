@@ -126,7 +126,7 @@ export default function App() {
           position={[0, 1.05, -1.2]}
           rotation={[0.2, 0, 0]}
         />
-        <Notification tableText={tableText} />
+        {/* <Notification tableText={tableText} /> */}
         <Grabber groupRef={letters} />
         {generateLetters(reset, alphabet, letters)}
         <Letter position={[2, 1, 0.4]} name="w" />
