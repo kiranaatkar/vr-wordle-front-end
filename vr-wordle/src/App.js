@@ -52,9 +52,7 @@ export default function App() {
   ]);
   const [guessCount, setGuessCount] = useState(0);
   const [reset, setReset] = useState(false);
-
   const [currentGuess, setCurrentGuess] = useState([]);
-
   const [answer, setAnswer] = useState("");
   const [gameEnd, setGameCondition] = useState(false);
 
@@ -109,6 +107,7 @@ export default function App() {
         setGameCondition("lose");
       }
       deleteOldGuess();
+      resetPositions();
     }
   };
 
@@ -138,10 +137,8 @@ export default function App() {
       </Text>
       <Grid guesses={guesses} answer={answer} />
       <Physics gravity={[0, -10, 0]}>
-        {/* <PointerLockControls /> */}
         <Button reset={resetPositions} />
         <Submit submit={submitGuess} />
-
         <Table
           args={[3.5, 0.2, 2]}
           position={[0, 1.05, -1.2]}
@@ -162,7 +159,6 @@ export default function App() {
         <Player />
         <Floor />
       </Physics>
-
       <Stars />
     </VRCanvas>
   );
