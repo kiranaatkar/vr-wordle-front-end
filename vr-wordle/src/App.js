@@ -12,8 +12,11 @@ import { Physics } from "@react-three/cannon";
 import Player from "./Components/Player.js";
 import Letter from "./Components/Letter.js";
 import Column from "./Components/Column.js";
+import Networking from "./Components/Networking.js";
 import { answerWords } from "./word-lists/answer-words.js";
 import { differenceInDays } from "date-fns";
+
+const myAPI = new Networking();
 
 export function generateLetters(reset, alphabet, letters) {
   return (
@@ -101,6 +104,8 @@ export default function App() {
       setGuessCount(newCount);
       if (currentGuess.join("") === answer) {
         console.log("win");
+        const score = guessCount + 1;
+        myAPI.postScore(score, answer, "placeholderUsername");
         setGameCondition("win");
       } else if (!newGuesses.includes(answer) && guessCount === 5) {
         console.log("lose");
@@ -146,11 +151,11 @@ export default function App() {
         />
         <Grabber groupRef={letters} />
         {generateLetters(reset, alphabet, letters)}
-        <Letter position={[2, 1, 0.4]} name="w" />
-        <Letter position={[2, 2, 0.6]} name="r" />
-        <Letter position={[2, 3, 0.7]} name="d" />
-        <Letter position={[-2, 1, 0.6]} name="l" />
-        <Letter position={[-2, 2, 0.4]} name="e" />
+        <Letter position={[2, 1, 0.4]} name="c" />
+        <Letter position={[2, 2, 0.6]} name="h" />
+        <Letter position={[2, 1, 0.7]} name="o" />
+        <Letter position={[-2, 1, 0.6]} name="k" />
+        <Letter position={[-2, 1, 0.4]} name="e" />
         <Column position={[-1.25, 0, 0.4]} guessIndex={4} setGuess={setGuess} />
         <Column position={[-0.6, 0, 0.6]} guessIndex={3} setGuess={setGuess} />
         <Column position={[0, 0, 0.7]} guessIndex={2} setGuess={setGuess} />
