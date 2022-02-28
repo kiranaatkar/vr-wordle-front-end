@@ -1,9 +1,18 @@
 import { useCylinder } from "@react-three/cannon";
 import { useState } from "react";
 import { useSpring, animated, config } from "@react-spring/three";
+import { useLoader } from "@react-three/fiber";
+import { TextureLoader } from "three";
 
 export default function PressurePlate(props) {
   const [pressed, setPress] = useState(false);
+
+  const [colorMap, normalMap, roughnessMap, aoMap] = useLoader(TextureLoader, [
+    "/textures/aerial_rocks_02_diff_2k.jpg",
+    "/textures/aerial_rocks_02_nor_dx_2k.jpg",
+    "/textures/aerial_rocks_02_rough_2k.jpg",
+    "/textures/aerial_rocks_02_ao_2k.jpg",
+  ]);
 
   const [ref] = useCylinder(() => ({
     type: "Static",
@@ -30,9 +39,14 @@ export default function PressurePlate(props) {
 
   function getPlateColor() {
     return pressed ? (
-      <meshNormalMaterial />
+      <meshNormalMaterial color={"white"} />
     ) : (
-      <meshStandardMaterial color="black" />
+      <meshStandardMaterial
+        map={colorMap}
+        normalMap={normalMap}
+        roughnessMap={roughnessMap}
+        aoMap={aoMap}
+      />
     );
   }
 

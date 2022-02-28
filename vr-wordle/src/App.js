@@ -1,5 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Text, Environment, Sky, Stars } from "@react-three/drei";
+import {
+  Text,
+  Environment,
+  Sky,
+  Stars,
+  PositionalAudio,
+} from "@react-three/drei";
 import { VRCanvas, DefaultXRControllers } from "@react-three/xr";
 import LetterCubes from "./Components/LetterCubes.js";
 import Floor from "./Components/Floor.js";
@@ -11,7 +17,7 @@ import Table from "./Components/Table.js";
 import { Physics } from "@react-three/cannon";
 import Player from "./Components/Player.js";
 import Letter from "./Components/Letter.js";
-import Column from "./Components/Column.js";
+import Pillars from "./Components/Pillars.js";
 import { answerWords } from "./word-lists/answer-words.js";
 import { differenceInDays } from "date-fns";
 
@@ -115,7 +121,7 @@ export default function App() {
   return (
     <VRCanvas style={{ touchAction: "none" }}>
       <DefaultXRControllers />
-      <ambientLight intensity={0.2} />
+      <ambientLight intensity={0.3} />
       <mesh></mesh>
       <Text
         fontSize={1}
@@ -137,10 +143,8 @@ export default function App() {
       </Text>
       <Grid guesses={guesses} answer={answer} />
       <Physics gravity={[0, -10, 0]}>
-        {/* <PointerLockControls /> */}
         <Button reset={resetPositions} />
         <Submit submit={submitGuess} />
-
         <Table
           args={[3.5, 0.2, 2]}
           position={[0, 1.05, -1.2]}
@@ -148,27 +152,17 @@ export default function App() {
         />
         <Grabber groupRef={letters} />
         {generateLetters(reset, alphabet, letters)}
-        <Letter position={[2, 1, 0.4]} name="w" />
+        <Letter position={[2, 1, 1]} name="w" />
         <Letter position={[2, 2, 0.6]} name="r" />
         <Letter position={[2, 3, 0.7]} name="d" />
         <Letter position={[-2, 1, 0.6]} name="l" />
-        <Letter position={[-2, 2, 0.4]} name="e" />
-        <Column position={[-1.25, 0, 0.4]} guessIndex={4} setGuess={setGuess} />
-        <Column position={[-0.6, 0, 0.6]} guessIndex={3} setGuess={setGuess} />
-        <Column position={[0, 0, 0.7]} guessIndex={2} setGuess={setGuess} />
-        <Column position={[0.6, 0, 0.6]} guessIndex={1} setGuess={setGuess} />
-        <Column position={[1.2, 0, 0.4]} guessIndex={0} setGuess={setGuess} />
+        <Letter position={[-2, 2, 1]} name="e" />
+        <Pillars setGuess={setGuess} />
         <Player />
         <Floor />
       </Physics>
       <Environment preset={"night"} />
-      <Sky
-        distance={450000}
-        sunPosition={[0, -1, 0]}
-        azimuth={0.25}
-        // mieCoefficient={0.024}
-        // mieDirectionalG={1}
-      />
+      <Sky distance={450000} sunPosition={[0, -1, 0]} azimuth={0.25} />
       <Stars
         radius={100}
         depth={100}
@@ -178,6 +172,7 @@ export default function App() {
         fade
       />
       <fog attach="fog" args={["#421700", 0, 100]} />
+      <PositionalAudio url="/wind.mp3" distance={1} autoplay={false} loop />
     </VRCanvas>
   );
 }
