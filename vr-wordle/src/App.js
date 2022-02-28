@@ -18,8 +18,11 @@ import { Physics } from "@react-three/cannon";
 import Player from "./Components/Player.js";
 import Letter from "./Components/Letter.js";
 import Pillars from "./Components/Pillars.js";
+import Networking from "./Components/Networking.js";
 import { answerWords } from "./word-lists/answer-words.js";
 import { differenceInDays } from "date-fns";
+
+const myAPI = new Networking();
 
 export function generateLetters(reset, alphabet, letters) {
   return (
@@ -107,6 +110,8 @@ export default function App() {
       setGuessCount(newCount);
       if (currentGuess.join("") === answer) {
         console.log("win");
+        const score = guessCount + 1;
+        myAPI.postScore(score, answer, "placeholderUsername");
         setGameCondition("win");
       } else if (!newGuesses.includes(answer) && guessCount === 5) {
         console.log("lose");
