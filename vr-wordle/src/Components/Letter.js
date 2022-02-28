@@ -32,7 +32,7 @@ export default function Letter(props) {
       api.position.set(
         (x - size.width / 2) / aspect,
         -(y - size.height / 2) / aspect,
-        1
+        position[2]
       );
     },
     { pointerEvents: true }
