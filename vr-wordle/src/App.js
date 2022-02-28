@@ -97,7 +97,6 @@ export default function App() {
       currentGuess.filter((char) => char !== "").length === 5 &&
       !gameEnd
     ) {
-      console.log(guessCount);
       const newGuesses = guesses;
       newGuesses[guessCount] = currentGuess.join("");
       const newCount = guessCount + 1;
