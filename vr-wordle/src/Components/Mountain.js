@@ -3,9 +3,7 @@ import { useGLTF } from "@react-three/drei";
 
 export default function Model(props) {
   const group = useRef();
-  const { nodes, materials } = useGLTF(
-    "/uploads_files_3605962_mountain (1).glb"
-  );
+  const { nodes, materials } = useGLTF("/mountain.glb");
   return (
     <group
       ref={group}
