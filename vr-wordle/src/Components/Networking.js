@@ -18,7 +18,7 @@ class Networking {
   }
 
   async postScore(score, word, username) {
-    let response = await fetch(`${API_URL}/scores`, {
+    const response = await fetch(`${API_URL}/scores`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -30,7 +30,7 @@ class Networking {
       }),
     });
 
-    let json = await response.json();
+    const json = await response.json();
     return json;
   }
 }
