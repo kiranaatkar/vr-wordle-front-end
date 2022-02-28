@@ -2,6 +2,7 @@ import { Box, Text } from "@react-three/drei";
 import { useState, useRef } from "react";
 import { useSpring, animated } from "@react-spring/three";
 import { useFrame } from "@react-three/fiber";
+import React from "react";
 
 export default function Grid(props) {
   return props.guesses.map((it, i) => {

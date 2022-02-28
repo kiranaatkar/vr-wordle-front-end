@@ -1,5 +1,5 @@
 import { useCylinder } from "@react-three/cannon";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useSpring, animated, config } from "@react-spring/three";
 
 export default function PressurePlate(props) {

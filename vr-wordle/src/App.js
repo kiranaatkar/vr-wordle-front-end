@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Stars, Text } from "@react-three/drei";
+import { useFrame, Canvas } from "@react-three/fiber";
 import { VRCanvas, DefaultXRControllers } from "@react-three/xr";
 import LetterCubes from "./Components/LetterCubes.js";
 import Floor from "./Components/Floor.js";
@@ -14,6 +15,28 @@ import Letter from "./Components/Letter.js";
 import Column from "./Components/Column.js";
 import { answerWords } from "./word-lists/answer-words.js";
 import { differenceInDays } from "date-fns";
+import useMeasure from "react-use-measure";
+import { ResizeObserver } from "@juggle/resize-observer";
+
+export function MyRotatingBox() {
+  const myMesh = useRef();
+  const [active, setActive] = useState(false);
+
+  useFrame((_, delta) => {
+    myMesh.current.rotation.x += delta;
+  });
+
+  return (
+    <mesh
+      scale={active ? 1.5 : 1}
+      onClick={() => setActive(!active)}
+      ref={myMesh}
+    >
+      <boxBufferGeometry />
+      <meshPhongMaterial color="royalblue" />
+    </mesh>
+  );
+}
 
 export function generateLetters(reset, alphabet, letters) {
   return (
@@ -111,8 +134,11 @@ export default function App() {
     }
   };
 
+  const [polyfill] = useMeasure({ polyfill: ResizeObserver });
+
   return (
-    <VRCanvas style={{ touchAction: "none" }}>
+    <Canvas style={{ touchAction: "none" }} ref={polyfill}>
+      <MyRotatingBox />
       <DefaultXRControllers />
       <ambientLight intensity={1} />
       <spotLight position={[0, 10, 0]} angle={0.15} penumbra={1} />
@@ -160,6 +186,6 @@ export default function App() {
         <Floor />
       </Physics>
       <Stars />
-    </VRCanvas>
+    </Canvas>
   );
 }

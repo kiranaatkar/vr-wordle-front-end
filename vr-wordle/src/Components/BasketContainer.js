@@ -1,5 +1,6 @@
 import { useBox } from "@react-three/cannon";
 import { Box } from "@react-three/drei";
+import React from "react";
 
 function ContainerWall(props) {
   const [ref] = useBox(() => ({

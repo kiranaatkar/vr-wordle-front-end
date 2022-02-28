@@ -1,5 +1,6 @@
 import { useCylinder } from "@react-three/cannon";
 import PressurePlate from "./PressurePlate";
+import React from "react";
 
 export default function ColumnContainer(props) {
   const { columnGeometry, setGuess, guessIndex } = props;

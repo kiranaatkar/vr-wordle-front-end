@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useBox, useLockConstraint } from "@react-three/cannon";
 import { useFrame } from "@react-three/fiber";
 import { useController, useXREvent } from "@react-three/xr";
