@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import * as THREE from "three";
-import { useThree, useLoader } from "react-three-fiber";
+import { useThree, useLoader } from "@react-three/fiber";
 
 export default function Wind() {
   const wind = "/wind.mp3";
