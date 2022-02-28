@@ -1,7 +1,8 @@
 import { Box, Text } from "@react-three/drei";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useSpring, animated } from "@react-spring/three";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useLoader, useThree } from "@react-three/fiber";
+import * as THREE from "three";
 
 export default function Grid(props) {
   return props.guesses.map((it, i) => {
@@ -23,6 +24,19 @@ function StaticLetter(props) {
 
   const [active, setActive] = useState(false);
 
+  const sound = useRef();
+  const { camera } = useThree();
+  const [listener] = useState(() => new THREE.AudioListener());
+  const buffer = useLoader(THREE.AudioLoader, "/blocks.mp3");
+
+  useEffect(() => {
+    sound.current.setBuffer(buffer);
+    sound.current.setRefDistance(1);
+    sound.current.setVolume(0.9);
+    camera.add(listener);
+    return () => camera.remove(listener);
+  });
+
   const springs = useSpring({
     color: props.submitted ? color : "#3a3a3c",
     delay: 600 + props.index * 600,
@@ -33,7 +47,8 @@ function StaticLetter(props) {
 
   useFrame(() => {
     if (props.submitted && box.current.rotation.x < Math.PI / 2) {
-      box.current.rotation.x += 0.03 - props.index * 0.005;
+      sound.current.play();
+      box.current.rotation.x += 0.0285 - props.index * 0.005;
     }
   });
 
@@ -48,6 +63,7 @@ function StaticLetter(props) {
       }}
     >
       <animated.meshStandardMaterial attach="material" color={springs.color} />
+      <positionalAudio ref={sound} args={[listener]} />
       <Text
         userData={{ letter: props.id }}
         position={[0, size[1] / 2 + 0.001, 0]}
