@@ -1,20 +1,19 @@
-import { render, screen } from "@testing-library/react";
-
-import { useState, useRef } from "react";
-
+import { render, screen, fireEvent, getByTestId } from "@testing-library/react";
+import React from "react";
+import App from "./App";
 import ReactThreeTestRenderer from "@react-three/test-renderer";
 
 test("generate letters generates 26 boxes", async () => {
-  const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
-  // const letters = useRef(<group />);
-  // const [state, setState] = useState({
+  // const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
+
+  // const state = {
   //   guesses: ["hello", "world", "vrdle", "wrdle", "crane", "cramp"],
   //   answer: "cramp",
   //   reset: false,
-  // });
-  // const renderer = await ReactThreeTestRenderer.create(
-  //   generateLetters(state, alphabet, letters)
-  // );
-  // const meshChildren = renderer.scene.children[0].allChildren;
-  // expect(meshChildren.length).toBe(26);
+  // };
+  const renderer = await ReactThreeTestRenderer.create(<App />);
+  console.log(renderer);
+  const meshChildren = renderer.scene.allChildren;
+  console.log(meshChildren);
+  expect(meshChildren.length).toBe(26);
 });
