@@ -10,7 +10,7 @@ export default function ColumnContainer(props) {
     // pressure plate, top, trunk, bottom
     <>
       <PressurePlate
-        position={[x, y + 0.55, z]}
+        position={[x, y + 0.54, z]}
         args={[0.225, 0.225, 0.1, 32]}
         setGuess={setGuess}
         guessIndex={guessIndex}

@@ -13,7 +13,11 @@ export default function Pillars(props) {
         guessIndex={3}
         setGuess={props.setGuess}
       />
-      <Column position={[0, 0, 0.7]} guessIndex={2} setGuess={props.setGuess} />
+      <Column
+        position={[0, -0.1, 1]}
+        guessIndex={2}
+        setGuess={props.setGuess}
+      />
       <Column
         position={[0.6, 0, 0.6]}
         guessIndex={1}

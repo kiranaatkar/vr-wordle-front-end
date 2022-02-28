@@ -1,11 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  Text,
-  Environment,
-  Sky,
-  Stars,
-  PositionalAudio,
-} from "@react-three/drei";
+import { Text, Environment, Sky, Stars } from "@react-three/drei";
 import { VRCanvas, DefaultXRControllers } from "@react-three/xr";
 import LetterCubes from "./Components/LetterCubes.js";
 import Floor from "./Components/Floor.js";
@@ -21,6 +15,7 @@ import Pillars from "./Components/Pillars.js";
 import Networking from "./Components/Networking.js";
 import { answerWords } from "./word-lists/answer-words.js";
 import { differenceInDays } from "date-fns";
+import Wind from "./Components/Wind.js";
 
 const myAPI = new Networking();
 
@@ -126,7 +121,6 @@ export default function App() {
     <VRCanvas style={{ touchAction: "none" }}>
       <DefaultXRControllers />
       <ambientLight intensity={0.3} />
-      <mesh></mesh>
       <Text
         fontSize={1}
         color="green"
@@ -176,7 +170,7 @@ export default function App() {
         fade
       />
       <fog attach="fog" args={["#421700", 0, 100]} />
-      <PositionalAudio url="/wind.mp3" distance={1} autoplay loop />
+      <Wind />
     </VRCanvas>
   );
 }
