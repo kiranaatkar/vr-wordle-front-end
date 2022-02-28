@@ -10,7 +10,7 @@ export default function ColumnContainer(props) {
     // pressure plate, top, trunk, bottom
     <>
       <PressurePlate
-        position={[x, y + 0.55, z]}
+        position={[x, y + 0.54, z]}
         args={[0.225, 0.225, 0.1, 32]}
         setGuess={setGuess}
         guessIndex={guessIndex}
@@ -35,7 +35,7 @@ function ContainerCircle(props) {
   return (
     <mesh ref={ref} position={props.position}>
       <cylinderBufferGeometry attach="geometry" args={props.args} />
-      <meshNormalMaterial opacity={1} transparent />
+      <meshNormalMaterial opacity={0} transparent />
     </mesh>
   );
 }

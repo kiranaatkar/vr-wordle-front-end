@@ -1,9 +1,31 @@
 import { useCylinder } from "@react-three/cannon";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useSpring, animated, config } from "@react-spring/three";
+import { useLoader, useThree } from "@react-three/fiber";
+import { TextureLoader } from "three";
+import * as THREE from "three";
 
 export default function PressurePlate(props) {
   const [pressed, setPress] = useState(false);
+
+  const sound = useRef();
+  const { camera } = useThree();
+  const [listener] = useState(() => new THREE.AudioListener());
+  const buffer = useLoader(THREE.AudioLoader, "/pressure.mp3");
+
+  useEffect(() => {
+    sound.current.setBuffer(buffer);
+    sound.current.setRefDistance(1);
+    camera.add(listener);
+    return () => camera.remove(listener);
+  });
+
+  const [colorMap, normalMap, roughnessMap, aoMap] = useLoader(TextureLoader, [
+    "/textures/aerial_rocks_02_diff_2k.jpg",
+    "/textures/aerial_rocks_02_nor_dx_2k.jpg",
+    "/textures/aerial_rocks_02_rough_2k.jpg",
+    "/textures/aerial_rocks_02_ao_2k.jpg",
+  ]);
 
   const [ref] = useCylinder(() => ({
     type: "Static",
@@ -16,6 +38,7 @@ export default function PressurePlate(props) {
     },
     onCollideBegin: () => {
       setPress(true);
+      sound.current.play();
     },
     onCollideEnd: () => {
       setPress(false);
@@ -30,9 +53,14 @@ export default function PressurePlate(props) {
 
   function getPlateColor() {
     return pressed ? (
-      <meshNormalMaterial />
+      <meshNormalMaterial color={"white"} />
     ) : (
-      <meshStandardMaterial color="black" />
+      <meshStandardMaterial
+        map={colorMap}
+        normalMap={normalMap}
+        roughnessMap={roughnessMap}
+        aoMap={aoMap}
+      />
     );
   }
 
@@ -40,6 +68,7 @@ export default function PressurePlate(props) {
     <animated.mesh ref={ref} scale={scale}>
       <cylinderBufferGeometry attach="geometry" args={props.args} />
       {getPlateColor()}
+      <positionalAudio ref={sound} args={[listener]} />
     </animated.mesh>
   );
 }
