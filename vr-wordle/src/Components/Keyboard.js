@@ -25,8 +25,8 @@ export default function Keyboard() {
       args={[
         {
           language: "eng",
-          fontFamily: "./Roboto-msdf.json",
-          fontTexture: "./Roboto-msdf.png",
+          fontFamily: "/Roboto-msdf.json",
+          fontTexture: "/Roboto-msdf.png",
           fontSize: 0.035, // fontSize will propagate to the keys blocks
           backgroundColor: new THREE.Color(0x858585),
           backgroundOpacity: 1,

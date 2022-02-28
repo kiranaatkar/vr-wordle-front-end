@@ -41,8 +41,8 @@ export default function Panel() {
           height: 1,
           fontSize: 0.1,
           backgroundOpacity: 1,
-          fontFamily: "./Roboto-msdf.json",
-          fontTexture: "./Roboto-msdf.png",
+          fontFamily: "/Roboto-msdf.json",
+          fontTexture: "/Roboto-msdf.png",
         },
       ]}
     >

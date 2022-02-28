@@ -15,8 +15,8 @@ import Pillars from "./Components/Pillars.js";
 import Networking from "./Components/Networking.js";
 import { answerWords } from "./word-lists/answer-words.js";
 import { differenceInDays } from "date-fns";
-import Panel from "./Components/Panel.js";
-import Keyboard from "./Components/Keyboard.js";
+// import Panel from "./Components/Panel.js";
+// import Keyboard from "./Components/Keyboard.js";
 import Wind from "./Components/Wind.js";
 
 const myAPI = new Networking();
@@ -160,8 +160,8 @@ export default function App() {
         <Pillars setGuess={setGuess} />
         <Player />
         <Floor />
-        <Panel />
-        <Keyboard />
+        {/* <Panel />
+        <Keyboard /> */}
       </Physics>
       <Environment preset={"night"} />
       <Sky distance={450000} sunPosition={[0, -1, 0]} azimuth={0.25} />
