@@ -17,5 +17,5 @@ export default function Wind() {
     camera.add(listener);
     return () => camera.remove(listener);
   });
-  return <positionalAudio autoplay ref={sound} args={[listener]} />;
+  return <positionalAudio ref={sound} args={[listener]} />;
 }
