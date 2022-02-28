@@ -58,9 +58,7 @@ export default function App() {
   ]);
   const [guessCount, setGuessCount] = useState(0);
   const [reset, setReset] = useState(false);
-
   const [currentGuess, setCurrentGuess] = useState([]);
-
   const [answer, setAnswer] = useState("");
   const [gameEnd, setGameCondition] = useState(false);
 
@@ -115,6 +113,7 @@ export default function App() {
         setGameCondition("lose");
       }
       deleteOldGuess();
+      resetPositions();
     }
   };
 
