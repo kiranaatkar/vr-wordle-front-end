@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Stars, Text } from "@react-three/drei";
+import { Text, Environment, Sky, Stars } from "@react-three/drei";
 import { VRCanvas, DefaultXRControllers } from "@react-three/xr";
 import LetterCubes from "./Components/LetterCubes.js";
 import Floor from "./Components/Floor.js";
@@ -115,9 +115,7 @@ export default function App() {
   return (
     <VRCanvas style={{ touchAction: "none" }}>
       <DefaultXRControllers />
-      <ambientLight intensity={1} />
-      <spotLight position={[0, 10, 0]} angle={0.15} penumbra={1} />
-      <pointLight position={[-10, -10, -10]} />
+      <ambientLight intensity={0.2} />
       <mesh></mesh>
       <Text
         fontSize={1}
@@ -163,8 +161,23 @@ export default function App() {
         <Player />
         <Floor />
       </Physics>
-
-      <Stars />
+      <Environment preset={"night"} />
+      <Sky
+        distance={450000}
+        sunPosition={[0, -1, 0]}
+        azimuth={0.25}
+        // mieCoefficient={0.024}
+        // mieDirectionalG={1}
+      />
+      <Stars
+        radius={100}
+        depth={100}
+        count={5000}
+        factor={4}
+        saturation={0}
+        fade
+      />
+      <fog attach="fog" args={["#421700", 0, 100]} />
     </VRCanvas>
   );
 }

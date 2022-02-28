@@ -1,5 +1,8 @@
 import React from "react";
 import { usePlane } from "@react-three/cannon";
+import { useLoader } from "@react-three/fiber";
+import { TextureLoader } from "three/src/loaders/TextureLoader";
+import Model from "./Mountain.js";
 
 export default function Floor(props) {
   const [ref] = usePlane(() => ({
@@ -7,15 +10,27 @@ export default function Floor(props) {
     material: {
       friction: 1,
     },
+    opacity: 0,
   }));
+
+  const [colorMap, displacementMap, roughnessMap] = useLoader(TextureLoader, [
+    "/textures/snow_field_aerial_col_4k.jpg",
+    "/textures/snow_field_aerial_height_4k.png",
+    "/textures/snow_field_aerial_rough_4k.jpg",
+  ]);
+
   return (
-    <mesh {...props} position={[0, 0, 0]} ref={ref}>
-      <planeBufferGeometry
-        attach="geometry"
-        args={[100, 100]}
-        opacity={0.001}
-      />
-      <meshStandardMaterial color="white" opacity={0.001} />
-    </mesh>
+    <>
+      <Model />
+
+      <mesh {...props} position={[0, 0, 0]} ref={ref}>
+        <planeBufferGeometry attach="geometry" args={[1, 1]} />
+        <meshStandardMaterial
+        // map={colorMap}
+        // displacementMap={displacementMap}
+        // roughnessMap={roughnessMap}
+        />
+      </mesh>
+    </>
   );
 }
