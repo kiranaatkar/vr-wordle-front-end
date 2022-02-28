@@ -14,6 +14,8 @@ import Letter from "./Components/Letter.js";
 import Column from "./Components/Column.js";
 import { answerWords } from "./word-lists/answer-words.js";
 import { differenceInDays } from "date-fns";
+import Panel from "./Components/Panel.js";
+import Keyboard from "./Components/Keyboard.js";
 
 export function generateLetters(reset, alphabet, letters) {
   return (
@@ -158,6 +160,8 @@ export default function App() {
         <Column position={[1.2, 0, 0.4]} guessIndex={0} setGuess={setGuess} />
         <Player />
         <Floor />
+        <Panel />
+        <Keyboard />
       </Physics>
       <Stars />
     </VRCanvas>

@@ -1,42 +1,40 @@
-import { useThree } from "@react-three/fiber";
-import {
-  MeshLambertMaterial,
-  BoxBufferGeometry,
-  Object3D,
-  InstancedMesh,
-} from "three";
+import React, { useState, useRef, useEffect } from "react";
+import { useFrame, extend } from "@react-three/fiber";
+import ThreeMeshUI from "three-mesh-ui";
+import * as THREE from "three";
+import Backspace from "../assets/backspace.png";
+import Shift from "../assets/shift.png";
+import Enter from "../assets/enter.png";
 
-let mesh;
-const tempBoxes = new Object3D();
-
-function AddInstancedMesh() {
-  console.log("meshed");
-  // An InstancedMesh of 4 cubes
-  mesh = new InstancedMesh(
-    new BoxBufferGeometry(0.3, 0.3, 0.3),
-    new MeshLambertMaterial({ color: "red" }),
-    26
-  );
-  const { scene } = useThree();
-  scene.add(mesh);
-  setInstancedMeshPositions(mesh);
-}
-
-function setInstancedMeshPositions(mesh) {
-  console.log("positioned");
-  for (var i = 0; i < mesh.count; i++) {
-    tempBoxes.position.set(
-      -2 + (i % 9) * 0.5,
-      2 - Math.floor(i / 9) * 0.5,
-      -2 + Math.floor(i / 9) * 0.5
-    );
-    tempBoxes.updateMatrix();
-    mesh.setMatrixAt(i, tempBoxes.matrix);
-  }
-  mesh.instanceMatrix.needsUpdate = true;
-}
+extend(ThreeMeshUI);
 
 export default function Keyboard() {
-  AddInstancedMesh();
-  return null;
+  const keys = useRef();
+
+  useEffect(() => {});
+
+  useFrame(() => {
+    ThreeMeshUI.update();
+  });
+  return (
+    <keyboard
+      ref={keys}
+      position={[-3, 1.5, -1]}
+      rotation={[0, Math.PI / 4, 0]}
+      scale={2}
+      args={[
+        {
+          language: "eng",
+          fontFamily: "./Roboto-msdf.json",
+          fontTexture: "./Roboto-msdf.png",
+          fontSize: 0.035, // fontSize will propagate to the keys blocks
+          backgroundColor: new THREE.Color(0x858585),
+          backgroundOpacity: 1,
+          backspaceTexture: Backspace,
+          shiftTexture: Shift,
+          enterTexture: Enter,
+        },
+      ]}
+    ></keyboard>
+  );
 }
