@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import { useFrame, extend } from "@react-three/fiber";
 import ThreeMeshUI from "three-mesh-ui";
 import * as THREE from "three";
