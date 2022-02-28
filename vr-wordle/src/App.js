@@ -176,7 +176,7 @@ export default function App() {
         fade
       />
       <fog attach="fog" args={["#421700", 0, 100]} />
-      <PositionalAudio url="/wind.mp3" distance={1} autoplay={false} loop />
+      <PositionalAudio url="/wind.mp3" distance={1} autoplay={true} loop />
     </VRCanvas>
   );
 }
