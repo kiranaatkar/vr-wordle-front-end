@@ -1,38 +1,6 @@
 import { useProgress } from '@react-three/drei';
-import React, { useEffect, useMemo, useCallback, useState } from 'react';
-import SemiCircleProgressBar from 'react-progressbar-semicircle';
-
-function Loader(props) {
-  const { progress } = useProgress();
-  const containerStyles = {
-    height: 20,
-    width: '50vw',
-    backgroundColor: '#e0e0de',
-    borderRadius: 50,
-    margin: 50,
-  };
-
-  const fillerStyles = {
-    height: '100%',
-    width: `${Math.floor(progress)}%`,
-    backgroundColor: '#009038',
-    borderRadius: 'inherit',
-    textAlign: 'right',
-  };
-
-  const labelStyles = {
-    padding: 5,
-    color: 'black',
-    fontWeight: 'bold',
-  };
-  return (
-    <div style={containerStyles}>
-      <div style={fillerStyles}>
-        <span style={labelStyles}>{`${Math.floor(progress)}%`}</span>
-      </div>
-    </div>
-  );
-}
+import './LoadingScreen.css';
+import React from 'react';
 
 const CircularProgress = ({ size, strokeWidth, color }) => {
   const { progress } = useProgress();
@@ -46,14 +14,14 @@ const CircularProgress = ({ size, strokeWidth, color }) => {
     <svg width={size} height={size} viewBox={viewBox}>
       <circle
         fill='none'
-        stroke='#ccc'
+        stroke='#99f2c8'
         cx={size / 2}
         cy={size / 2}
         r={radius}
         strokeWidth={`${strokeWidth}px`}
       />
       <circle
-        fill='none'
+        fill='#99f2c8'
         stroke={color}
         cx={size / 2}
         cy={size / 2}
@@ -65,7 +33,7 @@ const CircularProgress = ({ size, strokeWidth, color }) => {
         style={{ transition: 'all 0.5s' }}
       />
       <text
-        fill='black'
+        fill='#1f4037'
         fontSize='40px'
         x='50%'
         y='50%'
@@ -78,12 +46,9 @@ const CircularProgress = ({ size, strokeWidth, color }) => {
 };
 
 export default function LoadingScreen() {
-  return <CircularProgress size={250} strokeWidth={20} color='green' />;
+  return (
+    <div className='loadingScreen'>
+      <CircularProgress size={250} strokeWidth={20} color='#1f4037' />
+    </div>
+  );
 }
-
-// export default function LoadingScreen() {
-//   const { progress } = useProgress();
-//   return (
-//     <SemiCircleProgressBar percentage={Math.floor(progress)} showPercentValue />
-//   );
-// }
