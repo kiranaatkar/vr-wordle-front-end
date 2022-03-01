@@ -1,16 +1,15 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+import Homepage from './Components/Homepage.js';
 import reportWebVitals from './reportWebVitals';
-import LoadingScreen from './Components/loadingScreen.js';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Suspense fallback={<LoadingScreen />}>
-      <App />
-    </Suspense>
-  </React.StrictMode>,
+  <BrowserRouter>
+    <Homepage />
+  </BrowserRouter>,
   document.getElementById('root')
 );
 
