@@ -3,11 +3,9 @@ import TextField from "@mui/material/TextField";
 import Switch from "@mui/material/Switch";
 import Button from "@mui/material/Button";
 import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import { generateName } from "gamer-namer";
 import "./Homepage.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { FormLabel } from "@mui/material";
 
 const theme = createTheme({
   palette: {
@@ -25,12 +23,18 @@ const theme = createTheme({
   },
 });
 
-export default function Homepage() {
+export default function Homepage(props) {
   const [username, setUsername] = useState("");
   const [colourblind, setColourblind] = useState(false);
 
   const onChange = (e) => {
     setUsername(e.target.value);
+  };
+
+  const submitUsername = () => {
+    console.log("submitted");
+    props.setColorBlind(colourblind);
+    props.setUsername(username);
   };
 
   return (
@@ -52,6 +56,7 @@ export default function Homepage() {
         <Button
           variant="contained"
           type="submit"
+          onClick={submitUsername}
           style={{ width: "20vw", marginBottom: "1vh" }}
           disabled={username.length === 0}
         >
