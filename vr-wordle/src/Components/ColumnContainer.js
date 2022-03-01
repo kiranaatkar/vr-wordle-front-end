@@ -35,7 +35,7 @@ function ContainerCircle(props) {
   return (
     <mesh ref={ref} position={props.position}>
       <cylinderBufferGeometry attach="geometry" args={props.args} />
-      <meshNormalMaterial opacity={0} transparent />
+      <meshStandardMaterial alphaTest={0.5} opacity={0} />
     </mesh>
   );
 }
