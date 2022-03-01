@@ -4,6 +4,7 @@ import Game from "./Components/Game";
 
 export default function App() {
   const [username, setUsername] = useState("tom");
+  const [colorBlind, setColorBlind] = useState(false);
 
   return (
     <Routes>
@@ -12,7 +13,7 @@ export default function App() {
         element={
           username ? (
             <Suspense fallback={<div>Loading...</div>}>
-              <Game username={username} />
+              <Game username={username} colorBlind={colorBlind} />
             </Suspense>
           ) : (
             <Navigate replace to="/" />
