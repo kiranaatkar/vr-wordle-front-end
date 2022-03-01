@@ -57,7 +57,7 @@ export default function App() {
     "     ",
   ]);
 
-  const [username, setUsername] = useState("placeholderUsername");
+  const [username] = useState("placeholderUsername");
   const [guessCount, setGuessCount] = useState(0);
   const [reset, setReset] = useState(false);
   const [currentGuess, setCurrentGuess] = useState([]);
