@@ -76,7 +76,7 @@ export default function Keyboard() {
             enterTexture: Enter,
           },
         ]}
-      ></keyboard>
+      />
     </Interactive>
   );
 }
