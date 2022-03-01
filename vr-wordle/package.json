@@ -51,6 +51,11 @@
     ]
   },
   "devDependencies": {
-    "@react-three/test-renderer": "^7.0.25"
+    "@react-three/test-renderer": "^7.0.25",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.2.3",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1"
   }
 }

@@ -1,5 +1,5 @@
 import { Box, Text } from "@react-three/drei";
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useSpring, animated } from "@react-spring/three";
 import { useFrame, useLoader, useThree } from "@react-three/fiber";
 import * as THREE from "three";
@@ -77,7 +77,7 @@ function StaticLetter(props) {
   );
 }
 
-function Guess(guess, word) {
+export function Guess(guess, word) {
   const side = 1;
   const space = 0.1;
   const width = (side + space) * 4;
