@@ -55,7 +55,12 @@ export default function Homepage() {
         }}
       >
         <FormControlLabel
-          control={<Checkbox style={{ marginLeft: "3vw" }} />}
+          control={
+            <Checkbox
+              onChange={() => setColourblind(!colourblind)}
+              style={{ marginLeft: "3vw" }}
+            />
+          }
           label="COLOURBLIND MODE"
         />
       </FormGroup>
