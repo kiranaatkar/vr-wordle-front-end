@@ -8,7 +8,7 @@ export default function Grid(props) {
   return props.guesses.map((it, i) => {
     return (
       <group position={[0, 7.5 - i * 1.2, -3]} key={i}>
-        {Guess(it, props.answer)}
+        {Guess(it, props.answer, props.colorBlind)}
       </group>
     );
   });
@@ -17,8 +17,8 @@ export default function Grid(props) {
 function StaticLetter(props) {
   const size = [props.side, props.side, props.side];
   let color = {
-    present: "#B59F3B",
-    correct: "#538D4E",
+    present: props.colorBlind ? "#85BFF9" : "#B59F3B",
+    correct: props.colorBlind ? "#F5793A" : "#538D4E",
     absent: "#3A3A3C",
   }[props.state];
 
@@ -77,7 +77,7 @@ function StaticLetter(props) {
   );
 }
 
-export function Guess(guess, word) {
+export function Guess(guess, word, colorBlind) {
   const side = 1;
   const space = 0.1;
   const width = (side + space) * 4;
@@ -98,6 +98,7 @@ export function Guess(guess, word) {
               ? "present"
               : "absent"
           }
+          colorBlind={colorBlind}
         />
       ))}
     </>
