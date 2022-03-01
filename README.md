@@ -6,6 +6,13 @@ This project is an attempt to recreate Wordle in VR using React Three Fiber and 
 
 After a guess, the letters chosen that were not used will disappear from the game world and another guess can be made, until the correct word has been found or the player uses up all six guesses!
 
+## Assets
+
+* Mountain Model - https://www.cgtrader.com/free-3d-models/exterior/landscape/mountainwithtress
+* Pedestal - https://sketchfab.com/3d-models/doric-twist-pedestal-7936fc9cbb6547459bfecb20910281ec
+* Audio SFX - https://www.zapsplat.com/
+
+
 ## Technologies
 * react-three/cannon @4.7.0
 * react-three/drei @8.10.6
