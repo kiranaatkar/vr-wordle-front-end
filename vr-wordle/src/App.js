@@ -56,6 +56,8 @@ export default function App() {
     "     ",
     "     ",
   ]);
+
+  const [username, setUsername] = useState("placeholderUsername");
   const [guessCount, setGuessCount] = useState(0);
   const [reset, setReset] = useState(false);
   const [currentGuess, setCurrentGuess] = useState([]);
@@ -108,7 +110,7 @@ export default function App() {
       if (currentGuess.join("") === answer) {
         console.log("win");
         const score = guessCount + 1;
-        myAPI.postScore(score, answer, "placeholderUsername");
+        myAPI.postScore(score, answer, username);
         setGameCondition("win");
       } else if (!newGuesses.includes(answer) && guessCount === 5) {
         console.log("lose");
