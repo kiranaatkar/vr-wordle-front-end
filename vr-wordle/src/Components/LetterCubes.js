@@ -97,7 +97,10 @@ export default function LetterCubes({ id, position, sizeArg, reset, index }) {
         >
           {id.toUpperCase()}
         </Text>
-        <meshStandardMaterial color={state.hover ? "#00E2FB" : "#3a3a3c"} />
+        <meshStandardMaterial
+          color={state.hover ? "#00E2FB" : "#3a3a3c"}
+          alphaTest={0.8}
+        />
       </Box>
     </Interactive>
   );
