@@ -1,10 +1,11 @@
-import React, { useState, Suspense } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
-import Game from "./Components/Game";
-import Homepage from "./Components/Homepage";
+import React, { useState, Suspense } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Game from './Components/Game';
+import Homepage from './Components/Homepage';
+import LoadingScreen from './Components/loadingScreen.js';
 
 export default function App() {
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState('');
   const [colorBlind, setColorBlind] = useState(false);
 
   console.log(username, colorBlind);
@@ -12,24 +13,24 @@ export default function App() {
   return (
     <Routes>
       <Route
-        path="/play"
+        path='/play'
         element={
           username ? (
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<LoadingScreen />}>
               <Game username={username} colorBlind={colorBlind} />
             </Suspense>
           ) : (
-            <Navigate replace to="/" />
+            <Navigate replace to='/' />
           )
         }
       />
       <Route
-        path="/"
+        path='/'
         element={
           !username ? (
             <Homepage setUsername={setUsername} setColorBlind={setColorBlind} />
           ) : (
-            <Navigate replace to="/play" />
+            <Navigate replace to='/play' />
           )
         }
       />
