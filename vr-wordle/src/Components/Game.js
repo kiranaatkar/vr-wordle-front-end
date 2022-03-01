@@ -15,8 +15,6 @@ import Pillars from "./Pillars.js";
 import Networking from "./Networking.js";
 import { answerWords } from "../word-lists/answer-words.js";
 import { differenceInDays } from "date-fns";
-// import Panel from "./Components/Panel.js";
-import Keyboard from "./Keyboard.js";
 import Wind from "./Wind.js";
 
 const myAPI = new Networking();
