@@ -1,4 +1,3 @@
-
 import { answerWords } from "./word-lists/answer-words.js";
 import { differenceInDays } from "date-fns";
 import { render, screen } from "@testing-library/react";
@@ -48,6 +47,9 @@ test("letterBoxes will have all required props and will have correct type", () =
         sizeArg: expect.any(Object),
         position: expect.any(Object),
       })
+    );
+  }
+});
 
 test("getRandomAnswer returns a string that is only different on different days", () => {
   const answer = getRandomAnswerWord();
@@ -465,8 +467,7 @@ test("submitGuess ends the game on last guess", () => {
   submitGuess();
 
   expect(state.guessCount).toBe(6);
-  
-})
+});
 
 test("Grid displays 30 blocks", () => {
   const guesses = ["irate", "choke", "chore", "chose", "crane", "rupee"];
@@ -478,8 +479,8 @@ test("Grid displays 30 blocks", () => {
     expect(test[child].props.children.props.children.length).toBe(5);
   }
 });
-  
- test("Guess correctly outputs a five letter word with five blocks", () => {
+
+test("Guess correctly outputs a five letter word with five blocks", () => {
   const expected = [
     {
       side: 1,
@@ -527,7 +528,6 @@ test("Grid displays 30 blocks", () => {
   for (let child in test.props.children) {
     expect(JSON.stringify(test.props.children[child].props)).toStrictEqual(
       JSON.stringify(expected[child])
-
     );
   }
 });
