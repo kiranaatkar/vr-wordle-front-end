@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
-import Checkbox from "@mui/material/Checkbox";
+import Switch from "@mui/material/Switch";
 import Button from "@mui/material/Button";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { generateName } from "gamer-namer";
 import "./Homepage.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { FormLabel } from "@mui/material";
 
 const theme = createTheme({
   palette: {
@@ -25,7 +26,7 @@ const theme = createTheme({
 });
 
 export default function Homepage() {
-  const [username, setUsername] = useState();
+  const [username, setUsername] = useState("");
   const [colourblind, setColourblind] = useState(false);
 
   const onChange = (e) => {
@@ -41,28 +42,46 @@ export default function Homepage() {
           variant="filled"
           value={username}
           onChange={onChange}
-          style={{ width: "20vw", margin: "5vh", color: "#ffffff" }}
+          style={{
+            width: "20vw",
+            marginBottom: "1vh",
+            marginTop: "3vh",
+            color: "#ffffff",
+          }}
         />
-        <Button variant="contained" onClick={() => setUsername(generateName())}>
+        <Button
+          variant="contained"
+          type="submit"
+          style={{ width: "20vw", marginBottom: "1vh" }}
+          disabled={username.length === 0}
+        >
+          Submit{" "}
+        </Button>
+        <Button
+          style={{ width: "20vw", marginBottom: "18vh" }}
+          variant="contained"
+          onClick={() => setUsername(generateName())}
+        >
           Generate Random Username{" "}
         </Button>
       </ThemeProvider>
       <FormGroup
         style={{
-          marginTop: "4vh",
-          background: "white",
+          background: "#5d9d8a",
           width: "20vw",
+          borderRadius: "5px",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-evenly",
+          alignItems: "center",
         }}
       >
-        <FormControlLabel
-          control={
-            <Checkbox
-              onChange={() => setColourblind(!colourblind)}
-              style={{ marginLeft: "3vw" }}
-            />
-          }
-          label="COLOURBLIND MODE"
+        <Switch
+          checked={colourblind}
+          onChange={() => setColourblind(!colourblind)}
+          color="warning"
         />
+        <h3 style={{ color: "white" }}>Colourblind Mode</h3>
       </FormGroup>
     </div>
   );
