@@ -56,6 +56,7 @@ export default function Game(props) {
   ]);
 
   const [username] = useState(props.username);
+  const [colorBlind] = useState(props.colorBlind);
   const [guessCount, setGuessCount] = useState(0);
   const [reset, setReset] = useState(false);
   const [currentGuess, setCurrentGuess] = useState([]);
@@ -143,7 +144,7 @@ export default function Game(props) {
       >
         You Lose!
       </Text>
-      <Grid guesses={guesses} answer={answer} />
+      <Grid guesses={guesses} answer={answer} colorBlind={colorBlind} />
       <Physics gravity={[0, -10, 0]}>
         <Button reset={resetPositions} />
         <Submit submit={submitGuess} />
