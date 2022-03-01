@@ -16,6 +16,7 @@ import Networking from "./Networking.js";
 import { answerWords } from "../word-lists/answer-words.js";
 import { differenceInDays } from "date-fns";
 import Wind from "./Wind.js";
+import { Navigate } from "react-router";
 
 const myAPI = new Networking();
 
@@ -62,6 +63,8 @@ export default function Game(props) {
   const [currentGuess, setCurrentGuess] = useState([]);
   const [answer, setAnswer] = useState("");
   const [gameEnd, setGameCondition] = useState(false);
+
+  console.log(username, colorBlind);
 
   const resetPositions = () => {
     setReset(!reset);
@@ -120,7 +123,7 @@ export default function Game(props) {
     }
   };
 
-  return (
+  return username ? (
     <VRCanvas style={{ touchAction: "none" }}>
       <DefaultXRControllers />
       <ambientLight intensity={0.3} />
@@ -177,5 +180,7 @@ export default function Game(props) {
       <fog attach="fog" args={["#421700", 0, 100]} />
       <Wind />
     </VRCanvas>
+  ) : (
+    <Navigate to="/" />
   );
 }
