@@ -162,8 +162,6 @@ export default function Game(props) {
         <Pillars setGuess={setGuess} />
         <Player />
         <Floor />
-        {/* <Panel /> */}
-        <Keyboard />
       </Physics>
       <Environment preset={"night"} />
       <Sky distance={450000} sunPosition={[0, -1, 0]} azimuth={0.25} />
