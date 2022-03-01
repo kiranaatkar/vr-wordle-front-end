@@ -31,28 +31,21 @@ test("generate letters generates 26 boxes", () => {
   expect(dummyLetters).toHaveLength(26);
 });
 
-test("letterBoxes will have all required props", () => {
+test("letterBoxes will have all required props and will have correct type", () => {
   const dummyLetters = generateLetters(true, alphabet, "letters");
   for (let i = 0; i < 26; i++) {
-    expect(dummyLetters[i]).toHaveProperty("group");
-    expect(dummyLetters[i]).toHaveProperty("reset");
-    expect(dummyLetters[i]).toHaveProperty("index");
-    expect(dummyLetters[i]).toHaveProperty("id");
-    expect(dummyLetters[i]).toHaveProperty("key");
-    expect(dummyLetters[i]).toHaveProperty("sizeArg");
-    expect(dummyLetters[i]).toHaveProperty("position");
+    expect(dummyLetters[i]).toEqual(
+      expect.objectContaining({
+        group: expect.any(String),
+        reset: expect.any(Boolean),
+        index: expect.any(Number),
+        id: expect.any(String),
+        key: expect.any(String),
+        sizeArg: expect.any(Object),
+        position: expect.any(Object),
+      })
+    );
   }
-});
-
-test("letterBox props are of correct type", () => {
-  const dummyLetters = generateLetters(true, alphabet, "letters");
-  expect(typeof dummyLetters[0].group).toBe("string");
-  expect(typeof dummyLetters[0].reset).toBe("boolean");
-  expect(typeof dummyLetters[0].index).toBe("number");
-  expect(typeof dummyLetters[0].id).toBe("string");
-  expect(typeof dummyLetters[0].key).toBe("string");
-  expect(typeof dummyLetters[0].sizeArg).toBe("object");
-  expect(typeof dummyLetters[0].position).toBe("object");
 });
 
 test("getRandomAnswer returns a string that is only different on different days", () => {
