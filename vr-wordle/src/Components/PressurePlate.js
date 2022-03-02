@@ -20,12 +20,7 @@ export default function PressurePlate(props) {
     return () => camera.remove(listener);
   });
 
-  const [colorMap, normalMap, roughnessMap, aoMap] = useLoader(TextureLoader, [
-    "/textures/aerial_rocks_02_diff_2k.jpg",
-    "/textures/aerial_rocks_02_nor_dx_2k.jpg",
-    "/textures/aerial_rocks_02_rough_2k.jpg",
-    "/textures/aerial_rocks_02_ao_2k.jpg",
-  ]);
+  const [colorMap] = useLoader(TextureLoader, ["/textures/mossy-rock.png"]);
 
   const [ref] = useCylinder(() => ({
     type: "Static",
@@ -55,12 +50,7 @@ export default function PressurePlate(props) {
     return pressed ? (
       <meshNormalMaterial color={"white"} />
     ) : (
-      <meshStandardMaterial
-        map={colorMap}
-        normalMap={normalMap}
-        roughnessMap={roughnessMap}
-        aoMap={aoMap}
-      />
+      <meshStandardMaterial map={colorMap} />
     );
   }
 
