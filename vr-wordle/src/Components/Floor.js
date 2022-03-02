@@ -1,6 +1,6 @@
 import React from "react";
 import { usePlane } from "@react-three/cannon";
-import Model from "./Mountain.js";
+// import Model from "./Mountain.js";
 
 export default function Floor(props) {
   const [ref] = usePlane(() => ({
@@ -13,7 +13,7 @@ export default function Floor(props) {
 
   return (
     <>
-      <Model />
+      {/* <Model /> */}
 
       <mesh {...props} position={[0, 0, 0]} ref={ref}>
         <planeBufferGeometry attach="geometry" args={[1, 1]} />
