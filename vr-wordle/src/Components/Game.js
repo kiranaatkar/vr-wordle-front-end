@@ -126,7 +126,7 @@ export default function Game(props) {
   };
 
   return username ? (
-    <VRCanvas mode="concurrent" style={{ touchAction: "none" }}>
+    <VRCanvas mode="concurrent" performance={{ min: 0.8 }} style={{ touchAction: "none" }}>
       <DefaultXRControllers />
       <ambientLight intensity={0.3} />
       <Text
