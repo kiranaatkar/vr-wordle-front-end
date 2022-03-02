@@ -32,7 +32,6 @@ export default function Homepage(props) {
   };
 
   const submitUsername = () => {
-    console.log("submitted");
     props.setColorBlind(colourblind);
     props.setUsername(username);
   };

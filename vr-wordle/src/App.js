@@ -10,8 +10,6 @@ export default function App() {
   const [username, setUsername] = useState("");
   const [colorBlind, setColorBlind] = useState(false);
 
-  console.log(username, colorBlind);
-
   return (
     <div className="App">
       <Routes>
