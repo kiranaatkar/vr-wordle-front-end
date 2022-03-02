@@ -76,6 +76,7 @@ export default function Game(props) {
 
   useEffect(() => {
     setAnswer(getRandomAnswerWord());
+    setAnswer("nnnnn");
   }, []);
 
   props.setAnswer(answer);
