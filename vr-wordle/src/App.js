@@ -4,6 +4,7 @@ import Game from "./Components/Game";
 import Homepage from "./Components/Homepage";
 import LoadingScreen from "./Components/loadingScreen.js";
 import { Stats } from "@react-three/drei";
+import Results from "./Components/ResultsDisplay";
 import "./App.css";
 
 // FOR TESTING RESULTS COMPONENT
@@ -19,7 +20,7 @@ export default function App() {
   return (
     <div className="App">
       <Routes>
-        {/* <Route
+        <Route
           path="/results"
           element={
             username && gameEnded ? (
@@ -28,7 +29,7 @@ export default function App() {
               <Navigate to="/" />
             )
           }
-        /> */}
+        />
         <Route
           path="/play"
           element={
