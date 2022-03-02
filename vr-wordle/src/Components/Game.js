@@ -14,6 +14,7 @@ import Letter from "./Letter.js";
 import Pillars from "./Pillars.js";
 import Networking from "./Networking.js";
 import { answerWords } from "../word-lists/answer-words.js";
+import { allowedWords } from "../word-lists/allowed-words.js";
 import { differenceInDays } from "date-fns";
 import Wind from "./Wind.js";
 import { Navigate } from "react-router";
@@ -102,7 +103,8 @@ export default function Game(props) {
     if (
       guessCount < 6 &&
       currentGuess.filter((char) => char !== "").length === 5 &&
-      !gameEnd
+      !gameEnd &&
+      allowedWords.includes(currentGuess.join(""))
     ) {
       const newGuesses = guesses;
       newGuesses[guessCount] = currentGuess.join("");
