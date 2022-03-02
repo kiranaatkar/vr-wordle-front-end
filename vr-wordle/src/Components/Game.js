@@ -150,10 +150,10 @@ export default function Game(props) {
         <Grabber groupRef={letters} />
         {generateLetters(reset, alphabet, letters)}
         <Letter position={[2, 1, -1]} name="n" />
-        <Letter position={[2, 2, 0.6]} name="r" />
+        {/* <Letter position={[2, 2, 0.6]} name="r" />
         <Letter position={[2, 3, 0.7]} name="d" />
         <Letter position={[-2, 1, 0.6]} name="l" />
-        <Letter position={[-2, 2, 1]} name="e" />
+        <Letter position={[-2, 2, 1]} name="e" /> */}
         <Pillars setGuess={setGuess} />
         {/* <Player /> */}
         <Floor />
