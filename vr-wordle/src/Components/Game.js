@@ -130,6 +130,7 @@ export default function Game(props) {
       mode="concurrent"
       performance={{ min: 0.8 }}
       style={{ touchAction: "none" }}
+      frameloop="demand"
     >
       <DefaultXRControllers />
       <ambientLight intensity={0.3} />
