@@ -11,7 +11,7 @@ export default function Model({ position, guessIndex, setGuess }) {
   const { nodes } = useGLTF("/scene.glb");
   return (
     <>
-      <mesh
+      {/* <mesh
         rotation={[-Math.PI / 2, 0, 0]}
         ref={group}
         position={position}
@@ -22,7 +22,7 @@ export default function Model({ position, guessIndex, setGuess }) {
         geometry={nodes.Object_2.geometry}
       >
         <meshStandardMaterial map={colorMap} />{" "}
-      </mesh>
+      </mesh> */}
       <ColumnContainer
         columnGeometry={[...position, 0.3]}
         setGuess={setGuess}

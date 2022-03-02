@@ -23,7 +23,7 @@ export default function Button(props) {
     args: [0.2, 0.2, 0.05],
     mass: 1,
     type: "Static",
-    position: [-1.2, 1, -0.5],
+    position: [-1.2, 1, -0.3],
     rotation: [-Math.PI / 2 + 0.2, 0, 0],
     material: {
       friction: 1,

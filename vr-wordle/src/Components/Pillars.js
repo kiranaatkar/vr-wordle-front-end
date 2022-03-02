@@ -4,27 +4,27 @@ export default function Pillars(props) {
   return (
     <>
       <Column
-        position={[-1.25, 0.2, -0.9]}
+        position={[-1.05, 0.1, -0.7]}
         guessIndex={1}
         setGuess={props.setGuess}
       />
       <Column
-        position={[-0.6, 0.3, -1.3]}
+        position={[-0.6, 0.2, -0.9]}
         guessIndex={2}
         setGuess={props.setGuess}
       />
       <Column
-        position={[0, 0.4, -1.5]}
+        position={[0, 0.2, -1.1]}
         guessIndex={3}
         setGuess={props.setGuess}
       />
       <Column
-        position={[0.6, 0.3, -1.3]}
+        position={[0.6, 0.2, -0.9]}
         guessIndex={4}
         setGuess={props.setGuess}
       />
       <Column
-        position={[1.2, 0.2, -0.9]}
+        position={[1.05, 0.1, -0.7]}
         guessIndex={5}
         setGuess={props.setGuess}
       />
