@@ -1,17 +1,10 @@
-import { useEffect, useState } from 'react';
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  CartesianGrid,
-  Cell,
-} from 'recharts';
+import React, { useEffect, useState } from 'react';
+import { BarChart, Bar, XAxis, YAxis, Cell, LabelList } from 'recharts';
 import Networking from './Networking.js';
 import './results.css';
+import LoadingScreen from './loadingScreen.js';
 
-export default function Results(props) {
+export default function ResultsGraph(props) {
   // const {answer} = props
   const { answer, userScore } = props;
   const myAPI = new Networking();
@@ -25,20 +18,28 @@ export default function Results(props) {
     { score: 6, sum: 0 },
   ]);
 
-  useEffect(async () => {
-    const json = await myAPI.getWordScores(answer);
-    json.scores.forEach((entry) => {
-      const scoreIndex = data.findIndex((data) => data.score === entry.score);
-      data[scoreIndex].sum++;
-    });
-    setData(data);
-    StillLoading(false);
+  useEffect(() => {
+    async function fetchData() {
+      StillLoading(true);
+      const json = await myAPI.getWordScores(answer);
+      const scores = json.scores;
+      scores.forEach((entry) => {
+        const scoreIndex = data.findIndex((data) => data.score === entry.score);
+        data[scoreIndex].sum++;
+      });
+      setData(data);
+      StillLoading(false);
+    }
+    fetchData();
+    console.log(data);
+
+    // // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div>
       {loading ? (
-        'Loading...'
+        <LoadingScreen />
       ) : (
         <div className='graph-wrapper'>
           <BarChart
@@ -46,21 +47,24 @@ export default function Results(props) {
             height={250}
             data={data}
             layout='vertical'
-            barCategoryGap={1}>
+            barCategoryGap={1}
+            fill='black'
+            margin={{ top: 10, bottom: 10 }}>
             <XAxis hide />
             <YAxis
               dataKey='score'
               type='number'
-              interval='preserveStartEnd'
+              interval={0}
               domain={[1, 6]}
+              ticks={[1, 2, 3, 4, 5, 6]}
+              fill='black'
             />
-            <Tooltip />
-            <Bar dataKey='sum' fill='black'>
+            <Bar dataKey='sum'>
+              <LabelList dataKey='sum' position='right' fill='black' />
               {data.map((entry) => (
                 <Cell
                   key={entry}
                   fill={entry.score === userScore ? '#99f2c8' : '#1f4037'}
-                  label={entry.sum}
                 />
               ))}
             </Bar>

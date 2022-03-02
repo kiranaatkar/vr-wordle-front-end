@@ -7,7 +7,7 @@ import { Stats } from '@react-three/drei';
 import './App.css';
 
 // FOR TESTING RESULTS COMPONENT
-import Results from './Components/ResultsDisplay';
+import ResultsScreen from './Components/ResultsScreen';
 
 export default function App() {
   const [username, setUsername] = useState('');
@@ -17,7 +17,7 @@ export default function App() {
 
   return (
     <div className='App'>
-      <Results answer='nasty' userScore={3} />
+      <ResultsScreen answer='nasty' userScore={3} />
       <Routes>
         <Route
           path='/play'
