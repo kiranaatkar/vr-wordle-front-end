@@ -24,9 +24,6 @@ export default function Model({ position, guessIndex, setGuess }) {
         geometry={nodes.mesh_0.geometry}>
         <meshStandardMaterial
           map={colorMap}
-          normalMap={normalMap}
-          roughnessMap={roughnessMap}
-          aoMap={aoMap}
         />{' '}
       </mesh>
       <ColumnContainer
