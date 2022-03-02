@@ -70,8 +70,6 @@ export default function Game(props) {
   const [answer, setAnswer] = useState("");
   const [gameEnd, setGameCondition] = useState(false);
 
-  console.log(username, colorBlind);
-
   const resetPositions = () => {
     setReset(!reset);
   };

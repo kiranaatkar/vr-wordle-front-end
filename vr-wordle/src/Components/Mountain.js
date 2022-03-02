@@ -1,9 +1,10 @@
 import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 
-export default function Model(props) {
+export default function Mountain(props) {
   const group = useRef();
   const { nodes, materials } = useGLTF("/mountain.glb");
+
   return (
     <group
       ref={group}
@@ -30,4 +31,4 @@ export default function Model(props) {
   );
 }
 
-useGLTF.preload("/uploads_files_3605962_mountain (1).glb");
+useGLTF.preload("/mountain.glb");

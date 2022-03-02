@@ -40,7 +40,7 @@ function StaticLetter(props) {
   const springs = useSpring({
     color: props.submitted ? color : "#3a3a3c",
     delay: 600 + props.index * 600,
-    config: { duration: 200 },
+    config: { duration: 400 },
   });
 
   const box = useRef();
@@ -48,7 +48,7 @@ function StaticLetter(props) {
   useFrame(() => {
     if (props.submitted && box.current.rotation.x < Math.PI / 2) {
       sound.current.play();
-      box.current.rotation.x += 0.0285 - props.index * 0.005;
+      box.current.rotation.x += 0.029 - props.index * 0.005;
     }
   });
 
