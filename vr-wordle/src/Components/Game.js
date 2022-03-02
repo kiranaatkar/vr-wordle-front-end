@@ -126,29 +126,13 @@ export default function Game(props) {
   };
 
   return username ? (
-    <VRCanvas mode="concurrent" performance={{ min: 0.8 }} style={{ touchAction: "none" }}>
+    <VRCanvas
+      mode="concurrent"
+      performance={{ min: 0.8 }}
+      style={{ touchAction: "none" }}
+    >
       <DefaultXRControllers />
       <ambientLight intensity={0.3} />
-      <Text
-        fontSize={1}
-        color="green"
-        position={[0, 1.22, -1.45]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        fillOpacity={gameEnd === "win" ? 1 : 0}
-        alphaTest={0.5}
-      >
-        You Win!
-      </Text>
-      <Text
-        fontSize={1}
-        color="red"
-        position={[0, 1.22, -1.45]}
-        rotation={[1, 0, 0]}
-        fillOpacity={gameEnd === "lose" ? 1 : 0}
-        alphaTest={0.5}
-      >
-        You Lose!
-      </Text>
       <Grid guesses={guesses} answer={answer} colorBlind={colorBlind} />
       <Physics gravity={[0, -10, 0]}>
         <Button reset={resetPositions} />
