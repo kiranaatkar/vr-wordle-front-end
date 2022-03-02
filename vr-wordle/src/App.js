@@ -7,19 +7,19 @@ import { Stats } from "@react-three/drei";
 import "./App.css";
 
 // FOR TESTING RESULTS COMPONENT
-import Results from "./Components/ResultsDisplay";
+// import Results from "./Components/ResultsDisplay";
 
 export default function App() {
   const [username, setUsername] = useState("");
   const [colorBlind, setColorBlind] = useState(false);
   const [gameEnded, endGame] = useState(false);
 
-  console.log(username, colorBlind);
+  console.log(username, colorBlind, gameEnded);
 
   return (
     <div className="App">
       <Routes>
-        <Route
+        {/* <Route
           path="/results"
           element={
             username && gameEnded ? (
@@ -28,7 +28,7 @@ export default function App() {
               <Navigate to="/" />
             )
           }
-        />
+        /> */}
         <Route
           path="/play"
           element={
