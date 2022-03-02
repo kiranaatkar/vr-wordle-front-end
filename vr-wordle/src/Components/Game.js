@@ -14,8 +14,9 @@ import Letter from "./Letter.js";
 import Pillars from "./Pillars.js";
 import Networking from "./Networking.js";
 import { answerWords } from "../word-lists/answer-words.js";
+import { allowedWords } from "../word-lists/allowed-words.js";
 import { differenceInDays } from "date-fns";
-import Wind from "./Wind.js";
+// import Wind from "./Wind.js";
 import { Navigate } from "react-router";
 
 const myAPI = new Networking();
@@ -102,7 +103,8 @@ export default function Game(props) {
     if (
       guessCount < 6 &&
       currentGuess.filter((char) => char !== "").length === 5 &&
-      !gameEnd
+      !gameEnd &&
+      [...allowedWords, ...answerWords].includes(currentGuess.join(""))
     ) {
       const newGuesses = guesses;
       newGuesses[guessCount] = currentGuess.join("");
@@ -124,7 +126,7 @@ export default function Game(props) {
   };
 
   return username ? (
-    <VRCanvas style={{ touchAction: "none" }} performance={{ min: 0.8 }}>
+    <VRCanvas mode="concurrent" performance={{ min: 0.8 }} style={{ touchAction: "none" }}>
       <DefaultXRControllers />
       <ambientLight intensity={0.3} />
       <Text
@@ -178,7 +180,7 @@ export default function Game(props) {
         fade
       />
       <fog attach="fog" args={["#421700", 0, 100]} />
-      <Wind />
+      {/* <Wind /> */}
     </VRCanvas>
   ) : (
     <Navigate to="/" />
