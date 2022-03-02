@@ -5,16 +5,14 @@ import { useGLTF } from '@react-three/drei';
 import ColumnContainer from './ColumnContainer.js';
 
 export default function Model({ position, guessIndex, setGuess }) {
-  const [colorMap] = useLoader(TextureLoader, [
-    '/textures/mossy-rock.png',
-  ]);
+  const [colorMap] = useLoader(TextureLoader, ['/textures/mossy-rock.png']);
 
   const group = useRef();
   const { nodes } = useGLTF('/lowPolyColumn.glb');
 
   return (
     <>
-      <mesh
+      {/* <mesh
         ref={group}
         position={position}
         dispose={null}
@@ -25,7 +23,7 @@ export default function Model({ position, guessIndex, setGuess }) {
         <meshStandardMaterial
           map={colorMap}
         />{' '}
-      </mesh>
+      </mesh> */}
       <ColumnContainer
         columnGeometry={[...position, 0.3]}
         setGuess={setGuess}
