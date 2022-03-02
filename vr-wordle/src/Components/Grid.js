@@ -104,3 +104,9 @@ export function Guess(guess, word, colorBlind) {
     </>
   );
 }
+
+function checkLetter(letter, correctLetter) {
+  if (letter === correctLetter) {
+    return "correct";
+  }
+}
