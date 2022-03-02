@@ -16,6 +16,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@use-gesture/react": "^10.2.6",
     "babel-jest": "^27.5.1",
+    "create-react-class": "^15.7.0",
     "date-fns": "^2.28.0",
     "gamer-namer": "^1.0.5",
     "jest": "^27.5.1",
