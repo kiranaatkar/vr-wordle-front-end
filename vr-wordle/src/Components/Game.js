@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Text, Environment, Sky, Stars } from "@react-three/drei";
+import { Environment, Sky, Stars } from "@react-three/drei";
 import { VRCanvas, DefaultXRControllers } from "@react-three/xr";
 import LetterCubes from "./LetterCubes.js";
 import Floor from "./Floor.js";
