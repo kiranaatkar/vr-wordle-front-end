@@ -76,6 +76,7 @@ export default function Game(props) {
 
   useEffect(() => {
     setAnswer(getRandomAnswerWord());
+    setAnswer("nnnnn");
   }, []);
 
   props.setAnswer(answer);
@@ -104,7 +105,7 @@ export default function Game(props) {
     }
   };
 
-  const submitGuess = () => {
+  const submitGuess = async () => {
     if (
       guessCount < 6 &&
       currentGuess.filter((char) => char !== "").length === 5 &&
@@ -116,21 +117,21 @@ export default function Game(props) {
       const newCount = guessCount + 1;
       setGuesses(newGuesses);
       setGuessCount(newCount);
+      deleteOldGuess();
+      resetPositions();
       if (currentGuess.join("") === answer) {
         console.log("win");
         const score = guessCount + 1;
-        myAPI.postScore(score, answer, username);
+        await myAPI.postScore(score, answer, username);
         setGameCondition("win");
         props.setScore(guessCount);
-        setTimeout(props.endGame(true), 3000);
+        setTimeout(props.endGame(true), 5000);
       } else if (!newGuesses.includes(answer) && guessCount === 5) {
         console.log("lose");
         setGameCondition("lose");
         props.setScore(guessCount);
-        setTimeout(props.endGame(true), 3000);
+        setTimeout(props.endGame(true), 5000);
       }
-      deleteOldGuess();
-      resetPositions();
     }
   };
 
