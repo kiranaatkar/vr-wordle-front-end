@@ -32,7 +32,11 @@ export function generateLetters(reset, alphabet, letters) {
             id={letter}
             key={letter}
             sizeArg={[0.07, 0.07, 0.07]}
-            position={[(Math.random() - 0.5) * 0.25, 1.6 + 0.3 * i, -1]}
+            position={[
+              (Math.random() - 0.5) * 0.25,
+              1.6 + 0.3 * i,
+              -0.6 + (Math.random() - 0.5) * 0.2,
+            ]}
           />
         );
       })}
@@ -139,7 +143,7 @@ export default function Game(props) {
         <Submit submit={submitGuess} />
         <Table
           args={[3.5, 0.2, 2]}
-          position={[0, 1.05, -1.2]}
+          position={[0, 1, -0.8]}
           rotation={[0.2, 0, 0]}
         />
         <Grabber groupRef={letters} />

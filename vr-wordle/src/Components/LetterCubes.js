@@ -47,7 +47,7 @@ export default function LetterCubes({ id, position, sizeArg, reset, index }) {
     api.position.set(
       (Math.random() - 0.5) * 0.2,
       2 + 0.21 * index,
-      -0.7 + (Math.random() - 0.5) * 0.2
+      -0.6 + (Math.random() - 0.5) * 0.2
     );
     setState({ ...state, reset: reset });
   }
