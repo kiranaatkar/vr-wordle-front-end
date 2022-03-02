@@ -3,7 +3,7 @@ import PressurePlate from "./PressurePlate";
 export default function ColumnContainer(props) {
   const { columnGeometry, setGuess, guessIndex } = props;
   let [x, y, z] = columnGeometry;
-  y += 0.5; // Moves center up so bottom is at y=0
+  // Moves center up so bottom is at y=0
 
   return (
     // pressure plate, top, trunk, bottom
