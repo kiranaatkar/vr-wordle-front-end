@@ -16,7 +16,7 @@ import Networking from "./Networking.js";
 import { answerWords } from "../word-lists/answer-words.js";
 import { allowedWords } from "../word-lists/allowed-words.js";
 import { differenceInDays } from "date-fns";
-import Wind from "./Wind.js";
+// import Wind from "./Wind.js";
 import { Navigate } from "react-router";
 
 const myAPI = new Networking();
@@ -180,7 +180,7 @@ export default function Game(props) {
         fade
       />
       <fog attach="fog" args={["#421700", 0, 100]} />
-      <Wind />
+      {/* <Wind /> */}
     </VRCanvas>
   ) : (
     <Navigate to="/" />
