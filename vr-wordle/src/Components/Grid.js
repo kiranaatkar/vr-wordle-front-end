@@ -91,13 +91,7 @@ export function Guess(guess, word, colorBlind) {
           index={i}
           key={i}
           position={[-width / 2 + (side + space) * i, 0, 0]}
-          state={
-            word[i] === it
-              ? "correct"
-              : word.includes(it)
-              ? "present"
-              : "absent"
-          }
+          state={createColors(guess.split(""), word)[i]}
           colorBlind={colorBlind}
         />
       ))}
@@ -105,8 +99,49 @@ export function Guess(guess, word, colorBlind) {
   );
 }
 
-function checkLetter(letter, correctLetter) {
-  if (letter === correctLetter) {
-    return "correct";
-  }
-}
+const createColors = (wordArr, target) => {
+  const targetObj = target.split("").reduce((a, c) => {
+    if (a[c]) {
+      a[c] += 1;
+    } else {
+      a[c] = 1;
+    }
+    return a;
+  }, {});
+  const wordObj = {};
+  const colors = ["absent", "absent", "absent", "absent", "absent"];
+
+  wordArr.forEach((l, i) => {
+    if (target[i] === l) {
+      colors[i] = "correct";
+      matchedLetters[i] = l;
+      if (wordObj[l]) {
+        wordObj[l] += 1;
+      } else {
+        wordObj[l] = 1;
+      }
+    }
+  });
+
+  wordArr.forEach((l, i) => {
+    if (target.includes(l) && colors[i] !== "correct") {
+      if ((wordObj[l] || 0) < targetObj[l]) {
+        colors[i] = "present";
+        almostLetters.push(l);
+      }
+      if (wordObj[l]) {
+        wordObj[l] += 1;
+      } else {
+        wordObj[l] = 1;
+      }
+    } else {
+      failedLetters.push(l);
+    }
+  });
+
+  return colors;
+};
+
+let matchedLetters = [null, null, null, null, null];
+let almostLetters = [];
+let failedLetters = [];
