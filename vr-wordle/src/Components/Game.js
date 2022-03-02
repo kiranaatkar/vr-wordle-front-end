@@ -16,7 +16,7 @@ import Networking from "./Networking.js";
 import { answerWords } from "../word-lists/answer-words.js";
 import { allowedWords } from "../word-lists/allowed-words.js";
 import { differenceInDays } from "date-fns";
-import Wind from "./Wind.js";
+// import Wind from "./Wind.js";
 import { Navigate } from "react-router";
 
 const myAPI = new Networking();
@@ -104,7 +104,7 @@ export default function Game(props) {
       guessCount < 6 &&
       currentGuess.filter((char) => char !== "").length === 5 &&
       !gameEnd &&
-      allowedWords.includes(currentGuess.join(""))
+      [...allowedWords, ...answerWords].includes(currentGuess.join(""))
     ) {
       const newGuesses = guesses;
       newGuesses[guessCount] = currentGuess.join("");
@@ -126,29 +126,13 @@ export default function Game(props) {
   };
 
   return username ? (
-    <VRCanvas style={{ touchAction: "none" }}>
+    <VRCanvas
+      mode="concurrent"
+      performance={{ min: 0.8 }}
+      style={{ touchAction: "none" }}
+    >
       <DefaultXRControllers />
       <ambientLight intensity={0.3} />
-      <Text
-        fontSize={1}
-        color="green"
-        position={[0, 1.22, -1.45]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        fillOpacity={gameEnd === "win" ? 1 : 0}
-        alphaTest={0.5}
-      >
-        You Win!
-      </Text>
-      <Text
-        fontSize={1}
-        color="red"
-        position={[0, 1.22, -1.45]}
-        rotation={[1, 0, 0]}
-        fillOpacity={gameEnd === "lose" ? 1 : 0}
-        alphaTest={0.5}
-      >
-        You Lose!
-      </Text>
       <Grid guesses={guesses} answer={answer} colorBlind={colorBlind} />
       <Physics gravity={[0, -10, 0]}>
         <Button reset={resetPositions} />
@@ -180,7 +164,7 @@ export default function Game(props) {
         fade
       />
       <fog attach="fog" args={["#421700", 0, 100]} />
-      <Wind />
+      {/* <Wind /> */}
     </VRCanvas>
   ) : (
     <Navigate to="/" />
