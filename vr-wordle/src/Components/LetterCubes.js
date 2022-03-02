@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useThree } from "@react-three/fiber";
+import { useThree, useLoader } from "@react-three/fiber";
 import { useBox } from "@react-three/cannon";
-import { Box, Text } from "@react-three/drei";
+import { Box } from "@react-three/drei";
 import { useDrag } from "@use-gesture/react";
 import { Interactive, useController, useXRFrame } from "@react-three/xr";
-import { Vector3 } from "three";
+import { Vector3, TextureLoader } from "three";
 
 export default function LetterCubes({ id, position, sizeArg, reset, index }) {
   const [state, setState] = useState({
@@ -26,6 +26,8 @@ export default function LetterCubes({ id, position, sizeArg, reset, index }) {
       friction: 1,
     },
   }));
+
+  const [colorMap] = useLoader(TextureLoader, ["/textures/lettercube-a.png"]);
 
   const bind = useDrag(
     ({ offset: [,], xy: [x, y], first, last }) => {
@@ -81,25 +83,10 @@ export default function LetterCubes({ id, position, sizeArg, reset, index }) {
         onPointerOut={(event) => setState({ ...state, hover: false })}
         name={id}
       >
-        <Text
-          userData={{ letter: id }}
-          position={[0, sizeArg[1] / 2 + 0.0001, 0]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          fontSize={0.05}
-        >
-          {id.toUpperCase()}
-        </Text>
-        <Text
-          userData={{ letter: id }}
-          position={[0, -(sizeArg[1] / 2 + 0.0001), 0]}
-          rotation={[-Math.PI / 2, Math.PI, 0]}
-          fontSize={0.05}
-        >
-          {id.toUpperCase()}
-        </Text>
         <meshStandardMaterial
-          color={state.hover ? "#00E2FB" : "#3a3a3c"}
+          color={state.hover ? "#00E2FB" : "#ffffff"}
           alphaTest={0.8}
+          map={colorMap}
         />
       </Box>
     </Interactive>

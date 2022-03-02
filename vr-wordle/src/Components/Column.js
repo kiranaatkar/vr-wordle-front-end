@@ -1,14 +1,14 @@
-import React, { useRef } from 'react';
-import { useLoader } from '@react-three/fiber';
-import { TextureLoader } from 'three';
-import { useGLTF } from '@react-three/drei';
-import ColumnContainer from './ColumnContainer.js';
+import React from "react";
+// import { useLoader } from "@react-three/fiber";
+// import { TextureLoader } from "three";
+import { useGLTF } from "@react-three/drei";
+import ColumnContainer from "./ColumnContainer.js";
 
 export default function Model({ position, guessIndex, setGuess }) {
-  const [colorMap] = useLoader(TextureLoader, ['/textures/mossy-rock.png']);
+  // const [colorMap] = useLoader(TextureLoader, ["/textures/mossy-rock.png"]);
 
-  const group = useRef();
-  const { nodes } = useGLTF('/lowPolyColumn.glb');
+  // const group = useRef();
+  // const { nodes } = useGLTF("/lowPolyColumn.glb");
 
   return (
     <>
@@ -19,10 +19,9 @@ export default function Model({ position, guessIndex, setGuess }) {
         scale={1.5}
         castShadow
         receiveShadow
-        geometry={nodes.mesh_0.geometry}>
-        <meshStandardMaterial
-          map={colorMap}
-        />{' '}
+        geometry={nodes.mesh_0.geometry}
+      >
+        <meshStandardMaterial map={colorMap} />{" "}
       </mesh> */}
       <ColumnContainer
         columnGeometry={[...position, 0.3]}
@@ -33,4 +32,4 @@ export default function Model({ position, guessIndex, setGuess }) {
   );
 }
 
-useGLTF.preload('/scene.glb');
+useGLTF.preload("/scene.glb");

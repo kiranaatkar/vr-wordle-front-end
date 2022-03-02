@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Text, Environment, Sky, Stars } from "@react-three/drei";
+import { Environment, Sky, Stars } from "@react-three/drei";
 import { VRCanvas, DefaultXRControllers } from "@react-three/xr";
 import LetterCubes from "./LetterCubes.js";
 import Floor from "./Floor.js";
@@ -14,10 +14,11 @@ import Letter from "./Letter.js";
 import Pillars from "./Pillars.js";
 import Networking from "./Networking.js";
 import { answerWords } from "../word-lists/answer-words.js";
-import { allowedWords } from "../word-lists/allowed-words.js";
+// import { allowedWords } from "../word-lists/allowed-words.js";
 import { differenceInDays } from "date-fns";
 // import Wind from "./Wind.js";
 import { Navigate } from "react-router";
+import Alphabet from "./Alphabet.js";
 
 const myAPI = new Networking();
 
@@ -107,8 +108,8 @@ export default function Game(props) {
     if (
       guessCount < 6 &&
       currentGuess.filter((char) => char !== "").length === 5 &&
-      !gameEnd &&
-      [...allowedWords, ...answerWords].includes(currentGuess.join(""))
+      !gameEnd
+      // [...allowedWords, ...answerWords].includes(currentGuess.join(""))
     ) {
       const newGuesses = guesses;
       newGuesses[guessCount] = currentGuess.join("");
@@ -149,11 +150,7 @@ export default function Game(props) {
         />
         <Grabber groupRef={letters} />
         {generateLetters(reset, alphabet, letters)}
-        <Letter position={[2, 1, 1]} name="w" />
-        <Letter position={[2, 2, 0.6]} name="r" />
-        <Letter position={[2, 3, 0.7]} name="d" />
-        <Letter position={[-2, 1, 0.6]} name="l" />
-        <Letter position={[-2, 2, 1]} name="e" />
+        <Letter position={[2, 1, -1]} name="n" />
         <Pillars setGuess={setGuess} />
         <Player />
         <Floor />
@@ -170,6 +167,7 @@ export default function Game(props) {
       />
       <fog attach="fog" args={["#421700", 0, 100]} />
       {/* <Wind /> */}
+      <Alphabet />
     </VRCanvas>
   ) : (
     <Navigate to="/" />
