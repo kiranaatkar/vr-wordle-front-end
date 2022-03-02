@@ -39,8 +39,9 @@ export default function Homepage(props) {
   return (
     <div className="homepage">
       <ThemeProvider theme={theme}>
-        <img src={"/wrdle-cropped.png"} alt="wrdle" />
+        <img src={"/wrdle-cropped.png"} alt="wrdle" data-testid="title-image" />
         <TextField
+          data-testid="username-input"
           label="Username"
           variant="filled"
           value={username}
@@ -53,6 +54,7 @@ export default function Homepage(props) {
           }}
         />
         <Button
+          data-testid="submit-button"
           variant="contained"
           type="submit"
           onClick={submitUsername}
@@ -62,6 +64,7 @@ export default function Homepage(props) {
           Submit{" "}
         </Button>
         <Button
+          data-testid="random-username"
           style={{ width: "20vw", marginBottom: "18vh" }}
           variant="contained"
           onClick={() => setUsername(generateName())}
@@ -70,6 +73,7 @@ export default function Homepage(props) {
         </Button>
       </ThemeProvider>
       <FormGroup
+        data-testid="colorblind-section"
         style={{
           background: "#5d9d8a",
           width: "20vw",
@@ -81,6 +85,7 @@ export default function Homepage(props) {
         }}
       >
         <Switch
+          data-testid="colorblind-switch"
           checked={colourblind}
           onChange={() => setColourblind(!colourblind)}
           color="warning"

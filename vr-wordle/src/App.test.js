@@ -3,6 +3,9 @@ import { differenceInDays } from "date-fns";
 import { render, screen } from "@testing-library/react";
 import React, { useState, useRef } from "react";
 import Grid, { Guess } from "./Components/Grid.js";
+import userEvent from "@testing-library/user-event";
+import Homepage from "./Components/Homepage.js";
+import "@testing-library/jest-dom";
 
 const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
 
@@ -530,4 +533,53 @@ test("Guess correctly outputs a five letter word with five blocks", () => {
       JSON.stringify(expected[child])
     );
   }
+});
+
+describe("<Homepage />", () => {
+  test("renders username input", () => {
+    render(<Homepage />);
+    const element = screen.getByTestId("username-input");
+    expect(element).toBeInTheDocument();
+  });
+
+  test("renders title", () => {
+    render(<Homepage />);
+    const element = screen.getByTestId("title-image");
+    expect(element).toBeInTheDocument();
+    expect(element).toHaveAttribute("alt", "wrdle");
+  });
+
+  test("renders submit button", () => {
+    render(<Homepage />);
+    const element = screen.getByTestId("submit-button");
+    expect(element).toBeInTheDocument();
+    expect(element).toHaveAttribute("type", "submit");
+  });
+
+  test("renders random-username button", () => {
+    render(<Homepage />);
+    const element = screen.getByTestId("random-username");
+    expect(element).toBeInTheDocument();
+  });
+
+  test("renders colorblind mode", () => {
+    render(<Homepage />);
+    const element = screen.getByTestId("colorblind-section");
+    const descendant = screen.getByTestId("colorblind-switch");
+    expect(element).toBeInTheDocument();
+    expect(element).toContainElement(descendant);
+  });
+
+  test("submit is disabled on empty username", () => {
+    render(<Homepage />);
+    const element = screen.getByTestId("submit-button");
+    expect(element).toBeDisabled();
+  });
+
+  // test("submit is enabled on filled username", () => {
+  //   render(<Homepage />);
+  //   const username = screen.getByTestId("username-input");
+  //   userEvent.type(username, "test");
+  //   expect(screen.getByTestId("submit-button")).not.toBeDisabled();
+  // });
 });
