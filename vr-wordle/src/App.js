@@ -12,13 +12,23 @@ import ResultsScreen from './Components/ResultsScreen';
 export default function App() {
   const [username, setUsername] = useState('');
   const [colorBlind, setColorBlind] = useState(false);
-
-  console.log(username, colorBlind);
-
+  const [gameEnded, endGame] = useState(false);
+  const [answer, setAnswer] = useState('');
+  const [score, setScore] = useState(0);
+  console.log(gameEnded, answer, score);
   return (
     <div className='App'>
-      <ResultsScreen answer='nasty' userScore={3} />
       <Routes>
+        {/* <Route
+          path="/results"
+          element={
+            username && gameEnded ? (
+              <Results answer={answer} userScore={score} />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        /> */}
         <Route
           path='/play'
           element={
@@ -28,7 +38,13 @@ export default function App() {
                   showPanel={0} // Start-up panel (default=0)
                   className='stats' // Optional className to add to the stats container dom element
                 />
-                <Game username={username} colorBlind={colorBlind} />
+                <Game
+                  username={username}
+                  colorBlind={colorBlind}
+                  endGame={(state) => endGame(state)}
+                  setAnswer={(answer) => setAnswer(answer)}
+                  setScore={(score) => setScore(score)}
+                />
               </Suspense>
             ) : (
               <Navigate replace to='/' />

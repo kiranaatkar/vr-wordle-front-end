@@ -27,7 +27,9 @@ export default function LetterCubes({ id, position, sizeArg, reset, index }) {
     },
   }));
 
-  const [colorMap] = useLoader(TextureLoader, ["/textures/lettercube-a.png"]);
+  const [colorMap] = useLoader(TextureLoader, [
+    `/textures/lettercube-${id.toLowerCase()}.png`,
+  ]);
 
   const bind = useDrag(
     ({ offset: [,], xy: [x, y], first, last }) => {
