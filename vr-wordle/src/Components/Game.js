@@ -104,7 +104,7 @@ export default function Game(props) {
       guessCount < 6 &&
       currentGuess.filter((char) => char !== "").length === 5 &&
       !gameEnd &&
-      allowedWords.includes(currentGuess.join(""))
+      [...allowedWords, ...answerWords].includes(currentGuess.join(""))
     ) {
       const newGuesses = guesses;
       newGuesses[guessCount] = currentGuess.join("");
@@ -126,7 +126,7 @@ export default function Game(props) {
   };
 
   return username ? (
-    <VRCanvas style={{ touchAction: "none" }}>
+    <VRCanvas mode="concurrent" style={{ touchAction: "none" }}>
       <DefaultXRControllers />
       <ambientLight intensity={0.3} />
       <Text
