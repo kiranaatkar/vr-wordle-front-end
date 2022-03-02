@@ -114,7 +114,7 @@ const createColors = (wordArr, target) => {
   wordArr.forEach((l, i) => {
     if (target[i] === l) {
       colors[i] = "correct";
-      matchedLetters[i] = l;
+
       if (wordObj[l]) {
         wordObj[l] += 1;
       } else {
@@ -127,21 +127,14 @@ const createColors = (wordArr, target) => {
     if (target.includes(l) && colors[i] !== "correct") {
       if ((wordObj[l] || 0) < targetObj[l]) {
         colors[i] = "present";
-        almostLetters.push(l);
       }
       if (wordObj[l]) {
         wordObj[l] += 1;
       } else {
         wordObj[l] = 1;
       }
-    } else {
-      failedLetters.push(l);
     }
   });
 
   return colors;
 };
-
-let matchedLetters = [null, null, null, null, null];
-let almostLetters = [];
-let failedLetters = [];
