@@ -32,7 +32,7 @@ export default function App() {
         <Route
           path="/play"
           element={
-            username ? (
+            username.length > 1 ? (
               <Suspense fallback={<LoadingScreen />}>
                 <Stats
                   showPanel={0} // Start-up panel (default=0)
