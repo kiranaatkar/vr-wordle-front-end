@@ -15,6 +15,7 @@ export default function App() {
   const [gameEnded, endGame] = useState(false);
   const [answer, setAnswer] = useState("");
   const [score, setScore] = useState(0);
+  console.log(gameEnded, answer, score);
   return (
     <div className="App">
       <Routes>
