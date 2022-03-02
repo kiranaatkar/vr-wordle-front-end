@@ -5,12 +5,7 @@ import { useGLTF } from "@react-three/drei";
 import ColumnContainer from "./ColumnContainer.js";
 
 export default function Model({ position, guessIndex, setGuess }) {
-  const [colorMap, normalMap, roughnessMap, aoMap] = useLoader(TextureLoader, [
-    "/textures/aerial_rocks_02_diff_2k.jpg",
-    "/textures/aerial_rocks_02_nor_dx_2k.jpg",
-    "/textures/aerial_rocks_02_rough_2k.jpg",
-    "/textures/aerial_rocks_02_ao_2k.jpg",
-  ]);
+  const [colorMap] = useLoader(TextureLoader, ["/textures/mossy-rock.png"]);
 
   const group = useRef();
   const { nodes } = useGLTF("/scene.glb");
@@ -26,12 +21,7 @@ export default function Model({ position, guessIndex, setGuess }) {
         receiveShadow
         geometry={nodes.Object_2.geometry}
       >
-        <meshStandardMaterial
-          map={colorMap}
-          normalMap={normalMap}
-          roughnessMap={roughnessMap}
-          aoMap={aoMap}
-        />{" "}
+        <meshStandardMaterial map={colorMap} />{" "}
       </mesh>
       <ColumnContainer
         columnGeometry={[...position, 0.3]}
