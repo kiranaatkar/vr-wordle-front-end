@@ -18,6 +18,7 @@ import { answerWords } from "../word-lists/answer-words.js";
 import { differenceInDays } from "date-fns";
 // import Wind from "./Wind.js";
 import { Navigate } from "react-router";
+import Alphabet from "./Alphabet.js";
 
 const myAPI = new Networking();
 
@@ -166,6 +167,7 @@ export default function Game(props) {
       />
       <fog attach="fog" args={["#421700", 0, 100]} />
       {/* <Wind /> */}
+      <Alphabet />
     </VRCanvas>
   ) : (
     <Navigate to="/" />
