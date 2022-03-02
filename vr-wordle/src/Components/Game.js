@@ -78,6 +78,8 @@ export default function Game(props) {
     setAnswer(getRandomAnswerWord());
   }, []);
 
+  props.setAnswer(answer);
+
   const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
   const letters = useRef(<group />);
 
@@ -119,6 +121,7 @@ export default function Game(props) {
         const score = guessCount + 1;
         myAPI.postScore(score, answer, username);
         setGameCondition("win");
+        props.setScore(guessCount);
         setTimeout(props.endGame(true), 1000);
       } else if (!newGuesses.includes(answer) && guessCount === 5) {
         console.log("lose");

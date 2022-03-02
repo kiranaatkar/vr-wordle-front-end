@@ -13,7 +13,8 @@ export default function App() {
   const [username, setUsername] = useState("");
   const [colorBlind, setColorBlind] = useState(false);
   const [gameEnded, endGame] = useState(false);
-  
+  const [answer, setAnswer] = useState("");
+  const [score, setScore] = useState(0);
   return (
     <div className="App">
       <Routes>
@@ -21,7 +22,7 @@ export default function App() {
           path="/results"
           element={
             username && gameEnded ? (
-              <Results answer="nasty" userScore={3} />
+              <Results answer={answer} userScore={score} />
             ) : (
               <Navigate to="/" />
             )
@@ -40,6 +41,8 @@ export default function App() {
                   username={username}
                   colorBlind={colorBlind}
                   endGame={(state) => endGame(state)}
+                  setAnswer={(answer) => setAnswer(answer)}
+                  setScore={(score) => setScore(score)}
                 />
               </Suspense>
             ) : (
