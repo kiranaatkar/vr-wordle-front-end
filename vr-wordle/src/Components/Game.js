@@ -119,9 +119,11 @@ export default function Game(props) {
         const score = guessCount + 1;
         myAPI.postScore(score, answer, username);
         setGameCondition("win");
+        setTimeout(props.endGame(true), 1000);
       } else if (!newGuesses.includes(answer) && guessCount === 5) {
         console.log("lose");
         setGameCondition("lose");
+        setTimeout(props.endGame(true), 1000);
       }
       deleteOldGuess();
       resetPositions();
