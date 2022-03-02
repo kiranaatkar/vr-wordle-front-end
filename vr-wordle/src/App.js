@@ -1,12 +1,11 @@
-import React, { useState, Suspense } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import Game from './Components/Game';
-import Homepage from './Components/Homepage';
-import LoadingScreen from './Components/loadingScreen.js';
-import { Stats } from '@react-three/drei';
-import './App.css';
 
-// FOR TESTING RESULTS COMPONENT
+import React, { useState, Suspense } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Game from "./Components/Game";
+import Homepage from "./Components/Homepage";
+import LoadingScreen from "./Components/loadingScreen.js";
+import { Stats } from "@react-three/drei";
+import "./App.css";
 import ResultsScreen from './Components/ResultsScreen';
 
 export default function App() {
@@ -19,16 +18,16 @@ export default function App() {
   return (
     <div className='App'>
       <Routes>
-        {/* <Route
+        <Route
           path="/results"
           element={
             username && gameEnded ? (
-              <Results answer={answer} userScore={score} />
+              <ResultsScreen answer={answer} userScore={score} />
             ) : (
               <Navigate to="/" />
             )
           }
-        /> */}
+        />
         <Route
           path='/play'
           element={
