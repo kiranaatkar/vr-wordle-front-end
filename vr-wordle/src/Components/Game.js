@@ -176,7 +176,10 @@ export default function Game(props) {
         {/* Allows grabbing of the individual letters */}
         <Grabber groupRef={letters} />
         {generateLetters(reset, alphabet, letters)}
-        <Letter position={[2, 1, -1]} name='n' />
+        {process.env.NODE_ENV === 'development' && (
+          <Letter position={[2, 1, -1]} name='n' />
+        )}
+
         <Pillars setGuess={setGuess} />
         <Player />
         <Floor />
