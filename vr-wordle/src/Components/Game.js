@@ -73,7 +73,7 @@ export default function Game(props) {
     setAnswer(
       process.env.NODE_ENV === 'development' ? 'nnnnn' : getRandomAnswerWord()
     );
-    let todaysDate = format(new Date(), 'yyyy-MM-dd');
+    let todaysDate = format(new Date(), "yyyy-MM-dd");
     if (!cookies.guesses || todaysDate !== cookies.date) {
       setCookie('guesses', [
         '     ',
@@ -89,7 +89,7 @@ export default function Game(props) {
 
   props.setAnswer(answer);
 
-  const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
+  const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
   const letters = useRef(<group />);
 
   const deleteOldGuess = () => {
