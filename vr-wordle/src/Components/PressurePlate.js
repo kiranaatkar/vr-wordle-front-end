@@ -1,9 +1,9 @@
-import { useCylinder } from '@react-three/cannon';
-import { useState, useRef, useEffect } from 'react';
-import { useSpring, animated, config } from '@react-spring/three';
-import { useLoader, useThree } from '@react-three/fiber';
-import { TextureLoader } from 'three';
-import * as THREE from 'three';
+import { useCylinder } from "@react-three/cannon";
+import { useState, useRef, useEffect } from "react";
+import { useSpring, animated, config } from "@react-spring/three";
+import { useLoader, useThree } from "@react-three/fiber";
+import { TextureLoader } from "three";
+import * as THREE from "three";
 
 export default function PressurePlate(props) {
   const [pressed, setPress] = useState(false);
@@ -12,8 +12,10 @@ export default function PressurePlate(props) {
   const sound = useRef();
   const { camera } = useThree();
   const [listener] = useState(() => new THREE.AudioListener());
-  const buffer = useLoader(THREE.AudioLoader, '/pressure.mp3');
+  const buffer = useLoader(THREE.AudioLoader, "/pressure.mp3");
 
+  // Setting up the sound during every update to make sure sound plays and avoiding
+  // a bug where chrome does not allow autoplay
   useEffect(() => {
     sound.current.setBuffer(buffer);
     sound.current.setRefDistance(1);
@@ -21,10 +23,10 @@ export default function PressurePlate(props) {
     return () => camera.remove(listener);
   });
 
-  const [colorMap] = useLoader(TextureLoader, ['/textures/mossy-rock.png']);
+  const [colorMap] = useLoader(TextureLoader, ["/textures/mossy-rock.png"]);
 
   const [ref] = useCylinder(() => ({
-    type: 'Static',
+    type: "Static",
     mass: 10,
     args,
     scale: [1, pressed ? 0.2 : 1, 1],
@@ -58,7 +60,7 @@ export default function PressurePlate(props) {
 
   return (
     <animated.mesh ref={ref} scale={scale}>
-      <cylinderBufferGeometry attach='geometry' args={args} />
+      <cylinderBufferGeometry attach="geometry" args={args} />
       {getPlateColor()}
       <positionalAudio ref={sound} args={[listener]} />
     </animated.mesh>
