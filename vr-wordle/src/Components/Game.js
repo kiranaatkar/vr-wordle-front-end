@@ -130,7 +130,7 @@ export default function Game(props) {
       } else if (!newGuesses.includes(answer) && guessCount === 5) {
         console.log("lose");
         setGameCondition("lose");
-        props.setScore(guessCount);
+        props.setScore(null);
         setTimeout(props.endGame(true), 5000);
       }
     }
