@@ -60,16 +60,13 @@ export default function ResultsGraph(props) {
             />
             <Bar dataKey='value'>
               <LabelList position='right' fill='black' />
-              {data.map((entry) => {
-                console.log(entry.score, userScore);
-                return (
-                  <Cell
-                    key={entry.score}
-                    fill={entry.score === userScore ? '#99f2c8' : '#1f4037'}
-                    dataKey='value'
-                  />
-                );
-              })}
+              {data.map((entry) => (
+                <Cell
+                  key={entry.score}
+                  fill={entry.score === userScore ? '#99f2c8' : '#1f4037'}
+                  dataKey='value'
+                />
+              ))}
             </Bar>
           </BarChart>
         </div>
