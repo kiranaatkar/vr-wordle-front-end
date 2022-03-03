@@ -35,7 +35,6 @@ export default function ResultsGraph(props) {
       StillLoading(false);
     }
     fetchData();
-    console.log(data);
   }, []);
 
   return (
