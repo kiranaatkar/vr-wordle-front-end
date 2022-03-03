@@ -77,13 +77,13 @@ function StaticLetter(props) {
   );
 }
 
-export function Guess(guess, word, colorBlind) {
+export function Guess(userGuess, word, colorBlind) {
   const side = 1;
   const space = 0.1;
   const width = (side + space) * 4;
   return (
     <>
-      {guess.split("").map((guess, i) => (
+      {userGuess.split("").map((guess, i) => (
         <StaticLetter
           side={side}
           id={guess}
@@ -91,7 +91,7 @@ export function Guess(guess, word, colorBlind) {
           index={i}
           key={i}
           position={[-width / 2 + (side + space) * i, 0, 0]}
-          state={createColors(guess.split(""), word)[i]}
+          state={createColors(userGuess.split(""), word)[i]}
           colorBlind={colorBlind}
         />
       ))}
