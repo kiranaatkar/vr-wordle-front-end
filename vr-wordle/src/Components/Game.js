@@ -54,14 +54,14 @@ function getRandomAnswerWord() {
 }
 
 export default function Game(props) {
-  const [guesses, setGuesses] = useState([
-    "     ",
-    "     ",
-    "     ",
-    "     ",
-    "     ",
-    "     ",
-  ]);
+  // const [guesses, setGuesses] = useState([
+  //   "     ",
+  //   "     ",
+  //   "     ",
+  //   "     ",
+  //   "     ",
+  //   "     ",
+  // ]);
   const [cookies, setCookie] = useCookies();
   const [username] = useState(props.username);
   const [colorBlind] = useState(props.colorBlind);
@@ -130,7 +130,7 @@ export default function Game(props) {
       const newGuesses = cookies.guesses;
       newGuesses[guessCount] = currentGuess.join("");
       const newCount = guessCount + 1;
-      setGuesses(newGuesses);
+      //setGuesses(newGuesses);
       setGuessCount(newCount);
       if (currentGuess.join("") === answer) {
         console.log("win");

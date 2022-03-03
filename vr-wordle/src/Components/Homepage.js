@@ -6,6 +6,7 @@ import FormGroup from "@mui/material/FormGroup";
 import { generateName } from "gamer-namer";
 import "./Homepage.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { useCookies } from "react-cookie";
 
 const theme = createTheme({
   palette: {
@@ -26,6 +27,7 @@ const theme = createTheme({
 export default function Homepage(props) {
   const [username, setUsername] = useState("");
   const [colourblind, setColourblind] = useState(false);
+  const [cookies, setCookie] = useCookies();
 
   const onChange = (e) => {
     setUsername(e.target.value);
@@ -33,6 +35,18 @@ export default function Homepage(props) {
 
   const submitUsername = () => {
     props.setColorBlind(colourblind);
+    if (username !== cookies.username) {
+      setCookie("username", username);
+      setCookie("guesses", [
+        "     ",
+        "     ",
+        "     ",
+        "     ",
+        "     ",
+        "     ",
+      ]);
+    }
+
     props.setUsername(username);
   };
 
