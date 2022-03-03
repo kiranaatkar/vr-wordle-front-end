@@ -7,6 +7,7 @@ import { Stats } from "@react-three/drei";
 import "./App.css";
 import ResultsScreen from "./Components/ResultsScreen";
 
+
 export default function App() {
   const [username, setUsername] = useState("");
   const [colorBlind, setColorBlind] = useState(false);
@@ -18,12 +19,12 @@ export default function App() {
     <div className="App">
       <Routes>
         <Route
-          path="/results"
+          path='/results'
           element={
             username && gameEnded ? (
-              <ResultsScreen answer={answer} userScore={score} />
+              <ResultsScreen answer={answer} userScore={score + 1} />
             ) : (
-              <Navigate to="/" />
+              <Navigate to='/' />
             )
           }
         />
@@ -31,19 +32,23 @@ export default function App() {
           path="/play"
           element={
             username ? (
-              <Suspense fallback={<LoadingScreen />}>
-                <Stats
-                  showPanel={0} // Start-up panel (default=0)
-                  className="stats" // Optional className to add to the stats container dom element
-                />
-                <Game
-                  username={username}
-                  colorBlind={colorBlind}
-                  endGame={(state) => endGame(state)}
-                  setAnswer={(answer) => setAnswer(answer)}
-                  setScore={(score) => setScore(score)}
-                />
-              </Suspense>
+              gameEnded ? (
+                <Navigate replace to='/results' />
+              ) : (
+                <Suspense fallback={<LoadingScreen />}>
+                  <Stats
+                    showPanel={0} // Start-up panel (default=0)
+                    className='stats' // Optional className to add to the stats container dom element
+                  />
+                  <Game
+                    username={username}
+                    colorBlind={colorBlind}
+                    endGame={(state) => endGame(state)}
+                    setAnswer={(answer) => setAnswer(answer)}
+                    setScore={(score) => setScore(score)}
+                  />
+                </Suspense>
+              )
             ) : (
               <Navigate replace to="/" />
             )

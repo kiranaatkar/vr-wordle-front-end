@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Environment, Sky, Stars } from "@react-three/drei";
-import { VRCanvas, DefaultXRControllers } from "@react-three/xr";
+import { VRCanvas, DefaultXRControllers, Hands } from "@react-three/xr";
 import LetterCubes from "./LetterCubes.js";
+import GameEnd from "./GameEnd.js";
 import Floor from "./Floor.js";
 import Button from "./Button.js";
 import Submit from "./Submit.js";
@@ -119,7 +120,7 @@ export default function Game(props) {
     }
   };
 
-  const submitGuess = () => {
+  const submitGuess = async () => {
     if (
       guessCount < 6 &&
       currentGuess.filter((char) => char !== "").length === 5 &&
@@ -132,23 +133,23 @@ export default function Game(props) {
       const newCount = guessCount + 1;
       //setGuesses(newGuesses);
       setGuessCount(newCount);
+      deleteOldGuess();
+      resetPositions();
       if (currentGuess.join("") === answer) {
         console.log("win");
         const score = guessCount + 1;
-        myAPI.postScore(score, answer, username);
-        setGameCondition("win");
+        await myAPI.postScore(score, answer, username);
         props.setScore(guessCount);
-        setTimeout(props.endGame(true), 3000);
+        setTimeout(async () => {
+          setGameCondition("win");
+        }, 5000);
       } else if (!newGuesses.includes(answer) && guessCount === 5) {
         console.log("lose");
         setGameCondition("lose");
-        props.setScore(guessCount);
-        setTimeout(props.endGame(true), 3000);
+        props.setScore(null);
+        setTimeout(props.endGame(true), 5000);
       }
-      deleteOldGuess();
-      resetPositions();
       setCookie("guesses", newGuesses);
-      console.log(cookies);
     }
   };
 
@@ -158,10 +159,17 @@ export default function Game(props) {
       performance={{ min: 0.8 }}
       style={{ touchAction: "none" }}
       frameloop="demand"
+      sessionInit={{
+        optionalFeatures: ["local-floor", "bounded-floor", "hand-tracking"],
+      }}
     >
+      {gameEnd && <GameEnd endGame={() => props.endGame(true)} />}
+      {/* Grabs Oculus Controllers */}
       <DefaultXRControllers />
+      <Hands modelLeft={"/leftHand.gltf"} modelRight={"/rightHand.gltf"} />
       <ambientLight intensity={0.3} />
       <Grid guesses={cookies.guesses} answer={answer} colorBlind={colorBlind} />
+      {/* Adds Physics to child elements */}
       <Physics gravity={[0, -10, 0]}>
         <Button reset={resetPositions} />
         <Submit submit={submitGuess} />
@@ -170,6 +178,8 @@ export default function Game(props) {
           position={[0, 1, -0.8]}
           rotation={[0.2, 0, 0]}
         />
+
+        {/* Allows grabbing of the individual letters */}
         <Grabber groupRef={letters} />
         {generateLetters(reset, alphabet, letters)}
         <Letter position={[2, 1, -1]} name="n" />
@@ -188,7 +198,10 @@ export default function Game(props) {
         fade
       />
       <fog attach="fog" args={["#421700", 0, 100]} />
-      {/* <Wind /> */}
+
+      {/* 
+      Renders an alphabet behind and underneath the player to cache every 
+      letter in a text component, prevents scene re-loading on a submit */}
       <Alphabet />
     </VRCanvas>
   ) : (

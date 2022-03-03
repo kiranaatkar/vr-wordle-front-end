@@ -1,17 +1,18 @@
-import { useCylinder } from "@react-three/cannon";
-import { useState, useRef, useEffect } from "react";
-import { useSpring, animated, config } from "@react-spring/three";
-import { useLoader, useThree } from "@react-three/fiber";
-import { TextureLoader } from "three";
-import * as THREE from "three";
+import { useCylinder } from '@react-three/cannon';
+import { useState, useRef, useEffect } from 'react';
+import { useSpring, animated, config } from '@react-spring/three';
+import { useLoader, useThree } from '@react-three/fiber';
+import { TextureLoader } from 'three';
+import * as THREE from 'three';
 
 export default function PressurePlate(props) {
   const [pressed, setPress] = useState(false);
+  const { args, position, guessIndex } = props;
 
   const sound = useRef();
   const { camera } = useThree();
   const [listener] = useState(() => new THREE.AudioListener());
-  const buffer = useLoader(THREE.AudioLoader, "/pressure.mp3");
+  const buffer = useLoader(THREE.AudioLoader, '/pressure.mp3');
 
   useEffect(() => {
     sound.current.setBuffer(buffer);
@@ -20,16 +21,16 @@ export default function PressurePlate(props) {
     return () => camera.remove(listener);
   });
 
-  const [colorMap] = useLoader(TextureLoader, ["/textures/mossy-rock.png"]);
+  const [colorMap] = useLoader(TextureLoader, ['/textures/mossy-rock.png']);
 
   const [ref] = useCylinder(() => ({
-    type: "Static",
+    type: 'Static',
     mass: 10,
-    args: props.args,
+    args,
     scale: [1, pressed ? 0.2 : 1, 1],
-    position: props.position,
+    position,
     onCollide: (e) => {
-      props.setGuess(e.body.name, props.guessIndex);
+      props.setGuess(e.body.name, guessIndex);
     },
     onCollideBegin: () => {
       setPress(true);
@@ -40,6 +41,7 @@ export default function PressurePlate(props) {
     },
   }));
 
+  // Handle deformation when letter placed on top
   const { scale } = useSpring({
     to: { scale: [1, pressed ? 0.5 : 1, 1] },
     from: { scale: [1, pressed ? 1 : 0.5, 1] },
@@ -48,7 +50,7 @@ export default function PressurePlate(props) {
 
   function getPlateColor() {
     return pressed ? (
-      <meshNormalMaterial color={"white"} />
+      <meshNormalMaterial />
     ) : (
       <meshStandardMaterial map={colorMap} />
     );
@@ -56,7 +58,7 @@ export default function PressurePlate(props) {
 
   return (
     <animated.mesh ref={ref} scale={scale}>
-      <cylinderBufferGeometry attach="geometry" args={props.args} />
+      <cylinderBufferGeometry attach='geometry' args={args} />
       {getPlateColor()}
       <positionalAudio ref={sound} args={[listener]} />
     </animated.mesh>
