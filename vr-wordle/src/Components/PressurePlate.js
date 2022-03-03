@@ -26,11 +26,11 @@ export default function PressurePlate(props) {
   const [ref] = useCylinder(() => ({
     type: 'Static',
     mass: 10,
-    args: props.args,
+    args,
     scale: [1, pressed ? 0.2 : 1, 1],
-    position: props.position,
+    position,
     onCollide: (e) => {
-      props.setGuess(e.body.name, props.guessIndex);
+      props.setGuess(e.body.name, guessIndex);
     },
     onCollideBegin: () => {
       setPress(true);
@@ -57,7 +57,7 @@ export default function PressurePlate(props) {
 
   return (
     <animated.mesh ref={ref} scale={scale}>
-      <cylinderBufferGeometry attach='geometry' args={props.args} />
+      <cylinderBufferGeometry attach='geometry' args={args} />
       {getPlateColor()}
       <positionalAudio ref={sound} args={[listener]} />
     </animated.mesh>
