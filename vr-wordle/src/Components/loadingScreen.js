@@ -4,7 +4,6 @@ import React from 'react';
 
 const CircularProgress = ({ size, strokeWidth, color }) => {
   const { progress } = useProgress();
-
   const viewBox = `0 0 ${size} ${size}`;
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * Math.PI * 2;
