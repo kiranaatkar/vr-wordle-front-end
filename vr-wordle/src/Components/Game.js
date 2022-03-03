@@ -18,6 +18,8 @@ import { answerWords } from "../word-lists/answer-words.js";
 import { differenceInDays } from "date-fns";
 import { Navigate } from "react-router";
 import Alphabet from "./Alphabet.js";
+import RightHand from "./RightHand.js";
+import LeftHand from "./LeftHand.js";
 
 const myAPI = new Networking();
 
@@ -149,7 +151,7 @@ export default function Game(props) {
       {gameEnd && <GameEnd endGame={() => props.endGame(true)} />}
       {/* Grabs Oculus Controllers */}
       <DefaultXRControllers />
-      <Hands modelLeft={"/leftHandLow.glb"} modelRight={"/rightHandLow.glb"} />
+      <Hands modelLeft={<LeftHand />} modelRight={<RightHand />} />
       <ambientLight intensity={0.3} />
       <Grid guesses={guesses} answer={answer} colorBlind={colorBlind} />
 
