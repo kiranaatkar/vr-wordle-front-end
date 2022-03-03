@@ -15,12 +15,9 @@ import Letter from "./Letter.js";
 import Pillars from "./Pillars.js";
 import Networking from "./Networking.js";
 import { answerWords } from "../word-lists/answer-words.js";
-
-// import { allowedWords } from "../word-lists/allowed-words.js";
-import { differenceInDays } from 'date-fns';
-// import Wind from "./Wind.js";
-import { Navigate } from 'react-router';
-import Alphabet from './Alphabet.js';
+import { differenceInDays } from "date-fns";
+import { Navigate } from "react-router";
+import Alphabet from "./Alphabet.js";
 
 const myAPI = new Networking();
 
@@ -55,6 +52,8 @@ function getRandomAnswerWord() {
 }
 
 export default function Game(props) {
+  // Sets guesses to initially be empty strings to be filled later.
+  // Ensures the grid boxes are empty to begin with.
   const [guesses, setGuesses] = useState([
     '     ',
     '     ',
@@ -146,11 +145,13 @@ export default function Game(props) {
         optionalFeatures: ["local-floor", "bounded-floor", "hand-tracking"],
       }}
     >
-
+      {/* Grabs Oculus Controllers */}
       <DefaultXRControllers />
       <Hands />
       <ambientLight intensity={0.3} />
       <Grid guesses={guesses} answer={answer} colorBlind={colorBlind} />
+
+      {/* Adds Physics to child elements */}
       <Physics gravity={[0, -10, 0]}>
         <Button reset={resetPositions} />
         <Submit submit={submitGuess} />
@@ -159,6 +160,8 @@ export default function Game(props) {
           position={[0, 1, -0.8]}
           rotation={[0.2, 0, 0]}
         />
+
+        {/* Allows grabbing of the individual letters */}
         <Grabber groupRef={letters} />
         {generateLetters(reset, alphabet, letters)}
         <Letter position={[2, 1, -1]} name='n' />
@@ -176,8 +179,11 @@ export default function Game(props) {
         saturation={0}
         fade
       />
-      <fog attach='fog' args={['#421700', 0, 100]} />
-      {/* <Wind /> */}
+      <fog attach="fog" args={["#421700", 0, 100]} />
+
+      {/* 
+      Renders an alphabet behind and underneath the player to cache every 
+      letter in a text component, prevents scene re-loading on a submit */}
       <Alphabet />
     </VRCanvas>
   ) : (

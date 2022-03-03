@@ -1,8 +1,7 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useLoader } from '@react-three/fiber';
 import { TextureLoader } from 'three';
 import { useGLTF } from '@react-three/drei';
-import ColumnContainer from './ColumnContainer.js';
 import PressurePlate from './PressurePlate.js';
 
 export default function Model({ position, guessIndex, setGuess }) {
