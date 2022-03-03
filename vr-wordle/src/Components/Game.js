@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from "react";
 import { Environment, Sky, Stars } from "@react-three/drei";
 import { VRCanvas, DefaultXRControllers, Hands } from "@react-three/xr";
@@ -15,9 +16,7 @@ import Letter from "./Letter.js";
 import Pillars from "./Pillars.js";
 import Networking from "./Networking.js";
 import { answerWords } from "../word-lists/answer-words.js";
-// import { allowedWords } from "../word-lists/allowed-words.js";
 import { differenceInDays, format } from "date-fns";
-// import Wind from "./Wind.js";
 import { Navigate } from "react-router";
 import Alphabet from "./Alphabet.js";
 import RightHand from "./RightHand.js";
@@ -51,20 +50,12 @@ export function generateLetters(reset, alphabet, letters) {
 
 function getRandomAnswerWord() {
   const dateOne = new Date();
-  const dateTwo = new Date("02/24/2022");
+  const dateTwo = new Date('02/24/2022');
   let answer = answerWords[differenceInDays(dateOne, dateTwo) + 250];
   return answer;
 }
 
 export default function Game(props) {
-  // const [guesses, setGuesses] = useState([
-  //   "     ",
-  //   "     ",
-  //   "     ",
-  //   "     ",
-  //   "     ",
-  //   "     ",
-  // ]);
   const [cookies, setCookie] = useCookies();
   const [username] = useState(props.username);
   const [colorBlind] = useState(props.colorBlind);
@@ -73,7 +64,7 @@ export default function Game(props) {
   );
   const [reset, setReset] = useState(false);
   const [currentGuess, setCurrentGuess] = useState([]);
-  const [answer, setAnswer] = useState("");
+  const [answer, setAnswer] = useState('');
   const [gameEnd, setGameCondition] = useState(false);
   const [playing, setPlaying] = useState(true);
 
@@ -99,12 +90,12 @@ export default function Game(props) {
 
   props.setAnswer(answer);
 
-  const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
   const letters = useRef(<group />);
 
   const deleteOldGuess = () => {
     for (const letter of currentGuess) {
-      if (!getRandomAnswerWord().split("").includes(letter)) {
+      if (!getRandomAnswerWord().split('').includes(letter)) {
         const indexToRemove = letters.current.children.findIndex((child) => {
           return child.children[0].name === letter;
         });
@@ -145,26 +136,25 @@ export default function Game(props) {
         await myAPI.postScore(score, answer, username);
         props.setScore(guessCount);
         setTimeout(async () => {
-          setGameCondition("win");
-        }, 5000);
+          setGameCondition('win');
+        }, 3000);
       } else if (!newGuesses.includes(answer) && guessCount === 5) {
         console.log("lose");
         setPlaying(false);
         props.setScore(null);
         setTimeout(async () => {
           setGameCondition("lose");
-        }, 5000);
-      }
+        }, 3000);      }
       setCookie("guesses", newGuesses);
     }
   };
 
   return username ? (
     <VRCanvas
-      mode="concurrent"
+      mode='concurrent'
       performance={{ min: 0.8 }}
-      style={{ touchAction: "none" }}
-      frameloop="demand"
+      style={{ touchAction: 'none' }}
+      frameloop='demand'
       sessionInit={{
         optionalFeatures: ["local-floor", "bounded-floor", "hand-tracking"],
       }}
@@ -191,12 +181,12 @@ export default function Game(props) {
         {/* Allows grabbing of the individual letters */}
         <Grabber groupRef={letters} />
         {generateLetters(reset, alphabet, letters)}
-        <Letter position={[2, 1, -1]} name="n" />
+        <Letter position={[2, 1, -1]} name='n' />
         <Pillars setGuess={setGuess} />
         <Player />
         <Floor />
       </Physics>
-      <Environment preset={"night"} />
+      <Environment preset={'night'} />
       <Sky distance={450000} sunPosition={[0, -1, 0]} azimuth={0.25} />
       <Stars
         radius={100}
@@ -206,7 +196,7 @@ export default function Game(props) {
         saturation={0}
         fade
       />
-      <fog attach="fog" args={["#421700", 0, 100]} />
+      <fog attach='fog' args={['#421700', 0, 100]} />
 
       {/* 
       Renders an alphabet behind and underneath the player to cache every 
@@ -214,6 +204,6 @@ export default function Game(props) {
       <Alphabet />
     </VRCanvas>
   ) : (
-    <Navigate to="/" />
+    <Navigate to='/' />
   );
 }
