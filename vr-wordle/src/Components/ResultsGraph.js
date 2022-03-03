@@ -57,6 +57,7 @@ export default function ResultsGraph(props) {
               ticks={[1, 2, 3, 4, 5, 6]}
               fill='black'
               tickLine={false}
+              scale='band'
             />
             <Bar dataKey='value'>
               <LabelList position='right' fill='black' />
