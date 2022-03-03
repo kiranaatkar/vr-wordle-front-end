@@ -72,7 +72,9 @@ export default function Game(props) {
   };
 
   useEffect(() => {
-    setAnswer(getRandomAnswerWord());
+    setAnswer(
+      process.env.NODE_ENV === 'development' ? 'nnnnn' : getRandomAnswerWord()
+    );
     props.setAnswer(answer);
     let todaysDate = format(new Date(), 'yyyy-MM-dd');
     if (!cookies.guesses || todaysDate !== cookies.date) {
