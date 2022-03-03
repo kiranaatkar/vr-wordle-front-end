@@ -62,7 +62,7 @@ Entering VR here allows you to play the game fully. Pick up the letters and plac
 
 ## Contributors
 
-* [Kiran Aatkar]: https://github.com/kiranaatkar
-* [Omar Shueb]: https://github.com/Omar-Shueb
-* [Tamoor Waheed]: https://github.com/TamoorW
-* [Tom Waghorn]: https://github.com/tomw13
+* [Kiran Aatkar](https://github.com/kiranaatkar)
+* [Omar Shueb](https://github.com/Omar-Shueb)
+* [Tamoor Waheed](https://github.com/TamoorW)
+* [Tom Waghorn](https://github.com/tomw13)
