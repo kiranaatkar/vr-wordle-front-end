@@ -78,7 +78,6 @@ export default function Game(props) {
 
   useEffect(() => {
     setAnswer(getRandomAnswerWord());
-    setAnswer("nnnnn");
   }, []);
 
   props.setAnswer(answer);
@@ -151,7 +150,10 @@ export default function Game(props) {
         optionalFeatures: ["local-floor", "bounded-floor", "hand-tracking"],
       }}
     >
-      {/* {gameEnd && <GameEnd endGame={() => props.endGame(true)} />} */}
+      {/* Renders a component that will end the VR session and redirect to results
+      on game end. */}
+      {gameEnd && <GameEnd endGame={() => props.endGame(true)} />}
+
       {/* Grabs Oculus Controllers */}
       <DefaultXRControllers />
       <Hands modelLeft={"/leftHand.glb"} modelRight={"/rightHand.glb"} />
