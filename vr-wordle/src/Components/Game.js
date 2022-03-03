@@ -147,7 +147,7 @@ export default function Game(props) {
     >
       {/* Grabs Oculus Controllers */}
       <DefaultXRControllers />
-      <Hands />
+      <Hands modelLeft={"/hand-left.gltf"} modelRight={"/hand-right.gltf"} />
       <ambientLight intensity={0.3} />
       <Grid guesses={guesses} answer={answer} colorBlind={colorBlind} />
 
