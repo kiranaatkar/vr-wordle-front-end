@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from "react";
 import { Environment, Sky, Stars } from "@react-three/drei";
 import { VRCanvas, DefaultXRControllers, Hands } from "@react-three/xr";
@@ -14,11 +15,12 @@ import Letter from "./Letter.js";
 import Pillars from "./Pillars.js";
 import Networking from "./Networking.js";
 import { answerWords } from "../word-lists/answer-words.js";
+
 // import { allowedWords } from "../word-lists/allowed-words.js";
-import { differenceInDays } from "date-fns";
+import { differenceInDays } from 'date-fns';
 // import Wind from "./Wind.js";
-import { Navigate } from "react-router";
-import Alphabet from "./Alphabet.js";
+import { Navigate } from 'react-router';
+import Alphabet from './Alphabet.js';
 
 const myAPI = new Networking();
 
@@ -47,19 +49,19 @@ export function generateLetters(reset, alphabet, letters) {
 
 function getRandomAnswerWord() {
   const dateOne = new Date();
-  const dateTwo = new Date("02/24/2022");
+  const dateTwo = new Date('02/24/2022');
   let answer = answerWords[differenceInDays(dateOne, dateTwo) + 250];
   return answer;
 }
 
 export default function Game(props) {
   const [guesses, setGuesses] = useState([
-    "     ",
-    "     ",
-    "     ",
-    "     ",
-    "     ",
-    "     ",
+    '     ',
+    '     ',
+    '     ',
+    '     ',
+    '     ',
+    '     ',
   ]);
 
   const [username] = useState(props.username);
@@ -67,7 +69,7 @@ export default function Game(props) {
   const [guessCount, setGuessCount] = useState(0);
   const [reset, setReset] = useState(false);
   const [currentGuess, setCurrentGuess] = useState([]);
-  const [answer, setAnswer] = useState("");
+  const [answer, setAnswer] = useState('');
   const [gameEnd, setGameCondition] = useState(false);
 
   const resetPositions = () => {
@@ -80,12 +82,12 @@ export default function Game(props) {
 
   props.setAnswer(answer);
 
-  const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
   const letters = useRef(<group />);
 
   const deleteOldGuess = () => {
     for (const letter of currentGuess) {
-      if (!getRandomAnswerWord().split("").includes(letter)) {
+      if (!getRandomAnswerWord().split('').includes(letter)) {
         const indexToRemove = letters.current.children.findIndex((child) => {
           return child.children[0].name === letter;
         });
@@ -107,27 +109,27 @@ export default function Game(props) {
   const submitGuess = async () => {
     if (
       guessCount < 6 &&
-      currentGuess.filter((char) => char !== "").length === 5 &&
+      currentGuess.filter((char) => char !== '').length === 5 &&
       !gameEnd
       // [...allowedWords, ...answerWords].includes(currentGuess.join(""))
     ) {
       const newGuesses = guesses;
-      newGuesses[guessCount] = currentGuess.join("");
+      newGuesses[guessCount] = currentGuess.join('');
       const newCount = guessCount + 1;
       setGuesses(newGuesses);
       setGuessCount(newCount);
       deleteOldGuess();
       resetPositions();
-      if (currentGuess.join("") === answer) {
-        console.log("win");
+      if (currentGuess.join('') === answer) {
+        console.log('win');
         const score = guessCount + 1;
         await myAPI.postScore(score, answer, username);
-        setGameCondition("win");
+        setGameCondition('win');
         props.setScore(guessCount);
         setTimeout(props.endGame(true), 5000);
       } else if (!newGuesses.includes(answer) && guessCount === 5) {
-        console.log("lose");
-        setGameCondition("lose");
+        console.log('lose');
+        setGameCondition('lose');
         props.setScore(guessCount);
         setTimeout(props.endGame(true), 5000);
       }
@@ -136,7 +138,7 @@ export default function Game(props) {
 
   return username ? (
     <VRCanvas
-      mode="concurrent"
+      mode='concurrent'
       performance={{ min: 0.8 }}
       style={{ touchAction: "none" }}
       frameloop="demand"
@@ -144,6 +146,7 @@ export default function Game(props) {
         optionalFeatures: ["local-floor", "bounded-floor", "hand-tracking"],
       }}
     >
+
       <DefaultXRControllers />
       <Hands />
       <ambientLight intensity={0.3} />
@@ -158,12 +161,12 @@ export default function Game(props) {
         />
         <Grabber groupRef={letters} />
         {generateLetters(reset, alphabet, letters)}
-        <Letter position={[2, 1, -1]} name="n" />
+        <Letter position={[2, 1, -1]} name='n' />
         <Pillars setGuess={setGuess} />
         <Player />
         <Floor />
       </Physics>
-      <Environment preset={"night"} />
+      <Environment preset={'night'} />
       <Sky distance={450000} sunPosition={[0, -1, 0]} azimuth={0.25} />
       <Stars
         radius={100}
@@ -173,11 +176,11 @@ export default function Game(props) {
         saturation={0}
         fade
       />
-      <fog attach="fog" args={["#421700", 0, 100]} />
+      <fog attach='fog' args={['#421700', 0, 100]} />
       {/* <Wind /> */}
       <Alphabet />
     </VRCanvas>
   ) : (
-    <Navigate to="/" />
+    <Navigate to='/' />
   );
 }
