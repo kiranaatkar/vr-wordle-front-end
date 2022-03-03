@@ -44,7 +44,10 @@ export default function ResultsGraph(props) {
         <div className='leaderboard-entry'>
           <span>
             <h5>
-              {i + 1}: {score ? `${score.username} - ${score.score}` : ''}
+              {i + 1}.{' '}
+              {score
+                ? `${score.username} - ${score.score} ${score.created_at}`
+                : ''}
             </h5>
           </span>
         </div>
@@ -81,7 +84,7 @@ export default function ResultsGraph(props) {
                 tickLine={false}
                 scale='band'
               />
-              <Bar dataKey='value'>
+              <Bar dataKey='value' type='number'>
                 <LabelList position='right' fill='black' />
                 {data.map((entry) => (
                   <Cell
