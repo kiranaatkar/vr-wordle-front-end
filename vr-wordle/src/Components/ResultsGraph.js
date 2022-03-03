@@ -5,7 +5,6 @@ import './results.css';
 import LoadingScreen from './loadingScreen.js';
 
 export default function ResultsGraph(props) {
-  // const {answer} = props
   const { answer, userScore } = props;
   const myAPI = new Networking();
   const [loading, StillLoading] = useState(true);
@@ -33,8 +32,7 @@ export default function ResultsGraph(props) {
     fetchData();
     console.log(data);
 
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return (
     <div>

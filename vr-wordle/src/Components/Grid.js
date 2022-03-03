@@ -5,10 +5,10 @@ import { useFrame, useLoader, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 export default function Grid(props) {
-  return props.guesses.map((it, i) => {
+  return props.guesses.map((guess, i) => {
     return (
       <group position={[0, 7.5 - i * 1.2, -3]} key={i}>
-        {Guess(it, props.answer, props.colorBlind)}
+        {Guess(guess, props.answer, props.colorBlind)}
       </group>
     );
   });
@@ -83,11 +83,11 @@ export function Guess(guess, word, colorBlind) {
   const width = (side + space) * 4;
   return (
     <>
-      {guess.split("").map((it, i) => (
+      {guess.split("").map((guess, i) => (
         <StaticLetter
           side={side}
-          id={it}
-          submitted={!(it === " ")}
+          id={guess}
+          submitted={!(guess === " ")}
           index={i}
           key={i}
           position={[-width / 2 + (side + space) * i, 0, 0]}

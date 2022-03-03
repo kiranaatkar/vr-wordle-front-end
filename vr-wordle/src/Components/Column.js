@@ -1,6 +1,4 @@
 import React from "react";
-// import { useLoader } from "@react-three/fiber";
-// import { TextureLoader } from "three";
 import { useGLTF } from "@react-three/drei";
 import ColumnContainer from "./ColumnContainer.js";
 
