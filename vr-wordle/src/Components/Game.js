@@ -70,6 +70,7 @@ export default function Game(props) {
   const [currentGuess, setCurrentGuess] = useState([]);
   const [answer, setAnswer] = useState("");
   const [gameEnd, setGameCondition] = useState(false);
+  const [playing, setPlaying] = useState(true);
 
   const resetPositions = () => {
     setReset(!reset);
@@ -77,6 +78,7 @@ export default function Game(props) {
 
   useEffect(() => {
     setAnswer(getRandomAnswerWord());
+    setAnswer("nnnnn");
   }, []);
 
   props.setAnswer(answer);
@@ -109,7 +111,7 @@ export default function Game(props) {
     if (
       guessCount < 6 &&
       currentGuess.filter((char) => char !== "").length === 5 &&
-      !gameEnd
+      playing
       // [...allowedWords, ...answerWords].includes(currentGuess.join(""))
     ) {
       const newGuesses = guesses;
@@ -121,6 +123,7 @@ export default function Game(props) {
       resetPositions();
       if (currentGuess.join("") === answer) {
         console.log("win");
+        setPlaying(false);
         const score = guessCount + 1;
         await myAPI.postScore(score, answer, username);
         props.setScore(guessCount);
@@ -129,9 +132,11 @@ export default function Game(props) {
         }, 5000);
       } else if (!newGuesses.includes(answer) && guessCount === 5) {
         console.log("lose");
-        setGameCondition("lose");
+        setPlaying(false);
         props.setScore(null);
-        setTimeout(props.endGame(true), 5000);
+        setTimeout(async () => {
+          setGameCondition("lose");
+        }, 5000);
       }
     }
   };
@@ -146,7 +151,7 @@ export default function Game(props) {
         optionalFeatures: ["local-floor", "bounded-floor", "hand-tracking"],
       }}
     >
-      {gameEnd && <GameEnd endGame={() => props.endGame(true)} />}
+      {/* {gameEnd && <GameEnd endGame={() => props.endGame(true)} />} */}
       {/* Grabs Oculus Controllers */}
       <DefaultXRControllers />
       <Hands modelLeft={"/leftHand.glb"} modelRight={"/rightHand.glb"} />
