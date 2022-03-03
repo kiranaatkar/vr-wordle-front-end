@@ -20,7 +20,7 @@ export default function LetterCubes({ id, position, sizeArg, reset, index }) {
 
   const [ref, api] = useBox(() => ({
     args: sizeArg,
-    mass: 1,
+    mass: 0.25,
     position: position,
     material: {
       friction: 1,
