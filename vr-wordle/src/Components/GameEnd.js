@@ -1,5 +1,4 @@
 import { useThree } from "@react-three/fiber";
-import { Navigate } from "react-router";
 
 export default function GameEnd(props) {
   const { gl } = useThree();
