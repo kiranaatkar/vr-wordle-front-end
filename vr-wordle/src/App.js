@@ -1,4 +1,4 @@
-import React, { useState, Suspense } from "react";
+import React, { useState, Suspense, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Game from "./Components/Game";
 import Homepage from "./Components/Homepage";
@@ -6,10 +6,8 @@ import LoadingScreen from "./Components/loadingScreen.js";
 import { Stats } from "@react-three/drei";
 import "./App.css";
 import ResultsScreen from "./Components/ResultsScreen";
-import { useCookies } from "react-cookie";
 
 export default function App() {
-  const [cookies, setCookie] = useCookies(["sessionId"]);
   const [username, setUsername] = useState("");
   const [colorBlind, setColorBlind] = useState(false);
   const [gameEnded, endGame] = useState(false);

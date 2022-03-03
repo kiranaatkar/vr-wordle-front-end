@@ -15,10 +15,11 @@ import Pillars from "./Pillars.js";
 import Networking from "./Networking.js";
 import { answerWords } from "../word-lists/answer-words.js";
 // import { allowedWords } from "../word-lists/allowed-words.js";
-import { differenceInDays } from "date-fns";
+import { differenceInDays, format } from "date-fns";
 // import Wind from "./Wind.js";
 import { Navigate } from "react-router";
 import Alphabet from "./Alphabet.js";
+import { useCookies } from "react-cookie";
 
 const myAPI = new Networking();
 
@@ -61,10 +62,12 @@ export default function Game(props) {
     "     ",
     "     ",
   ]);
-
+  const [cookies, setCookie] = useCookies();
   const [username] = useState(props.username);
   const [colorBlind] = useState(props.colorBlind);
-  const [guessCount, setGuessCount] = useState(0);
+  const [guessCount, setGuessCount] = useState(
+    cookies.guesses.filter((guess) => guess !== "     ").length
+  );
   const [reset, setReset] = useState(false);
   const [currentGuess, setCurrentGuess] = useState([]);
   const [answer, setAnswer] = useState("");
@@ -76,6 +79,18 @@ export default function Game(props) {
 
   useEffect(() => {
     setAnswer(getRandomAnswerWord());
+    let todaysDate = format(new Date(), "yyyy-MM-dd");
+    if (!cookies.guesses || todaysDate !== cookies.date) {
+      setCookie("guesses", [
+        "     ",
+        "     ",
+        "     ",
+        "     ",
+        "     ",
+        "     ",
+      ]);
+      setCookie("date", format(new Date(), "yyyy-MM-dd"));
+    }
   }, []);
 
   props.setAnswer(answer);
@@ -111,7 +126,8 @@ export default function Game(props) {
       !gameEnd
       // [...allowedWords, ...answerWords].includes(currentGuess.join(""))
     ) {
-      const newGuesses = guesses;
+      console.log(guessCount);
+      const newGuesses = cookies.guesses;
       newGuesses[guessCount] = currentGuess.join("");
       const newCount = guessCount + 1;
       setGuesses(newGuesses);
@@ -131,6 +147,8 @@ export default function Game(props) {
       }
       deleteOldGuess();
       resetPositions();
+      setCookie("guesses", newGuesses);
+      console.log(cookies);
     }
   };
 
@@ -143,7 +161,7 @@ export default function Game(props) {
     >
       <DefaultXRControllers />
       <ambientLight intensity={0.3} />
-      <Grid guesses={guesses} answer={answer} colorBlind={colorBlind} />
+      <Grid guesses={cookies.guesses} answer={answer} colorBlind={colorBlind} />
       <Physics gravity={[0, -10, 0]}>
         <Button reset={resetPositions} />
         <Submit submit={submitGuess} />
