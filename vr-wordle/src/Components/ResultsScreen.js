@@ -10,9 +10,13 @@ export default function ResultsScreen(props) {
         Guess distributions for word {answer.toUpperCase()}
       </h2>
       <ResultsGraph answer={answer} userScore={userScore} />
-      {userScore
-        ? `You got it in ${userScore} attempts!`
-        : 'Better luck tomorrow!'}
+      <h3 className='graph-text'>
+        {userScore
+          ? `You got it in ${userScore} ${
+              userScore > 1 ? 'attempts' : 'attempt'
+            }!`
+          : 'Better luck tomorrow!'}
+      </h3>
     </div>
   );
 }
