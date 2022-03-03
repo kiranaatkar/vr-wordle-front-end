@@ -1,27 +1,26 @@
-
-import React, { useState, useRef, useEffect } from "react";
-import { Environment, Sky, Stars } from "@react-three/drei";
-import { VRCanvas, DefaultXRControllers, Hands } from "@react-three/xr";
-import LetterCubes from "./LetterCubes.js";
-import GameEnd from "./GameEnd.js";
-import Floor from "./Floor.js";
-import Button from "./Button.js";
-import Submit from "./Submit.js";
-import Grid from "./Grid.js";
-import Grabber from "./Grab.js";
-import Table from "./Table.js";
-import { Physics } from "@react-three/cannon";
-import Player from "./Player.js";
-import Letter from "./Letter.js";
-import Pillars from "./Pillars.js";
-import Networking from "./Networking.js";
-import { answerWords } from "../word-lists/answer-words.js";
-import { differenceInDays, format } from "date-fns";
-import { Navigate } from "react-router";
-import Alphabet from "./Alphabet.js";
-import RightHand from "./RightHand.js";
-import LeftHand from "./LeftHand.js";
-import { useCookies } from "react-cookie";
+import React, { useState, useRef, useEffect } from 'react';
+import { Environment, Sky, Stars } from '@react-three/drei';
+import { VRCanvas, DefaultXRControllers, Hands } from '@react-three/xr';
+import LetterCubes from './LetterCubes.js';
+import GameEnd from './GameEnd.js';
+import Floor from './Floor.js';
+import Button from './Button.js';
+import Submit from './Submit.js';
+import Grid from './Grid.js';
+import Grabber from './Grab.js';
+import Table from './Table.js';
+import { Physics } from '@react-three/cannon';
+import Player from './Player.js';
+import Letter from './Letter.js';
+import Pillars from './Pillars.js';
+import Networking from './Networking.js';
+import { answerWords } from '../word-lists/answer-words.js';
+import { differenceInDays, format } from 'date-fns';
+import { Navigate } from 'react-router';
+import Alphabet from './Alphabet.js';
+import RightHand from './RightHand.js';
+import LeftHand from './LeftHand.js';
+import { useCookies } from 'react-cookie';
 
 const myAPI = new Networking();
 
@@ -60,7 +59,7 @@ export default function Game(props) {
   const [username] = useState(props.username);
   const [colorBlind] = useState(props.colorBlind);
   const [guessCount, setGuessCount] = useState(
-    cookies.guesses.filter((guess) => guess !== "     ").length
+    cookies.guesses.filter((guess) => guess !== '     ').length
   );
   const [reset, setReset] = useState(false);
   const [currentGuess, setCurrentGuess] = useState([]);
@@ -74,21 +73,20 @@ export default function Game(props) {
 
   useEffect(() => {
     setAnswer(getRandomAnswerWord());
-    let todaysDate = format(new Date(), "yyyy-MM-dd");
+    props.setAnswer(answer);
+    let todaysDate = format(new Date(), 'yyyy-MM-dd');
     if (!cookies.guesses || todaysDate !== cookies.date) {
-      setCookie("guesses", [
-        "     ",
-        "     ",
-        "     ",
-        "     ",
-        "     ",
-        "     ",
+      setCookie('guesses', [
+        '     ',
+        '     ',
+        '     ',
+        '     ',
+        '     ',
+        '     ',
       ]);
-      setCookie("date", format(new Date(), "yyyy-MM-dd"));
+      setCookie('date', format(new Date(), 'yyyy-MM-dd'));
     }
   }, []);
-
-  props.setAnswer(answer);
 
   const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
   const letters = useRef(<group />);
@@ -117,20 +115,20 @@ export default function Game(props) {
   const submitGuess = async () => {
     if (
       guessCount < 6 &&
-      currentGuess.filter((char) => char !== "").length === 5 &&
+      currentGuess.filter((char) => char !== '').length === 5 &&
       playing
       // [...allowedWords, ...answerWords].includes(currentGuess.join(""))
     ) {
       console.log(guessCount);
       const newGuesses = cookies.guesses;
-      newGuesses[guessCount] = currentGuess.join("");
+      newGuesses[guessCount] = currentGuess.join('');
       const newCount = guessCount + 1;
       //setGuesses(newGuesses);
       setGuessCount(newCount);
       deleteOldGuess();
       resetPositions();
-      if (currentGuess.join("") === answer) {
-        console.log("win");
+      if (currentGuess.join('') === answer) {
+        console.log('win');
         setPlaying(false);
         const score = guessCount + 1;
         await myAPI.postScore(score, answer, username);
@@ -139,13 +137,14 @@ export default function Game(props) {
           setGameCondition('win');
         }, 3000);
       } else if (!newGuesses.includes(answer) && guessCount === 5) {
-        console.log("lose");
+        console.log('lose');
         setPlaying(false);
         props.setScore(null);
         setTimeout(async () => {
-          setGameCondition("lose");
-        }, 3000);      }
-      setCookie("guesses", newGuesses);
+          setGameCondition('lose');
+        }, 3000);
+      }
+      setCookie('guesses', newGuesses);
     }
   };
 
@@ -156,9 +155,8 @@ export default function Game(props) {
       style={{ touchAction: 'none' }}
       frameloop='demand'
       sessionInit={{
-        optionalFeatures: ["local-floor", "bounded-floor", "hand-tracking"],
-      }}
-    >
+        optionalFeatures: ['local-floor', 'bounded-floor', 'hand-tracking'],
+      }}>
       {/* Renders a component that will end the VR session and redirect to results
       on game end. */}
       {gameEnd && <GameEnd endGame={() => props.endGame(true)} />}
