@@ -1,19 +1,21 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Environment, Sky, Stars } from '@react-three/drei';
-import { VRCanvas, DefaultXRControllers } from '@react-three/xr';
-import LetterCubes from './LetterCubes.js';
-import Floor from './Floor.js';
-import Button from './Button.js';
-import Submit from './Submit.js';
-import Grid from './Grid.js';
-import Grabber from './Grab.js';
-import Table from './Table.js';
-import { Physics } from '@react-three/cannon';
-import Player from './Player.js';
-import Letter from './Letter.js';
-import Pillars from './Pillars.js';
-import Networking from './Networking.js';
-import { answerWords } from '../word-lists/answer-words.js';
+
+import React, { useState, useRef, useEffect } from "react";
+import { Environment, Sky, Stars } from "@react-three/drei";
+import { VRCanvas, DefaultXRControllers, Hands } from "@react-three/xr";
+import LetterCubes from "./LetterCubes.js";
+import Floor from "./Floor.js";
+import Button from "./Button.js";
+import Submit from "./Submit.js";
+import Grid from "./Grid.js";
+import Grabber from "./Grab.js";
+import Table from "./Table.js";
+import { Physics } from "@react-three/cannon";
+import Player from "./Player.js";
+import Letter from "./Letter.js";
+import Pillars from "./Pillars.js";
+import Networking from "./Networking.js";
+import { answerWords } from "../word-lists/answer-words.js";
+
 // import { allowedWords } from "../word-lists/allowed-words.js";
 import { differenceInDays } from 'date-fns';
 // import Wind from "./Wind.js";
@@ -139,9 +141,15 @@ export default function Game(props) {
     <VRCanvas
       mode='concurrent'
       performance={{ min: 0.8 }}
-      style={{ touchAction: 'none' }}
-      frameloop='demand'>
+      style={{ touchAction: "none" }}
+      frameloop="demand"
+      sessionInit={{
+        optionalFeatures: ["local-floor", "bounded-floor", "hand-tracking"],
+      }}
+    >
+
       <DefaultXRControllers />
+      <Hands />
       <ambientLight intensity={0.3} />
       <Grid guesses={guesses} answer={answer} colorBlind={colorBlind} />
       <Physics gravity={[0, -10, 0]}>
