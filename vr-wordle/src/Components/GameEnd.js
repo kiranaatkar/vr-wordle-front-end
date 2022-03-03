@@ -6,7 +6,6 @@ export default function GameEnd(props) {
 
   const endGame = () => {
     const session = gl.xr.getSession();
-    console.log(session);
     if (session) {
       session.end();
       props.endGame();
