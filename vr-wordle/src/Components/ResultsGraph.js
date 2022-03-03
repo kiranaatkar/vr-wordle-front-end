@@ -50,16 +50,15 @@ export default function ResultsGraph(props) {
             layout='vertical'
             barCategoryGap={1.5}
             margin={{ top: 10, bottom: 10 }}>
-            <XAxis hide type='number' />
+            <XAxis hide type='number' allowDataOverflow={false} />
             <YAxis
               dataKey='score'
               type='category'
               ticks={[1, 2, 3, 4, 5, 6]}
               fill='black'
               tickLine={false}
-              scale='band'
             />
-            <Bar dataKey='value'>
+            <Bar dataKey='value' type='number'>
               <LabelList position='right' fill='black' />
               {data.map((entry) => (
                 <Cell
