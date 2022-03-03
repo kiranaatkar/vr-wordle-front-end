@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Environment, Sky, Stars } from "@react-three/drei";
-import { VRCanvas, DefaultXRControllers } from "@react-three/xr";
+import { VRCanvas, DefaultXRControllers, Hands } from "@react-three/xr";
 import LetterCubes from "./LetterCubes.js";
 import Floor from "./Floor.js";
 import Button from "./Button.js";
@@ -140,8 +140,12 @@ export default function Game(props) {
       performance={{ min: 0.8 }}
       style={{ touchAction: "none" }}
       frameloop="demand"
+      sessionInit={{
+        optionalFeatures: ["local-floor", "bounded-floor", "hand-tracking"],
+      }}
     >
       <DefaultXRControllers />
+      <Hands />
       <ambientLight intensity={0.3} />
       <Grid guesses={guesses} answer={answer} colorBlind={colorBlind} />
       <Physics gravity={[0, -10, 0]}>
