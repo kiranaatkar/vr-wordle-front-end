@@ -5,9 +5,9 @@ import './results.css';
 import LoadingScreen from './loadingScreen.js';
 
 export default function ResultsGraph(props) {
-  // const {answer} = props
   const { answer, userScore } = props;
   const myAPI = new Networking();
+
   const [loading, StillLoading] = useState(true);
   const [data, setData] = useState([
     { score: 1, value: 0 },
@@ -18,22 +18,23 @@ export default function ResultsGraph(props) {
     { score: 6, value: 0 },
   ]);
 
+  function formatData(scores) {
+    scores.forEach((entry) => {
+      const scoreIndex = data.findIndex((data) => data.score === entry.score);
+      data[scoreIndex].value++;
+    });
+  }
+
   useEffect(() => {
     async function fetchData() {
       StillLoading(true);
       const json = await myAPI.getWordScores(answer);
       const scores = json.scores;
-      scores.forEach((entry) => {
-        const scoreIndex = data.findIndex((data) => data.score === entry.score);
-        data[scoreIndex].value++;
-      });
+      formatData(scores);
       setData(data);
       StillLoading(false);
     }
     fetchData();
-    console.log(data);
-
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -47,25 +48,28 @@ export default function ResultsGraph(props) {
             height={250}
             data={data}
             layout='vertical'
-            barCategoryGap={1}
-            fill='black'
+            barCategoryGap={1.5}
             margin={{ top: 10, bottom: 10 }}>
-            <XAxis hide />
+            <XAxis hide type='number' />
             <YAxis
               dataKey='score'
-              type='number'
+              type='category'
               ticks={[1, 2, 3, 4, 5, 6]}
               fill='black'
+              tickLine={false}
             />
             <Bar dataKey='value'>
               <LabelList position='right' fill='black' />
-              {data.map((entry) => (
-                <Cell
-                  key={entry.score}
-                  fill={entry.score === userScore ? '#99f2c8' : '#1f4037'}
-                  dataKey='value'
-                />
-              ))}
+              {data.map((entry) => {
+                console.log(entry.score, userScore);
+                return (
+                  <Cell
+                    key={entry.score}
+                    fill={entry.score === userScore ? '#99f2c8' : '#1f4037'}
+                    dataKey='value'
+                  />
+                );
+              })}
             </Bar>
           </BarChart>
         </div>
