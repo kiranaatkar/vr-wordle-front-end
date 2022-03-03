@@ -145,7 +145,7 @@ export default function Game(props) {
       }}
     >
       <DefaultXRControllers />
-      <Hands modelLeft={"/hand-left.gltf"} modelRight={"/hand-right.gltf"} />
+      <Hands modelLeft={"/leftHand.glb"} modelRight={"/rightHand.glb"} />
       <ambientLight intensity={0.3} />
       <Grid guesses={guesses} answer={answer} colorBlind={colorBlind} />
       <Physics gravity={[0, -10, 0]}>
