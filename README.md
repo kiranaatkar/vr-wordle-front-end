@@ -19,7 +19,7 @@ After a guess, the letters chosen that were not used will disappear from the gam
 
 <img width="1440" alt="Screenshot 2022-03-03 at 15 23 50" src="https://user-images.githubusercontent.com/94084605/156598252-3645c2d6-4bd8-47c7-810f-c5cbaac59560.png">
 The first page the user will be directed to will be the Homepage, where users can enter a Username or have one randomly generated. The user can also choose to toggle Colour-Blind Mode, which changes the colour-palette for the grid to be more accessible for those who are colour-blind.
-After submitting a username, the page will begin to load the app, after which an prompt will appear at the bottom of the page, allowing the user to enter a WebXR-powered interactive experience.
+After submitting a username, the page will begin to load the app, after which an ```Enter VR``` prompt will appear at the bottom of the page, allowing the user to enter a WebXR-powered interactive experience.
 
 ### Main Game
 
