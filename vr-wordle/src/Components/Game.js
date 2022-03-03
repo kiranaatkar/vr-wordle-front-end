@@ -15,11 +15,14 @@ import Letter from "./Letter.js";
 import Pillars from "./Pillars.js";
 import Networking from "./Networking.js";
 import { answerWords } from "../word-lists/answer-words.js";
-import { differenceInDays } from "date-fns";
+// import { allowedWords } from "../word-lists/allowed-words.js";
+import { differenceInDays, format } from "date-fns";
+// import Wind from "./Wind.js";
 import { Navigate } from "react-router";
 import Alphabet from "./Alphabet.js";
 import RightHand from "./RightHand.js";
 import LeftHand from "./LeftHand.js";
+import { useCookies } from "react-cookie";
 
 const myAPI = new Networking();
 
@@ -54,24 +57,25 @@ function getRandomAnswerWord() {
 }
 
 export default function Game(props) {
-  // Sets guesses to initially be empty strings to be filled later.
-  // Ensures the grid boxes are empty to begin with.
-  const [guesses, setGuesses] = useState([
-    "     ",
-    "     ",
-    "     ",
-    "     ",
-    "     ",
-    "     ",
-  ]);
-
+  // const [guesses, setGuesses] = useState([
+  //   "     ",
+  //   "     ",
+  //   "     ",
+  //   "     ",
+  //   "     ",
+  //   "     ",
+  // ]);
+  const [cookies, setCookie] = useCookies();
   const [username] = useState(props.username);
   const [colorBlind] = useState(props.colorBlind);
-  const [guessCount, setGuessCount] = useState(0);
+  const [guessCount, setGuessCount] = useState(
+    cookies.guesses.filter((guess) => guess !== "     ").length
+  );
   const [reset, setReset] = useState(false);
   const [currentGuess, setCurrentGuess] = useState([]);
   const [answer, setAnswer] = useState("");
   const [gameEnd, setGameCondition] = useState(false);
+  const [playing, setPlaying] = useState(true);
 
   const resetPositions = () => {
     setReset(!reset);
@@ -79,6 +83,18 @@ export default function Game(props) {
 
   useEffect(() => {
     setAnswer(getRandomAnswerWord());
+    let todaysDate = format(new Date(), "yyyy-MM-dd");
+    if (!cookies.guesses || todaysDate !== cookies.date) {
+      setCookie("guesses", [
+        "     ",
+        "     ",
+        "     ",
+        "     ",
+        "     ",
+        "     ",
+      ]);
+      setCookie("date", format(new Date(), "yyyy-MM-dd"));
+    }
   }, []);
 
   props.setAnswer(answer);
@@ -111,18 +127,20 @@ export default function Game(props) {
     if (
       guessCount < 6 &&
       currentGuess.filter((char) => char !== "").length === 5 &&
-      !gameEnd
+      playing
       // [...allowedWords, ...answerWords].includes(currentGuess.join(""))
     ) {
-      const newGuesses = guesses;
+      console.log(guessCount);
+      const newGuesses = cookies.guesses;
       newGuesses[guessCount] = currentGuess.join("");
       const newCount = guessCount + 1;
-      setGuesses(newGuesses);
+      //setGuesses(newGuesses);
       setGuessCount(newCount);
       deleteOldGuess();
       resetPositions();
       if (currentGuess.join("") === answer) {
         console.log("win");
+        setPlaying(false);
         const score = guessCount + 1;
         await myAPI.postScore(score, answer, username);
         props.setScore(guessCount);
@@ -131,10 +149,13 @@ export default function Game(props) {
         }, 5000);
       } else if (!newGuesses.includes(answer) && guessCount === 5) {
         console.log("lose");
-        setGameCondition("lose");
+        setPlaying(false);
         props.setScore(null);
-        setTimeout(props.endGame(true), 5000);
+        setTimeout(async () => {
+          setGameCondition("lose");
+        }, 5000);
       }
+      setCookie("guesses", newGuesses);
     }
   };
 
@@ -148,13 +169,15 @@ export default function Game(props) {
         optionalFeatures: ["local-floor", "bounded-floor", "hand-tracking"],
       }}
     >
+      {/* Renders a component that will end the VR session and redirect to results
+      on game end. */}
       {gameEnd && <GameEnd endGame={() => props.endGame(true)} />}
+
       {/* Grabs Oculus Controllers */}
       <DefaultXRControllers />
       <Hands modelLeft={<LeftHand />} modelRight={<RightHand />} />
       <ambientLight intensity={0.3} />
-      <Grid guesses={guesses} answer={answer} colorBlind={colorBlind} />
-
+      <Grid guesses={cookies.guesses} answer={answer} colorBlind={colorBlind} />
       {/* Adds Physics to child elements */}
       <Physics gravity={[0, -10, 0]}>
         <Button reset={resetPositions} />
