@@ -42,14 +42,12 @@ export default function ResultsGraph(props) {
     return scores.slice(0, 3).map((score, i) => {
       return (
         <div className='leaderboard-entry'>
-          <span>
             <h5>
               {i + 1}.{' '}
               {score
                 ? `${score.username} - ${score.score} ${score.created_at}`
                 : ''}
             </h5>
-          </span>
         </div>
       );
     });
