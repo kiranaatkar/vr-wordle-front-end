@@ -45,7 +45,7 @@ export function generateLetters(reset, alphabet, letters) {
   );
 }
 
-function getRandomAnswerWord() {
+async function getRandomAnswerWord() {
   const dateOne = new Date();
   const dateTwo = new Date("02/24/2022");
   let answer = answerWords[differenceInDays(dateOne, dateTwo) + 250];
@@ -54,6 +54,7 @@ function getRandomAnswerWord() {
 
 export default function Game(props) {
   const [cookies, setCookie] = useCookies();
+  const [guessGrid, setGuessGrid] = useState();
   const [username] = useState(props.username);
   const [colorBlind] = useState(props.colorBlind);
   const [guessCount, setGuessCount] = useState(
@@ -73,6 +74,10 @@ export default function Game(props) {
     setAnswer(
       process.env.NODE_ENV === "development" ? "nnnnn" : getRandomAnswerWord()
     );
+    async function fetchData() {
+      setGuessGrid(await getBackendGuesses());
+    }
+    fetchData();
     let todaysDate = format(new Date(), "yyyy-MM-dd");
     if (!cookies.guesses || todaysDate !== cookies.date) {
       setCookie("guesses", [
@@ -91,6 +96,18 @@ export default function Game(props) {
 
   const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
   const letters = useRef(<group />);
+
+  const getBackendGuesses = async () => {
+    let guesses = (await myAPI.getGuesses("test", "03/03/2022")).guesses[0];
+    if (!guesses) {
+      return ["     ", "     ", "     ", "     ", "     ", "     "];
+    }
+    let guessArr = [];
+    for (let i = 1; i <= 6; i++) {
+      guessArr.push(guesses[`guess_${i}`] ? guesses[`guess_${i}`] : "     ");
+    }
+    return guessArr;
+  };
 
   const deleteOldGuess = () => {
     for (const letter of currentGuess) {
@@ -114,6 +131,7 @@ export default function Game(props) {
   };
 
   const submitGuess = async () => {
+    console.log(guessGrid);
     if (
       guessCount < 6 &&
       currentGuess.filter((char) => char !== "").length === 5 &&
