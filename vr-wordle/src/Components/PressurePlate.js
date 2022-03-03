@@ -41,6 +41,7 @@ export default function PressurePlate(props) {
     },
   }));
 
+  // Handle deformation when letter placed on top
   const { scale } = useSpring({
     to: { scale: [1, pressed ? 0.5 : 1, 1] },
     from: { scale: [1, pressed ? 1 : 0.5, 1] },
