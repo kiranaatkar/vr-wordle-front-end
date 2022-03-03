@@ -20,6 +20,8 @@ import { differenceInDays, format } from "date-fns";
 // import Wind from "./Wind.js";
 import { Navigate } from "react-router";
 import Alphabet from "./Alphabet.js";
+import RightHand from "./RightHand.js";
+import LeftHand from "./LeftHand.js";
 import { useCookies } from "react-cookie";
 
 const myAPI = new Networking();
@@ -173,7 +175,7 @@ export default function Game(props) {
 
       {/* Grabs Oculus Controllers */}
       <DefaultXRControllers />
-      <Hands modelLeft={"/leftHandLow.glb"} modelRight={"/rightHandLow.glb"} />
+      <Hands modelLeft={<LeftHand />} modelRight={<RightHand />} />
       <ambientLight intensity={0.3} />
       <Grid guesses={cookies.guesses} answer={answer} colorBlind={colorBlind} />
       {/* Adds Physics to child elements */}
