@@ -22,7 +22,7 @@ import Alphabet from "./Alphabet.js";
 
 const myAPI = new Networking();
 
-const startTime = new Date.now();
+const startTime = new Date().getSeconds();
 
 export function generateLetters(reset, alphabet, letters) {
   return (

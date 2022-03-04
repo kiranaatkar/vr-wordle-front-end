@@ -20,11 +20,13 @@ export default function ResultsGraph(props) {
   ]);
 
   function formatData(jsonScores) {
+    const scoresArr = [];
     jsonScores.forEach((entry) => {
-      setScores([...scores, entry]);
+      scoresArr.push(entry);
       const scoreIndex = data.findIndex((data) => data.score === entry.score);
       data[scoreIndex].value++;
     });
+    setScores([...scoresArr]);
   }
 
   useEffect(() => {
@@ -40,16 +42,24 @@ export default function ResultsGraph(props) {
 
   function formatLeaderBoard(scores) {
     return scores.slice(0, 3).map((score, i) => {
-      return (
-        <div className='leaderboard-entry'>
+      if (score) {
+        return (
+          <div className='leaderboard-entry' key={i}>
             <h5>
-              {i + 1}.{' '}
-              {score
-                ? `${score.username} - ${score.score} ${score.created_at}`
-                : ''}
+              {`${i + 1}. ${score.username} - ${score.score} ${
+                score.score > 1 ? 'attempts' : 'attempt'
+              } in ${score.game_time}
+              seconds`}
             </h5>
-        </div>
-      );
+          </div>
+        );
+      } else {
+        return (
+          <div className='leaderboard-entry' key={i}>
+            <h5>{i + 1}. </h5>
+          </div>
+        );
+      }
     });
   }
 
@@ -60,7 +70,7 @@ export default function ResultsGraph(props) {
       ) : (
         <div>
           <div className='graph-wrapper'>
-            <h2>Leader board</h2>
+            <h2>Leaderboard</h2>
             {formatLeaderBoard(scores)}
           </div>
 
@@ -89,6 +99,7 @@ export default function ResultsGraph(props) {
                     key={entry.score}
                     fill={entry.score === userScore ? '#99f2c8' : '#1f4037'}
                     dataKey='value'
+                    type='number'
                   />
                 ))}
               </Bar>
