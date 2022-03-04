@@ -23,8 +23,6 @@ import Alphabet from "./Alphabet.js";
 
 const myAPI = new Networking();
 
-const startTime = new Date().getSeconds();
-
 export function generateLetters(reset, alphabet, letters) {
   return (
     <group ref={letters}>
@@ -48,10 +46,15 @@ export function generateLetters(reset, alphabet, letters) {
   );
 }
 
+// function getRandomAnswerWord() {
+//   const dateOne = new Date();
+//   const dateTwo = new Date("02/24/2022");
+//   let answer = answerWords[differenceInDays(dateOne, dateTwo) + 250];
+//   return answer;
+// }
+
 function getRandomAnswerWord() {
-  const dateOne = new Date();
-  const dateTwo = new Date("02/24/2022");
-  let answer = answerWords[differenceInDays(dateOne, dateTwo) + 250];
+  let answer = answerWords[Math.floor(Math.random() * answerWords.length)];
   return answer;
 }
 
@@ -73,9 +76,7 @@ export default function Game(props) {
   };
 
   useEffect(() => {
-    setAnswer(
-      process.env.NODE_ENV === "development" ? "nnnnn" : getRandomAnswerWord()
-    );
+    setAnswer(getRandomAnswerWord());
     let todaysDate = format(new Date(), "yyyy-MM-dd");
     if (!cookies.guesses || todaysDate !== cookies.date) {
       setCookie("guesses", [
