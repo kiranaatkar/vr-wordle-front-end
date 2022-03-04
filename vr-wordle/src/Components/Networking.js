@@ -2,7 +2,7 @@ const API_URL = process.env.REACT_APP_API_URL;
 class Networking {
   async getWordScores(word) {
     const response = await fetch(`${API_URL}/scores?word=${word}`, {
-      method: 'GET',
+      method: "GET",
     });
     const json = await response.json();
     return json;
@@ -10,22 +10,23 @@ class Networking {
 
   async getUserScores(username) {
     const response = await fetch(`${API_URL}/scores?username=${username}`, {
-      method: 'GET',
+      method: "GET",
     });
     const json = await response.json();
     return json;
   }
 
-  async postScore(score, word, username) {
+  async postScore(score, word, username, gameTime) {
     const response = await fetch(`${API_URL}/scores`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         score,
         word,
         username,
+        gameTime,
       }),
     });
 

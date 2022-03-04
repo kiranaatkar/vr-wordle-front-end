@@ -22,6 +22,8 @@ import { useCookies } from "react-cookie";
 
 const myAPI = new Networking();
 
+const startTime = new Date.now();
+
 export function generateLetters(reset, alphabet, letters) {
   return (
     <group ref={letters}>
@@ -132,7 +134,9 @@ export default function Game(props) {
         console.log("win");
         setPlaying(false);
         const score = guessCount + 1;
-        await myAPI.postScore(score, answer, username);
+        const endTime = new Date.now();
+        const gameTime = (endTime - startTime) / 1000;
+        await myAPI.postScore(score, answer, username, gameTime);
         props.setScore(guessCount);
         setTimeout(async () => {
           setGameCondition("win");
