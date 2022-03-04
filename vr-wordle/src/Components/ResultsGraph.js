@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, Cell, LabelList } from 'recharts';
-import Networking from './Networking.js';
-import './results.css';
-import LoadingScreen from './loadingScreen.js';
+import React, { useEffect, useState } from "react";
+import { BarChart, Bar, XAxis, YAxis, Cell, LabelList } from "recharts";
+import { formatTime } from "./FormatTime";
+import Networking from "./Networking.js";
+import "./results.css";
+import LoadingScreen from "./loadingScreen.js";
 
 export default function ResultsGraph(props) {
   const { answer, userScore } = props;
@@ -44,18 +45,17 @@ export default function ResultsGraph(props) {
     return scores.slice(0, 3).map((score, i) => {
       if (score) {
         return (
-          <div className='leaderboard-entry' key={i}>
+          <div className="leaderboard-entry" key={i}>
             <h5>
               {`${i + 1}. ${score.username} - ${score.score} ${
-                score.score > 1 ? 'attempts' : 'attempt'
-              } in ${score.game_time}
-              seconds`}
+                score.score > 1 ? "attempts" : "attempt"
+              } in ${formatTime(score.game_time)}`}
             </h5>
           </div>
         );
       } else {
         return (
-          <div className='leaderboard-entry' key={i}>
+          <div className="leaderboard-entry" key={i}>
             <h5>{i + 1}. </h5>
           </div>
         );
@@ -69,37 +69,38 @@ export default function ResultsGraph(props) {
         <LoadingScreen />
       ) : (
         <div>
-          <div className='graph-wrapper'>
+          <div className="graph-wrapper">
             <h2>Leaderboard</h2>
             {formatLeaderBoard(scores)}
           </div>
 
-          <div className='graph-wrapper'>
+          <div className="graph-wrapper">
             <h2>Guess distributions for word {answer.toUpperCase()}</h2>
             <BarChart
               width={730}
               height={250}
               data={data}
-              layout='vertical'
+              layout="vertical"
               barCategoryGap={1.5}
-              margin={{ top: 10, bottom: 10 }}>
-              <XAxis hide type='number' />
+              margin={{ top: 10, bottom: 10 }}
+            >
+              <XAxis hide type="number" />
               <YAxis
-                dataKey='score'
-                type='category'
+                dataKey="score"
+                type="category"
                 ticks={[1, 2, 3, 4, 5, 6]}
-                fill='black'
+                fill="black"
                 tickLine={false}
-                scale='band'
+                scale="band"
               />
-              <Bar dataKey='value' type='number'>
-                <LabelList position='right' fill='black' />
+              <Bar dataKey="value" type="number">
+                <LabelList position="right" fill="black" />
                 {data.map((entry) => (
                   <Cell
                     key={entry.score}
-                    fill={entry.score === userScore ? '#99f2c8' : '#1f4037'}
-                    dataKey='value'
-                    type='number'
+                    fill={entry.score === userScore ? "#99f2c8" : "#1f4037"}
+                    dataKey="value"
+                    type="number"
                   />
                 ))}
               </Bar>
