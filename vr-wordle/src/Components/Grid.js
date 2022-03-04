@@ -7,6 +7,7 @@ import * as THREE from "three";
 export default function Grid(props) {
   return props.guesses.map((guess, i) => {
     return (
+      // Sets the position based on which guess we're attempting
       <group position={[0, 7.5 - i * 1.2, -3]} key={i}>
         {Guess(guess, props.answer, props.colorBlind)}
       </group>
@@ -30,6 +31,8 @@ function StaticLetter(props) {
   const buffer = useLoader(THREE.AudioLoader, "/blocks.mp3");
 
   useEffect(() => {
+    // Setting up the sound during every update to make sure sound plays and avoiding
+    // a bug where chrome does not allow autoplay
     sound.current.setBuffer(buffer);
     sound.current.setRefDistance(1);
     sound.current.setVolume(0.9);
@@ -45,10 +48,14 @@ function StaticLetter(props) {
 
   const box = useRef();
 
+  const { gl } = useThree();
+
   useFrame(() => {
+    // Ties the boxes to rotate during every frame under certain conditions,
+    // such as when the word has been submitted
     if (props.submitted && box.current.rotation.x < Math.PI / 2) {
       sound.current.play();
-      box.current.rotation.x += 0.029 - props.index * 0.005;
+      box.current.rotation.x += 0.0385 - props.index * 0.005;
     }
   });
 
@@ -99,8 +106,10 @@ export function Guess(userGuess, word, colorBlind) {
   );
 }
 
-const createColors = (wordArr, target) => {
-  const targetObj = target.split("").reduce((a, c) => {
+// Detects which colour to set to each letter
+const createColors = (wordArr, answer) => {
+  // Creates a object with each characters from the correct answer
+  const answerObj = answer.split("").reduce((a, c) => {
     if (a[c]) {
       a[c] += 1;
     } else {
@@ -108,13 +117,17 @@ const createColors = (wordArr, target) => {
     }
     return a;
   }, {});
+
   const wordObj = {};
+  // Sets the default colours to be absent
   const colors = ["absent", "absent", "absent", "absent", "absent"];
 
+  // For each word check if it is in the correct place
   wordArr.forEach((l, i) => {
-    if (target[i] === l) {
+    if (answer[i] === l) {
       colors[i] = "correct";
 
+      // Adds to the counter object for the guess
       if (wordObj[l]) {
         wordObj[l] += 1;
       } else {
@@ -124,8 +137,11 @@ const createColors = (wordArr, target) => {
   });
 
   wordArr.forEach((l, i) => {
-    if (target.includes(l) && colors[i] !== "correct") {
-      if ((wordObj[l] || 0) < targetObj[l]) {
+    // This considers the case where the letter is present but is not correct
+    if (answer.includes(l) && colors[i] !== "correct") {
+      // Checks to make sure that the letter will not be set to present more times that the letter
+      // appears in the answer
+      if ((wordObj[l] || 0) < answerObj[l]) {
         colors[i] = "present";
       }
       if (wordObj[l]) {

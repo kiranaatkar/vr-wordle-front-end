@@ -1,6 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Environment, Sky, Stars } from "@react-three/drei";
 import { VRCanvas, DefaultXRControllers, Hands } from "@react-three/xr";
+import { differenceInDays, format } from "date-fns";
+import { Navigate } from "react-router";
+import { answerWords } from "../word-lists/answer-words.js";
+import { useCookies } from "react-cookie";
+import { Physics } from "@react-three/cannon";
 import LetterCubes from "./LetterCubes.js";
 import GameEnd from "./GameEnd.js";
 import Floor from "./Floor.js";
@@ -9,16 +14,11 @@ import Submit from "./Submit.js";
 import Grid from "./Grid.js";
 import Grabber from "./Grab.js";
 import Table from "./Table.js";
-import { Physics } from "@react-three/cannon";
 import Player from "./Player.js";
 import Letter from "./Letter.js";
 import Pillars from "./Pillars.js";
 import Networking from "./Networking.js";
-import { answerWords } from "../word-lists/answer-words.js";
-import { differenceInDays, format } from "date-fns";
-import { Navigate } from "react-router";
 import Alphabet from "./Alphabet.js";
-import { useCookies } from "react-cookie";
 
 const myAPI = new Networking();
 
@@ -122,16 +122,13 @@ export default function Game(props) {
       playing
       // [...allowedWords, ...answerWords].includes(currentGuess.join(""))
     ) {
-      console.log(guessCount);
       const newGuesses = cookies.guesses;
       newGuesses[guessCount] = currentGuess.join("");
       const newCount = guessCount + 1;
-      //setGuesses(newGuesses);
       setGuessCount(newCount);
       deleteOldGuess();
       resetPositions();
       if (currentGuess.join("") === answer) {
-        console.log("win");
         setPlaying(false);
         const score = guessCount + 1;
         const endTime = new Date.now();
@@ -142,7 +139,6 @@ export default function Game(props) {
           setGameCondition("win");
         }, 3000);
       } else if (!newGuesses.includes(answer) && guessCount === 5) {
-        console.log("lose");
         setPlaying(false);
         props.setScore(null);
         setTimeout(async () => {
@@ -160,7 +156,12 @@ export default function Game(props) {
       style={{ touchAction: "none" }}
       frameloop="demand"
       sessionInit={{
-        optionalFeatures: ["local-floor", "bounded-floor", "hand-tracking"],
+        optionalFeatures: [
+          "local-floor",
+          "bounded-floor",
+          "hand-tracking",
+          "layers",
+        ],
       }}
     >
       {/* Renders a component that will end the VR session and redirect to results
@@ -185,7 +186,10 @@ export default function Game(props) {
         {/* Allows grabbing of the individual letters */}
         <Grabber groupRef={letters} />
         {generateLetters(reset, alphabet, letters)}
-        <Letter position={[2, 1, -1]} name="n" />
+        {process.env.NODE_ENV === "development" && (
+          <Letter position={[2, 1, -1]} name="n" />
+        )}
+
         <Pillars setGuess={setGuess} />
         <Player />
         <Floor />

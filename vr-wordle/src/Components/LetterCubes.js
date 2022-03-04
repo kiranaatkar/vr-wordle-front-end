@@ -31,6 +31,7 @@ export default function LetterCubes({ id, position, sizeArg, reset, index }) {
     `/textures/lettercube-${id.toLowerCase()}.png`,
   ]);
 
+  // Code to enable click and drag features with a mouse
   const bind = useDrag(
     ({ offset: [,], xy: [x, y], first, last }) => {
       if (first) {
@@ -58,6 +59,7 @@ export default function LetterCubes({ id, position, sizeArg, reset, index }) {
 
   const grabController = useController("right");
 
+  // Constantly check to see if the block is within gather distance and change the hover state respectively
   useXRFrame(() => {
     const pos = new Vector3();
     const posB = new Vector3();
