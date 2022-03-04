@@ -4,6 +4,7 @@ import { VRCanvas, DefaultXRControllers, Hands } from "@react-three/xr";
 import { differenceInDays, format } from "date-fns";
 import { Navigate } from "react-router";
 import { answerWords } from "../word-lists/answer-words.js";
+import { allowedWords } from "../word-lists/allowed-words.js";
 import { useCookies } from "react-cookie";
 import { Physics } from "@react-three/cannon";
 import LetterCubes from "./LetterCubes.js";
@@ -116,12 +117,20 @@ export default function Game(props) {
   };
 
   const submitGuess = async () => {
-    if (
-      guessCount < 6 &&
-      currentGuess.filter((char) => char !== "").length === 5 &&
-      playing
-      // [...allowedWords, ...answerWords].includes(currentGuess.join(""))
-    ) {
+    let conditions = null;
+
+    process.env.NODE_ENV === "development" //Allows for non-allowed words during development and testing
+      ? (conditions =
+          guessCount < 6 &&
+          currentGuess.filter((char) => char !== "").length === 5 &&
+          playing)
+      : (conditions =
+          guessCount < 6 &&
+          currentGuess.filter((char) => char !== "").length === 5 &&
+          playing &&
+          [...allowedWords, ...answerWords].includes(currentGuess.join("")));
+
+    if (conditions) {
       const newGuesses = cookies.guesses;
       newGuesses[guessCount] = currentGuess.join("");
       const newCount = guessCount + 1;
