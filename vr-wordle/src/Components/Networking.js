@@ -1,4 +1,5 @@
 const API_URL = process.env.REACT_APP_API_URL;
+
 class Networking {
   async getWordScores(word) {
     const response = await fetch(`${API_URL}/scores?word=${word}`, {
@@ -16,7 +17,7 @@ class Networking {
     return json;
   }
 
-  async postScore(score, word, username) {
+  async postScore(score, word, username, gameTime) {
     const response = await fetch(`${API_URL}/scores`, {
       method: "POST",
       headers: {
@@ -26,6 +27,7 @@ class Networking {
         score,
         word,
         username,
+        gameTime,
       }),
     });
 

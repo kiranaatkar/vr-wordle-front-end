@@ -4,6 +4,7 @@ import { VRCanvas, DefaultXRControllers, Hands } from "@react-three/xr";
 import { differenceInDays, format } from "date-fns";
 import { Navigate } from "react-router";
 import { answerWords } from "../word-lists/answer-words.js";
+import { allowedWords } from "../word-lists/allowed-words.js";
 import { useCookies } from "react-cookie";
 import { Physics } from "@react-three/cannon";
 import LetterCubes from "./LetterCubes.js";
@@ -22,6 +23,8 @@ import Alphabet from "./Alphabet.js";
 
 const myAPI = new Networking();
 let todaysDate = format(new Date(), "yyyy-MM-dd");
+
+const startTime = new Date().getSeconds();
 
 export function generateLetters(reset, alphabet, letters) {
   return (
@@ -134,12 +137,20 @@ export default function Game(props) {
   };
 
   const submitGuess = async () => {
-    if (
-      guessCount <= 6 &&
-      currentGuess.filter((char) => char !== "").length === 5 &&
-      playing
-      // [...allowedWords, ...answerWords].includes(currentGuess.join(""))
-    ) {
+    let conditions = null;
+
+    process.env.NODE_ENV === "development" //Allows for non-allowed words during development and testing
+      ? (conditions =
+          guessCount <= 6 &&
+          currentGuess.filter((char) => char !== "").length === 5 &&
+          playing)
+      : (conditions =
+          guessCount <= 6 &&
+          currentGuess.filter((char) => char !== "").length === 5 &&
+          playing &&
+          [...allowedWords, ...answerWords].includes(currentGuess.join("")));
+
+    if (conditions) {
       const newGuesses = guessGrid;
       if (guessCount === 1) {
         await myAPI.postGuess(
@@ -164,7 +175,10 @@ export default function Game(props) {
       if (currentGuess.join("") === answer) {
         setPlaying(false);
         const score = guessCount + 1;
-        await myAPI.postScore(score, answer, username);
+        const endTime = Date.now();
+        const gameTime = (endTime - props.startTime) / 1000;
+        props.setEndTime(endTime);
+        await myAPI.postScore(score, answer, username, gameTime);
         props.setScore(guessCount);
         setTimeout(async () => {
           setGameCondition("win");
