@@ -2,8 +2,7 @@ import ResultsGraph from "./ResultsGraph";
 import { intervalToDuration } from "date-fns";
 import "./results.css";
 
-export default function ResultsScreen(props) {
-  const { answer, userScore, gameTime } = props;
+export function formatTime(gameTime) {
   let userTime = intervalToDuration({ start: 0, end: gameTime });
   let formattedTime = ``;
   if (userTime.minutes) {
@@ -19,6 +18,13 @@ export default function ResultsScreen(props) {
     formattedTime +=
       userTime.seconds === 1 ? "1 second" : `${userTime.seconds} seconds`;
   }
+
+  return formattedTime;
+}
+
+export default function ResultsScreen(props) {
+  const { answer, userScore, gameTime } = props;
+
   return (
     <div className="results-page-wrapper">
       <h1 className="graph-text">Statistics</h1>
@@ -26,7 +32,7 @@ export default function ResultsScreen(props) {
         {userScore
           ? `You got it with ${userScore} ${
               userScore > 1 ? "attempts" : "attempt"
-            } in ${formattedTime}!`
+            } in ${formatTime(gameTime)}!`
           : "Better luck tomorrow!"}
       </h3>
       <ResultsGraph answer={answer} userScore={userScore} />
