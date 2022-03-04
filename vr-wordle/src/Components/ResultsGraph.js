@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, Cell, LabelList } from "recharts";
-import { formatTime } from "./FormatTime";
+import { formatTime } from "./FormatTime.js";
 import Networking from "./Networking.js";
 import "./results.css";
 import LoadingScreen from "./loadingScreen.js";
