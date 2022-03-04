@@ -20,11 +20,13 @@ export default function ResultsGraph(props) {
   ]);
 
   function formatData(jsonScores) {
+    const scoresArr = [];
     jsonScores.forEach((entry) => {
-      setScores([...scores, entry]);
+      scoresArr.push(entry);
       const scoreIndex = data.findIndex((data) => data.score === entry.score);
       data[scoreIndex].value++;
     });
+    setScores([...scoresArr]);
   }
 
   useEffect(() => {
@@ -39,7 +41,6 @@ export default function ResultsGraph(props) {
   }, []);
 
   function formatLeaderBoard(scores) {
-    console.log(scores);
     return scores.slice(0, 3).map((score, i) => {
       if (score) {
         return (
