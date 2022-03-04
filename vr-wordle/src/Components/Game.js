@@ -22,6 +22,8 @@ import Alphabet from "./Alphabet.js";
 
 const myAPI = new Networking();
 
+const startTime = new Date.now();
+
 export function generateLetters(reset, alphabet, letters) {
   return (
     <group ref={letters}>
@@ -129,7 +131,10 @@ export default function Game(props) {
       if (currentGuess.join("") === answer) {
         setPlaying(false);
         const score = guessCount + 1;
-        await myAPI.postScore(score, answer, username);
+        const endTime = new Date.now();
+        const gameTime = (endTime - startTime) / 1000;
+        props.setGameTime(gameTime);
+        await myAPI.postScore(score, answer, username, gameTime);
         props.setScore(guessCount);
         setTimeout(async () => {
           setGameCondition("win");
