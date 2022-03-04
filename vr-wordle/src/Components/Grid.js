@@ -107,7 +107,7 @@ export function Guess(userGuess, word, colorBlind) {
 }
 
 // Detects which colour to set to each letter
-const createColors = (wordArr, answer) => {
+export function createColors(wordArr, answer) {
   // Creates a object with each characters from the correct answer
   const answerObj = answer.split("").reduce((a, c) => {
     if (a[c]) {
@@ -153,4 +153,4 @@ const createColors = (wordArr, answer) => {
   });
 
   return colors;
-};
+}
