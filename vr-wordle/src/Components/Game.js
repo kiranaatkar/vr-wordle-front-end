@@ -46,15 +46,10 @@ export function generateLetters(reset, alphabet, letters) {
   );
 }
 
-// function getRandomAnswerWord() {
-//   const dateOne = new Date();
-//   const dateTwo = new Date("02/24/2022");
-//   let answer = answerWords[differenceInDays(dateOne, dateTwo) + 250];
-//   return answer;
-// }
-
 function getRandomAnswerWord() {
-  let answer = answerWords[Math.floor(Math.random() * answerWords.length)];
+  const dateOne = new Date();
+  const dateTwo = new Date("02/24/2022");
+  let answer = answerWords[differenceInDays(dateOne, dateTwo) + 250];
   return answer;
 }
 
