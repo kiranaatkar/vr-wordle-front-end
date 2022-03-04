@@ -22,6 +22,7 @@ import Networking from "./Networking.js";
 import Alphabet from "./Alphabet.js";
 
 const myAPI = new Networking();
+let todaysDate = format(new Date(), "yyyy-MM-dd");
 
 const startTime = new Date().getSeconds();
 
@@ -57,10 +58,12 @@ function getRandomAnswerWord() {
 
 export default function Game(props) {
   const [cookies, setCookie] = useCookies();
+  const [guessGrid, setGuessGrid] = useState();
   const [username] = useState(props.username);
   const [colorBlind] = useState(props.colorBlind);
   const [guessCount, setGuessCount] = useState(
-    cookies.guesses.filter((guess) => guess !== "     ").length
+    0
+    // cookies.guesses.filter((guess) => guess !== "     ").length
   );
   const [reset, setReset] = useState(false);
   const [currentGuess, setCurrentGuess] = useState([]);
@@ -76,18 +79,20 @@ export default function Game(props) {
     setAnswer(
       process.env.NODE_ENV === "development" ? "nnnnn" : getRandomAnswerWord()
     );
-    let todaysDate = format(new Date(), "yyyy-MM-dd");
-    if (!cookies.guesses || todaysDate !== cookies.date) {
-      setCookie("guesses", [
-        "     ",
-        "     ",
-        "     ",
-        "     ",
-        "     ",
-        "     ",
-      ]);
-      setCookie("date", format(new Date(), "yyyy-MM-dd"));
+    async function fetchData() {
+      let guesses = await getBackendGuesses();
+      setGuessGrid(guesses);
+      let count = guesses.filter((guess) => guess !== "     ").length + 1;
+      setGuessCount(count);
+
+      if (guesses[count - 2] === answer) {
+        setPlaying(false);
+        setGameCondition("win");
+      } else if (count > 7) {
+        setGameCondition("lose");
+      }
     }
+    fetchData();
   }, []);
 
   props.setAnswer(answer);
@@ -95,9 +100,24 @@ export default function Game(props) {
   const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
   const letters = useRef(<group />);
 
+  const getBackendGuesses = async () => {
+    let response = (await myAPI.getGuesses(cookies.username, todaysDate))
+      .guesses[0];
+    if (!response) {
+      return ["     ", "     ", "     ", "     ", "     ", "     "];
+    }
+
+    let guessArr = [];
+    for (let i = 1; i <= 6; i++) {
+      guessArr.push(response[`guess_${i}`] ? response[`guess_${i}`] : "     ");
+    }
+    return guessArr;
+  };
+
   const deleteOldGuess = () => {
+    const answer = getRandomAnswerWord();
     for (const letter of currentGuess) {
-      if (!getRandomAnswerWord().split("").includes(letter)) {
+      if (!answer.split("").includes(letter)) {
         const indexToRemove = letters.current.children.findIndex((child) => {
           return child.children[0].name === letter;
         });
@@ -121,22 +141,37 @@ export default function Game(props) {
 
     process.env.NODE_ENV === "development" //Allows for non-allowed words during development and testing
       ? (conditions =
-          guessCount < 6 &&
+          guessCount <= 6 &&
           currentGuess.filter((char) => char !== "").length === 5 &&
           playing)
       : (conditions =
-          guessCount < 6 &&
+          guessCount <= 6 &&
           currentGuess.filter((char) => char !== "").length === 5 &&
           playing &&
           [...allowedWords, ...answerWords].includes(currentGuess.join("")));
 
     if (conditions) {
-      const newGuesses = cookies.guesses;
+      const newGuesses = guessGrid;
+      if (guessCount === 1) {
+        await myAPI.postGuess(
+          cookies.username,
+          todaysDate,
+          currentGuess.join("")
+        );
+      } else {
+        await myAPI.updateGuess(
+          cookies.username,
+          todaysDate,
+          currentGuess.join(""),
+          guessCount
+        );
+      }
+      setGuessGrid(await getBackendGuesses());
+      setGuessCount(guessCount + 1);
       newGuesses[guessCount] = currentGuess.join("");
-      const newCount = guessCount + 1;
-      setGuessCount(newCount);
       deleteOldGuess();
       resetPositions();
+
       if (currentGuess.join("") === answer) {
         setPlaying(false);
         const score = guessCount + 1;
@@ -148,17 +183,15 @@ export default function Game(props) {
         setTimeout(async () => {
           setGameCondition("win");
         }, 3000);
-      } else if (!newGuesses.includes(answer) && guessCount === 5) {
+      } else if (!newGuesses.includes(answer) && guessCount === 6) {
         setPlaying(false);
         props.setScore(null);
         setTimeout(async () => {
           setGameCondition("lose");
         }, 3000);
       }
-      setCookie("guesses", newGuesses);
     }
   };
-
   return username ? (
     <VRCanvas
       mode="concurrent"
@@ -182,7 +215,7 @@ export default function Game(props) {
       <DefaultXRControllers />
       <Hands modelLeft={"/hand-left.gltf"} modelRight={"/hand-right.gltf"} />
       <ambientLight intensity={0.3} />
-      <Grid guesses={cookies.guesses} answer={answer} colorBlind={colorBlind} />
+      <Grid guesses={guessGrid} answer={answer} colorBlind={colorBlind} />
       {/* Adds Physics to child elements */}
       <Physics gravity={[0, -10, 0]}>
         <Button reset={resetPositions} />
