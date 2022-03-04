@@ -45,6 +45,27 @@ class Networking {
     const json = await response.json();
     return json;
   }
+
+  async postGuess(username, date, guess_1) {
+    const response = await fetch(`${API_URL}/guesses`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, date, guess_1 }),
+    });
+    const json = await response.json();
+    return json;
+  }
+
+  async updateGuess(username, date, guess, count) {
+    const response = await fetch(`${API_URL}/updateGuesses`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, date, guess, count }),
+    });
+    const json = await response.json();
+    console.log(json);
+    return json;
+  }
 }
 
 export default Networking;

@@ -5,13 +5,18 @@ import { useFrame, useLoader, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 export default function Grid(props) {
-  return props.guesses.map((guess, i) => {
-    return (
-      <group position={[0, 7.5 - i * 1.2, -3]} key={i}>
-        {Guess(guess, props.answer, props.colorBlind)}
-      </group>
-    );
-  });
+  console.log("grid rendering");
+  if (props.guesses) {
+    return props.guesses.map((guess, i) => {
+      return (
+        <group position={[0, 7.5 - i * 1.2, -3]} key={i}>
+          {Guess(guess, props.answer, props.colorBlind)}
+        </group>
+      );
+    });
+  } else {
+    return null;
+  }
 }
 
 function StaticLetter(props) {
