@@ -140,9 +140,9 @@ export default function Game(props) {
       if (currentGuess.join("") === answer) {
         setPlaying(false);
         const score = guessCount + 1;
-        const endTime = new Date().getSeconds();
-        const gameTime = endTime - startTime;
-        props.setGameTime(gameTime);
+        const endTime = Date.now();
+        const gameTime = (endTime - props.startTime) / 1000;
+        props.setEndTime(endTime);
         await myAPI.postScore(score, answer, username, gameTime);
         props.setScore(guessCount);
         setTimeout(async () => {

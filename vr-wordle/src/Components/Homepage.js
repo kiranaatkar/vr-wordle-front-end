@@ -34,6 +34,7 @@ export default function Homepage(props) {
   };
 
   const submitUsername = () => {
+    props.setStartTime();
     props.setColorBlind(colourblind);
     if (username !== cookies.username) {
       setCookie("username", username);
