@@ -13,7 +13,9 @@ export default function App() {
   const [gameEnded, endGame] = useState(false);
   const [answer, setAnswer] = useState("");
   const [score, setScore] = useState(0);
-  const [gameTime, setGameTime] = useState(0);
+  const [startTime, setStartTime] = useState(0);
+  const [endTime, setEndTime] = useState(0);
+
   return (
     <div className="App">
       <Routes>
@@ -24,7 +26,7 @@ export default function App() {
               <ResultsScreen
                 answer={answer}
                 userScore={score + 1}
-                gameTime={gameTime}
+                gameTime={endTime - startTime}
               />
             ) : (
               <Navigate to="/" />
@@ -46,10 +48,11 @@ export default function App() {
                   <Game
                     username={username}
                     colorBlind={colorBlind}
+                    startTime={startTime}
                     endGame={(state) => endGame(state)}
                     setAnswer={(answer) => setAnswer(answer)}
                     setScore={(score) => setScore(score)}
-                    setGameTime={(number) => setGameTime(number)}
+                    setEndTime={(number) => setEndTime(number)}
                   />
                 </Suspense>
               )
@@ -65,6 +68,7 @@ export default function App() {
               <Homepage
                 setUsername={setUsername}
                 setColorBlind={setColorBlind}
+                setStartTime={() => setStartTime(Date.now())}
               />
             ) : (
               <Navigate replace to="/play" />
